@@ -1,0 +1,55 @@
+name: 'freeflow'
+
+services:
+  postgres:
+    container_name: freeflow_pg
+    image: postgres:latest
+    volumes:
+      - freeflow_pg:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: freeflow
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+      context: ./api
+      dockerfile: ../.docker/api/Dockerfile
+      target: development
+    volumes:
+      - ./api:/usr/src/app
+      - /api/node_modules
+    command: yarn run start:dev
+    #    depends_on:
+    #      - postgres
+    ports:
+      - '4000:4000'
+      - '5555:5555'
+
+  redis:
+    image: redis:latest
+    volumes:
+      - freeflow_redis:/data
+    environment:
+      ALLOW_EMPTY_PASSWORD: yes
+      REDIS_HOST: 127.0.0.1
+    ports:
+      - '6379:6379'
+
+#  client:
+#    build:
+#      context: ./.docker/client
+#      dockerfile: Dockerfile
+#    stdin_open: true
+#    volumes:
+#      - ./client/:/usr/src/client
+#      - /client/node_modules
+#    ports:
+#      - "3000:3000"
+#    command: yarn dev
+
+volumes:
+  freeflow_pg:
+  freeflow_redis:
