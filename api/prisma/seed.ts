@@ -3,26 +3,10 @@ import { hash } from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
-const randomIntFromInterval = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1) + min);
-
-const generateUniquePokemons = (n: number) => {
-    // Generovanie pola s číslami od 1 do 200
-    const pokemonIds = Array.from({ length: 400 }, (_, i) => i + 1);
-
-    // Premiešanie poľa
-    for (let i = pokemonIds.length - 1; i > 0; i--) {
-        const j = randomIntFromInterval(0, i);
-        [pokemonIds[i], pokemonIds[j]] = [pokemonIds[j], pokemonIds[i]];
-    }
-
-    return Array.from({ length: n }, (_, i) => ({ pokemonId: pokemonIds[i] }));
-};
-
 async function main() {
     await prisma.user.deleteMany();
     await prisma.log.deleteMany();
     await prisma.refreshToken.deleteMany();
-    await prisma.favoritePokemon.deleteMany();
 
     console.log('Seeding...');
 
@@ -38,11 +22,6 @@ async function main() {
             password: {
                 create: {
                     password: await hash('123456', 10),
-                },
-            },
-            favoritePokemon: {
-                createMany: {
-                    data: generateUniquePokemons(50),
                 },
             },
             profile: {
@@ -70,11 +49,6 @@ async function main() {
                     password: {
                         create: {
                             password: await hash('123456', 10),
-                        },
-                    },
-                    favoritePokemon: {
-                        createMany: {
-                            data: generateUniquePokemons(50),
                         },
                     },
                     profile: {

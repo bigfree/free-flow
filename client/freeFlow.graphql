@@ -1,0 +1,925 @@
+type Authorize {
+  """JWT Token"""
+  accessToken: JWT!
+
+  """JWT Token"""
+  refreshToken: JWT!
+  user: User!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeNullableFilter
+  notIn: [DateTime!]
+}
+
+"""
+A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address.
+"""
+scalar EmailAddress @specifiedBy(url: "https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address")
+
+input EnumLogFromNullableFilter {
+  equals: LogFrom
+  in: [LogFrom!]
+  not: NestedEnumLogFromNullableFilter
+  notIn: [LogFrom!]
+}
+
+input EnumLogTypeFilter {
+  equals: LogType
+  in: [LogType!]
+  not: NestedEnumLogTypeFilter
+  notIn: [LogType!]
+}
+
+input EnumUserRoleNullableListFilter {
+  equals: [UserRole!]
+  has: UserRole
+  hasEvery: [UserRole!]
+  hasSome: [UserRole!]
+  isEmpty: Boolean
+}
+
+input EnumUserTypeFieldUpdateOperationsInput {
+  set: UserType
+}
+
+input EnumUserTypeFilter {
+  equals: UserType
+  in: [UserType!]
+  not: NestedEnumUserTypeFilter
+  notIn: [UserType!]
+}
+
+type Flow {
+  code: String!
+  createdAt: DateTime
+  data: JSON
+  externalId: String
+  id: ID!
+  name: String!
+  user: User!
+  userId: String!
+}
+
+type FlowCountAggregate {
+  _all: Int!
+  code: Int!
+  createdAt: Int!
+  data: Int!
+  externalId: Int!
+  id: Int!
+  name: Int!
+  userId: Int!
+}
+
+input FlowCreateInput {
+  code: String!
+  createdAt: DateTime
+  data: JSON
+  externalId: String
+  name: String!
+  user: UserCreateNestedOneWithoutFlowsInput!
+}
+
+input FlowCreateManyUserInput {
+  code: String!
+  createdAt: DateTime
+  data: JSON
+  externalId: String
+  name: String!
+}
+
+input FlowCreateManyUserInputEnvelope {
+  data: [FlowCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input FlowCreateNestedManyWithoutUserInput {
+  connect: [FlowWhereUniqueInput!]
+  connectOrCreate: [FlowCreateOrConnectWithoutUserInput!]
+  create: [FlowCreateWithoutUserInput!]
+  createMany: FlowCreateManyUserInputEnvelope
+}
+
+input FlowCreateOrConnectWithoutUserInput {
+  create: FlowCreateWithoutUserInput!
+  where: FlowWhereUniqueInput!
+}
+
+input FlowCreateWithoutUserInput {
+  code: String!
+  createdAt: DateTime
+  data: JSON
+  externalId: String
+  name: String!
+}
+
+input FlowListRelationFilter {
+  every: FlowWhereInput
+  none: FlowWhereInput
+  some: FlowWhereInput
+}
+
+type FlowMaxAggregate {
+  code: String
+  createdAt: DateTime
+  externalId: String
+  id: String
+  name: String
+  userId: String
+}
+
+type FlowMinAggregate {
+  code: String
+  createdAt: DateTime
+  externalId: String
+  id: String
+  name: String
+  userId: String
+}
+
+input FlowOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input FlowOrderByWithRelationInput {
+  code: SortOrder
+  createdAt: SortOrderInput
+  data: SortOrderInput
+  externalId: SortOrderInput
+  id: SortOrder
+  name: SortOrder
+  user: UserOrderByWithRelationInput
+  userId: SortOrder
+}
+
+enum FlowScalarFieldEnum {
+  code
+  createdAt
+  data
+  externalId
+  id
+  name
+  userId
+}
+
+input FlowScalarWhereInput {
+  AND: [FlowScalarWhereInput!]
+  NOT: [FlowScalarWhereInput!]
+  OR: [FlowScalarWhereInput!]
+  code: StringFilter
+  createdAt: DateTimeNullableFilter
+  data: JsonNullableFilter
+  externalId: StringNullableFilter
+  id: StringFilter
+  name: StringFilter
+  userId: StringFilter
+}
+
+input FlowUpdateInput {
+  code: StringFieldUpdateOperationsInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  data: JSON
+  externalId: NullableStringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  user: UserUpdateOneRequiredWithoutFlowsNestedInput
+}
+
+input FlowUpdateManyMutationInput {
+  code: StringFieldUpdateOperationsInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  data: JSON
+  externalId: NullableStringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+}
+
+input FlowUpdateManyWithWhereWithoutUserInput {
+  data: FlowUpdateManyMutationInput!
+  where: FlowScalarWhereInput!
+}
+
+input FlowUpdateManyWithoutUserNestedInput {
+  connect: [FlowWhereUniqueInput!]
+  connectOrCreate: [FlowCreateOrConnectWithoutUserInput!]
+  create: [FlowCreateWithoutUserInput!]
+  createMany: FlowCreateManyUserInputEnvelope
+  delete: [FlowWhereUniqueInput!]
+  deleteMany: [FlowScalarWhereInput!]
+  disconnect: [FlowWhereUniqueInput!]
+  set: [FlowWhereUniqueInput!]
+  update: [FlowUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [FlowUpdateManyWithWhereWithoutUserInput!]
+  upsert: [FlowUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input FlowUpdateWithWhereUniqueWithoutUserInput {
+  data: FlowUpdateWithoutUserInput!
+  where: FlowWhereUniqueInput!
+}
+
+input FlowUpdateWithoutUserInput {
+  code: StringFieldUpdateOperationsInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  data: JSON
+  externalId: NullableStringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+}
+
+input FlowUpsertWithWhereUniqueWithoutUserInput {
+  create: FlowCreateWithoutUserInput!
+  update: FlowUpdateWithoutUserInput!
+  where: FlowWhereUniqueInput!
+}
+
+input FlowWhereInput {
+  AND: [FlowWhereInput!]
+  NOT: [FlowWhereInput!]
+  OR: [FlowWhereInput!]
+  code: StringFilter
+  createdAt: DateTimeNullableFilter
+  data: JsonNullableFilter
+  externalId: StringNullableFilter
+  id: StringFilter
+  name: StringFilter
+  user: UserRelationFilter
+  userId: StringFilter
+}
+
+input FlowWhereUniqueInput {
+  AND: [FlowWhereInput!]
+  NOT: [FlowWhereInput!]
+  OR: [FlowWhereInput!]
+  code: String
+  createdAt: DateTimeNullableFilter
+  data: JsonNullableFilter
+  externalId: String
+  id: String
+  name: String
+  user: UserRelationFilter
+  userId: StringFilter
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+"""
+A field whose value is a JSON Web Token (JWT): https://jwt.io/introduction.
+"""
+scalar JWT
+
+input JsonNullableFilter {
+  array_contains: JSON
+  array_ends_with: JSON
+  array_starts_with: JSON
+  equals: JSON
+  gt: JSON
+  gte: JSON
+  lt: JSON
+  lte: JSON
+  not: JSON
+  path: [String!]
+  string_contains: String
+  string_ends_with: String
+  string_starts_with: String
+}
+
+type Log {
+  createdAt: DateTime
+  data: JSON
+  from: LogFrom
+  id: ID!
+  type: LogType!
+}
+
+type LogCountAggregate {
+  _all: Int!
+  createdAt: Int!
+  data: Int!
+  from: Int!
+  id: Int!
+  type: Int!
+}
+
+input LogCreateInput {
+  createdAt: DateTime
+  data: JSON
+  from: LogFrom
+  type: LogType
+}
+
+enum LogFrom {
+  API
+  APP
+}
+
+type LogMaxAggregate {
+  createdAt: DateTime
+  from: LogFrom
+  id: String
+  type: LogType
+}
+
+type LogMinAggregate {
+  createdAt: DateTime
+  from: LogFrom
+  id: String
+  type: LogType
+}
+
+input LogOrderByWithRelationInput {
+  createdAt: SortOrderInput
+  data: SortOrderInput
+  from: SortOrderInput
+  id: SortOrder
+  type: SortOrder
+}
+
+enum LogScalarFieldEnum {
+  createdAt
+  data
+  from
+  id
+  type
+}
+
+enum LogType {
+  DEBUG
+  ERROR
+  LOG
+  VERBOSE
+  WARN
+}
+
+input LogWhereInput {
+  AND: [LogWhereInput!]
+  NOT: [LogWhereInput!]
+  OR: [LogWhereInput!]
+  createdAt: DateTimeNullableFilter
+  data: JsonNullableFilter
+  from: EnumLogFromNullableFilter
+  id: StringFilter
+  type: EnumLogTypeFilter
+}
+
+input LogWhereUniqueInput {
+  AND: [LogWhereInput!]
+  NOT: [LogWhereInput!]
+  OR: [LogWhereInput!]
+  createdAt: DateTimeNullableFilter
+  data: JsonNullableFilter
+  from: EnumLogFromNullableFilter
+  id: String
+  type: EnumLogTypeFilter
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  createFlow(data: FlowCreateInput!): Flow!
+  createLog(data: LogCreateInput): Log!
+  createUser(data: UserCreateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User!
+  login(loginInput: LoginInput!): Authorize!
+  logout: User!
+  refresh(refreshInput: RefreshInput!): Authorize!
+  register(registerInput: RegisterInput!): Authorize!
+  removeFlow(where: FlowWhereUniqueInput!): Flow!
+  updateFlow(data: FlowUpdateInput!, where: FlowWhereUniqueInput!): Flow!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+}
+
+input NestedDateTimeNullableFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeNullableFilter
+  notIn: [DateTime!]
+}
+
+input NestedEnumLogFromNullableFilter {
+  equals: LogFrom
+  in: [LogFrom!]
+  not: NestedEnumLogFromNullableFilter
+  notIn: [LogFrom!]
+}
+
+input NestedEnumLogTypeFilter {
+  equals: LogType
+  in: [LogType!]
+  not: NestedEnumLogTypeFilter
+  notIn: [LogType!]
+}
+
+input NestedEnumUserTypeFilter {
+  equals: UserType
+  in: [UserType!]
+  not: NestedEnumUserTypeFilter
+  notIn: [UserType!]
+}
+
+input NestedStringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NestedStringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input NullableDateTimeFieldUpdateOperationsInput {
+  set: DateTime
+}
+
+input NullableStringFieldUpdateOperationsInput {
+  set: String
+}
+
+enum NullsOrder {
+  first
+  last
+}
+
+input PasswordCreateNestedOneWithoutUserInput {
+  connect: PasswordWhereUniqueInput
+  connectOrCreate: PasswordCreateOrConnectWithoutUserInput
+  create: PasswordCreateWithoutUserInput
+}
+
+input PasswordCreateOrConnectWithoutUserInput {
+  create: PasswordCreateWithoutUserInput!
+  where: PasswordWhereUniqueInput!
+}
+
+input PasswordCreateWithoutUserInput {
+  password: String!
+}
+
+input PasswordOrderByWithRelationInput {
+  id: SortOrder
+  password: SortOrder
+  user: UserOrderByWithRelationInput
+}
+
+input PasswordUpdateOneRequiredWithoutUserNestedInput {
+  connect: PasswordWhereUniqueInput
+  connectOrCreate: PasswordCreateOrConnectWithoutUserInput
+  create: PasswordCreateWithoutUserInput
+  update: PasswordUpdateToOneWithWhereWithoutUserInput
+  upsert: PasswordUpsertWithoutUserInput
+}
+
+input PasswordUpdateToOneWithWhereWithoutUserInput {
+  data: PasswordUpdateWithoutUserInput!
+  where: PasswordWhereInput
+}
+
+input PasswordUpdateWithoutUserInput {
+  password: StringFieldUpdateOperationsInput
+}
+
+input PasswordUpsertWithoutUserInput {
+  create: PasswordCreateWithoutUserInput!
+  update: PasswordUpdateWithoutUserInput!
+  where: PasswordWhereInput
+}
+
+input PasswordWhereInput {
+  AND: [PasswordWhereInput!]
+  NOT: [PasswordWhereInput!]
+  OR: [PasswordWhereInput!]
+  id: StringFilter
+  password: StringFilter
+  user: UserNullableRelationFilter
+}
+
+input PasswordWhereUniqueInput {
+  AND: [PasswordWhereInput!]
+  NOT: [PasswordWhereInput!]
+  OR: [PasswordWhereInput!]
+  id: String
+  password: StringFilter
+  user: UserNullableRelationFilter
+}
+
+type Profile {
+  bio: String
+  createdAt: DateTime
+  firstName: String!
+  id: ID!
+  lastName: String!
+  user: User!
+  userId: String!
+  username: String
+}
+
+input ProfileCreateNestedOneWithoutUserInput {
+  connect: ProfileWhereUniqueInput
+  connectOrCreate: ProfileCreateOrConnectWithoutUserInput
+  create: ProfileCreateWithoutUserInput
+}
+
+input ProfileCreateOrConnectWithoutUserInput {
+  create: ProfileCreateWithoutUserInput!
+  where: ProfileWhereUniqueInput!
+}
+
+input ProfileCreateWithoutUserInput {
+  bio: String
+  createdAt: DateTime
+  firstName: String!
+  lastName: String!
+  username: String
+}
+
+input ProfileFullnameCompoundUniqueInput {
+  firstName: String!
+  lastName: String!
+}
+
+input ProfileNullableRelationFilter {
+  is: ProfileWhereInput
+  isNot: ProfileWhereInput
+}
+
+input ProfileOrderByWithRelationInput {
+  bio: SortOrderInput
+  createdAt: SortOrderInput
+  firstName: SortOrder
+  id: SortOrder
+  lastName: SortOrder
+  user: UserOrderByWithRelationInput
+  userId: SortOrder
+  username: SortOrderInput
+}
+
+input ProfileUpdateOneWithoutUserNestedInput {
+  connect: ProfileWhereUniqueInput
+  connectOrCreate: ProfileCreateOrConnectWithoutUserInput
+  create: ProfileCreateWithoutUserInput
+  delete: ProfileWhereInput
+  disconnect: ProfileWhereInput
+  update: ProfileUpdateToOneWithWhereWithoutUserInput
+  upsert: ProfileUpsertWithoutUserInput
+}
+
+input ProfileUpdateToOneWithWhereWithoutUserInput {
+  data: ProfileUpdateWithoutUserInput!
+  where: ProfileWhereInput
+}
+
+input ProfileUpdateWithoutUserInput {
+  bio: NullableStringFieldUpdateOperationsInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  firstName: StringFieldUpdateOperationsInput
+  lastName: StringFieldUpdateOperationsInput
+  username: NullableStringFieldUpdateOperationsInput
+}
+
+input ProfileUpsertWithoutUserInput {
+  create: ProfileCreateWithoutUserInput!
+  update: ProfileUpdateWithoutUserInput!
+  where: ProfileWhereInput
+}
+
+input ProfileWhereInput {
+  AND: [ProfileWhereInput!]
+  NOT: [ProfileWhereInput!]
+  OR: [ProfileWhereInput!]
+  bio: StringNullableFilter
+  createdAt: DateTimeNullableFilter
+  firstName: StringFilter
+  id: StringFilter
+  lastName: StringFilter
+  user: UserRelationFilter
+  userId: StringFilter
+  username: StringNullableFilter
+}
+
+input ProfileWhereUniqueInput {
+  AND: [ProfileWhereInput!]
+  NOT: [ProfileWhereInput!]
+  OR: [ProfileWhereInput!]
+  bio: StringNullableFilter
+  createdAt: DateTimeNullableFilter
+  firstName: StringFilter
+  fullname: ProfileFullnameCompoundUniqueInput
+  id: String
+  lastName: StringFilter
+  user: UserRelationFilter
+  userId: String
+  username: String
+}
+
+type Query {
+  flow(where: FlowWhereUniqueInput!): Flow!
+  flows(cursor: FlowWhereUniqueInput, distinct: [FlowScalarFieldEnum!], orderBy: [FlowOrderByWithRelationInput!], skip: Int, take: Int, where: FlowWhereInput): [Flow!]!
+  log(where: LogWhereUniqueInput!): Log!
+  logs(cursor: LogWhereUniqueInput, distinct: [LogScalarFieldEnum!], orderBy: [LogOrderByWithRelationInput!], skip: Int, take: Int, where: LogWhereInput): [Log!]!
+  me: User!
+  user(where: UserWhereUniqueInput!): User!
+  users(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+input RefreshInput {
+  """Refresh token"""
+  refreshToken: String!
+}
+
+input RegisterInput {
+  """User unique email address"""
+  email: String!
+
+  """User password"""
+  password: String!
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+input SortOrderInput {
+  nulls: NullsOrder
+  sort: SortOrder!
+}
+
+input StringFieldUpdateOperationsInput {
+  set: String
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+  notIn: [String!]
+  startsWith: String
+}
+
+type Subscription {
+  flowCreated: Flow!
+  flowDeleted: Flow!
+  flowUpdated: Flow!
+  logCreated: Log!
+  userCreated: User!
+  userDeleted: User!
+  userLogout: User!
+  userUpdated: User!
+}
+
+type User {
+  _count: UserCount!
+  createdAt: DateTime
+  email: EmailAddress!
+  flows: [Flow!]
+  id: ID!
+  pairId: String
+  profile: Profile
+  role: [UserRole!]
+  type: UserType!
+}
+
+type UserCount {
+  flows: Int!
+  refreshTokens: Int!
+}
+
+type UserCountAggregate {
+  _all: Int!
+  createdAt: Int!
+  email: Int!
+  id: Int!
+  pairId: Int!
+  role: Int!
+  type: Int!
+}
+
+input UserCreateInput {
+  createdAt: DateTime
+  email: EmailAddress!
+  flows: FlowCreateNestedManyWithoutUserInput
+  password: PasswordCreateNestedOneWithoutUserInput!
+  profile: ProfileCreateNestedOneWithoutUserInput
+  role: UserCreateroleInput
+  type: UserType
+}
+
+input UserCreateNestedOneWithoutFlowsInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutFlowsInput
+  create: UserCreateWithoutFlowsInput
+}
+
+input UserCreateOrConnectWithoutFlowsInput {
+  create: UserCreateWithoutFlowsInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserCreateWithoutFlowsInput {
+  createdAt: DateTime
+  email: EmailAddress!
+  password: PasswordCreateNestedOneWithoutUserInput!
+  profile: ProfileCreateNestedOneWithoutUserInput
+  role: UserCreateroleInput
+  type: UserType
+}
+
+input UserCreateroleInput {
+  set: [UserRole!]!
+}
+
+type UserMaxAggregate {
+  createdAt: DateTime
+  email: EmailAddress
+  id: String
+  pairId: String
+  type: UserType
+}
+
+type UserMinAggregate {
+  createdAt: DateTime
+  email: EmailAddress
+  id: String
+  pairId: String
+  type: UserType
+}
+
+input UserNullableRelationFilter {
+  is: UserWhereInput
+  isNot: UserWhereInput
+}
+
+input UserOrderByWithRelationInput {
+  createdAt: SortOrderInput
+  email: SortOrder
+  flows: FlowOrderByRelationAggregateInput
+  id: SortOrder
+  pairId: SortOrderInput
+  password: PasswordOrderByWithRelationInput
+  passwordId: SortOrder
+  profile: ProfileOrderByWithRelationInput
+  role: SortOrder
+  type: SortOrder
+}
+
+input UserRelationFilter {
+  is: UserWhereInput
+  isNot: UserWhereInput
+}
+
+enum UserRole {
+  ROLE_ADMIN
+  ROLE_GUEST
+  ROLE_USER
+}
+
+enum UserScalarFieldEnum {
+  createdAt
+  email
+  id
+  pairId
+  passwordId
+  role
+  type
+}
+
+enum UserType {
+  ADMIN
+  GUEST
+  USER
+}
+
+input UserUpdateInput {
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  flows: FlowUpdateManyWithoutUserNestedInput
+  password: PasswordUpdateOneRequiredWithoutUserNestedInput
+  profile: ProfileUpdateOneWithoutUserNestedInput
+  role: UserUpdateroleInput
+  type: EnumUserTypeFieldUpdateOperationsInput
+}
+
+input UserUpdateOneRequiredWithoutFlowsNestedInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutFlowsInput
+  create: UserCreateWithoutFlowsInput
+  update: UserUpdateToOneWithWhereWithoutFlowsInput
+  upsert: UserUpsertWithoutFlowsInput
+}
+
+input UserUpdateToOneWithWhereWithoutFlowsInput {
+  data: UserUpdateWithoutFlowsInput!
+  where: UserWhereInput
+}
+
+input UserUpdateWithoutFlowsInput {
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  password: PasswordUpdateOneRequiredWithoutUserNestedInput
+  profile: ProfileUpdateOneWithoutUserNestedInput
+  role: UserUpdateroleInput
+  type: EnumUserTypeFieldUpdateOperationsInput
+}
+
+input UserUpdateroleInput {
+  push: [UserRole!]
+  set: [UserRole!]
+}
+
+input UserUpsertWithoutFlowsInput {
+  create: UserCreateWithoutFlowsInput!
+  update: UserUpdateWithoutFlowsInput!
+  where: UserWhereInput
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  createdAt: DateTimeNullableFilter
+  email: StringFilter
+  flows: FlowListRelationFilter
+  id: StringFilter
+  pairId: StringNullableFilter
+  profile: ProfileNullableRelationFilter
+  role: EnumUserRoleNullableListFilter
+  type: EnumUserTypeFilter
+}
+
+input UserWhereUniqueInput {
+  AND: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  createdAt: DateTimeNullableFilter
+  email: EmailAddress
+  flows: FlowListRelationFilter
+  id: String
+  pairId: StringNullableFilter
+  profile: ProfileNullableRelationFilter
+  role: EnumUserRoleNullableListFilter
+  type: EnumUserTypeFilter
+}

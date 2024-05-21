@@ -38,17 +38,18 @@ services:
     ports:
       - '6379:6379'
 
-#  client:
-#    build:
-#      context: ./.docker/client
-#      dockerfile: Dockerfile
-#    stdin_open: true
-#    volumes:
-#      - ./client/:/usr/src/client
-#      - /client/node_modules
-#    ports:
-#      - "3000:3000"
-#    command: yarn dev
+  client:
+    build:
+      context: ./client
+      dockerfile: ../.docker/client/Dockerfile
+      target: development
+    stdin_open: true
+    volumes:
+      - ./client/:/usr/src/client
+      - /client/node_modules
+    ports:
+      - "3000:3000"
+    command: yarn dev
 
 volumes:
   freeflow_pg:

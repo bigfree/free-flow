@@ -16,12 +16,14 @@ import { RefreshTokenModule } from './refresh-token/refresh-token.module';
 import { TokensService } from './common/services/tokens/tokens.service';
 import { JwtService } from '@nestjs/jwt';
 import { RefreshTokenService } from './refresh-token/refresh-token.service';
-import { FavoritePokemonModule } from './favorite-pokemon/favorite-pokemon.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { throttlerConfig } from './common/config/throttler.config';
 import { winstonConfig } from './common/config/winston.config';
 import { graphqlConfig } from './common/config/graphql.config';
 import { AppVersionMiddleware } from './common/middleware/app-version/app-version.middleware';
+import { FlowModule } from './flow/flow.module';
+import { TabModule } from './tab/tab.module';
+import { FlowVersionModule } from './flow-version/flow-version.module';
 
 @Module({
     imports: [
@@ -49,7 +51,9 @@ import { AppVersionMiddleware } from './common/middleware/app-version/app-versio
         UserModule,
         AuthorizeModule,
         RefreshTokenModule,
-        FavoritePokemonModule,
+        FlowModule,
+        TabModule,
+        FlowVersionModule,
     ],
     controllers: [AppController],
     providers: [

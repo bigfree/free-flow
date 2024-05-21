@@ -1,0 +1,82 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    /* Path aliasing */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*",
+        "./dist/*",
+        ""
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      "@clients/*": [
+        "src/clients/*"
+      ],
+      "@common/*": [
+        "src/common/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@configs/*": [
+        "src/configs/*"
+      ],
+      "@graphql/*": [
+        "src/graphql/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+      "@modules/*": [
+        "src/modules/*"
+      ],
+      "@public/*": [
+        "public/*"
+      ],
+      "@routes/*": [
+        "src/routes/*"
+      ],
+      "@stores/*": [
+        "src/stores/*"
+      ],
+      "@themes/*": [
+        "src/themes/*"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "./src/generated"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}

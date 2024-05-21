@@ -1,0 +1,9 @@
+projects:
+  freeFlow:
+    schema: ./freeFlow.graphql
+    extensions:
+      endpoints:
+        freeFlow endpoint:
+          url: http://localhost:4000/graphql
+          introspect: true
+    documents: ./src/graphql/freeflow/**.*

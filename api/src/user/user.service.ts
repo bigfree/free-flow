@@ -33,7 +33,8 @@ export class UserService {
         return this.prismaService.user.findUniqueOrThrow({
             include: {
                 profile: true,
-                favoritePokemon: true,
+                tabs: true,
+                flows: true,
             },
             ...findUniqueUserArgs,
         });
@@ -49,7 +50,8 @@ export class UserService {
         return this.prismaService.user.findMany({
             include: {
                 profile: true,
-                favoritePokemon: true,
+                tabs: true,
+                flows: true,
             },
             ...findManyUserArgs,
         });
@@ -99,6 +101,8 @@ export class UserService {
         return this.prismaService.user.create({
             include: {
                 profile: true,
+                tabs: true,
+                flows: true,
             },
             ...createOneUserArgs,
             data: {
@@ -135,7 +139,8 @@ export class UserService {
         return this.prismaService.user.update({
             include: {
                 profile: true,
-                favoritePokemon: true,
+                tabs: true,
+                flows: true,
             },
             ...updateOneUserArgs,
         });
@@ -155,7 +160,8 @@ export class UserService {
         return this.prismaService.user.delete({
             include: {
                 profile: true,
-                favoritePokemon: true,
+                tabs: true,
+                flows: true,
             },
             ...deleteOneUserArgs,
         });

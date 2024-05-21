@@ -4,6 +4,7 @@ export enum PublishStateEnum {
     USER_UPDATED = 'userUpdated',
     USER_DELETED = 'userDeleted',
     USER_LOGOUT = 'userLogout',
-    FAVORITE_POKEMON_CREATED = 'favoritePokemonCreated',
-    FAVORITE_POKEMON_DELETED = 'favoritePokemonDeleted',
+    FLOW_CREATED = 'flowCreated',
+    FLOW_UPDATED = 'flowUpdated',
+    FLOW_DELETED = 'flowDeleted',
 }

@@ -24,7 +24,6 @@ export class LogService {
             try {
                 await transformAndValidate(CreateLogEvent, createOneLogArgs.data.data);
             } catch (error) {
-                console.log(error);
                 throw new GraphQLError('Data must be instance of CreateLogEvent', {
                     extensions: {
                         code: 'BAD_USER_INPUT',

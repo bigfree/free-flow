@@ -40,26 +40,28 @@ generator docs {
 
 model User {
   /// @HideField({ match: 'User*@(Create|Update)*Input' })
-  id              String            @id @default(cuid())
+  id            String         @id @default(cuid())
   /// @HideField({ match: 'User*@(Create|Update)*Input' })
-  pairId          String?
+  pairId        String?
   /// @Validator.IsString()
   /// @Validator.IsNotEmpty()
   /// @Validator.IsEmail()
   /// @FieldType('Scalars.GraphQLEmailAddress')
-  email           String            @unique @db.VarChar(100)
-  type            UserType          @default(USER)
-  role            UserRole[]
+  email         String         @unique @db.VarChar(100)
+  type          UserType       @default(USER)
+  role          UserRole[]
   /// @HideField({ match: 'User*@(Where)*Input', output: true })
-  password        Password          @relation(fields: [passwordId], references: [id], onDelete: Cascade)
+  password      Password       @relation(fields: [passwordId], references: [id], onDelete: Cascade)
   /// @HideField({ match: 'User*@(Where)*Input', output: true })
-  passwordId      String            @unique
+  passwordId    String         @unique
   /// @HideField({ input: true, output: true })
-  refreshTokens   RefreshToken[]
-  favoritePokemon FavoritePokemon[]
-  profile         Profile?
+  refreshTokens RefreshToken[]
+  flows         Flow[]
+  flowsVersion  FlowVersion[]
+  tabs          Tab[]          @relation("TabsOnUser")
+  profile       Profile?
   /// @FieldType('DateTime')
-  createdAt       DateTime?         @default(now())
+  createdAt     DateTime?      @default(now())
 
   // @@unique(name: "fullname", fields: [firstName, lastName])
   @@index(fields: [id], type: Hash)
@@ -106,6 +108,18 @@ model Profile {
   @@index(fields: [id], type: Hash)
 }
 
+model Tab {
+  /// @HideField({ match: 'Tab*@(Create)*Input' })
+  id     String @id @default(cuid())
+  user   User   @relation("TabsOnUser", fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  flow   Flow   @relation("FlowOnTab", fields: [flowId], references: [id], onDelete: Cascade)
+  flowId String
+
+  @@index(fields: [id], type: Hash)
+  @@index(fields: [userId], type: Hash)
+}
+
 model Log {
   /// @HideField({ match: 'Log*@(Create|Update)*Input' })
   id        String    @id @default(cuid())
@@ -122,18 +136,75 @@ model Log {
   @@index(fields: [data(ops: JsonbOps)], type: Gin)
 }
 
-model FavoritePokemon {
-  /// @HideField({ match: 'FavoritePokemon*@(Create|Update)*Input' })
-  id        String    @id @default(cuid())
-  pokemonId Int       @db.Integer
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  /// @FieldType('DateTime')
-  createdAt DateTime? @default(now())
+// TODO: Add auditlog
 
+model Flow {
+  /// @HideField({ match: 'Flow*@(Create|Update)*Input' })
+  id         String        @id @default(cuid())
+  externalId String?       @unique @db.VarChar(255)
+  /// @Validator.IsString()
+  /// @Validator.IsNotEmpty()
+  code       String        @unique @db.VarChar(255)
+  /// @Validator.IsString()
+  /// @Validator.IsNotEmpty()
+  name       String        @unique @db.VarChar(255)
+  /// @FieldType('JSON')
+  /// @PropertyType('TF.JsonObject')
+  data       Json?         @db.JsonB
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  tabs       Tab[]         @relation("FlowOnTab")
+  versions   FlowVersion[]
+  /// @FieldType('DateTime')
+  createdAt  DateTime?     @default(now())
+
+  @@index(fields: [data(ops: JsonbOps)], type: Gin)
   @@index(fields: [id], type: Hash)
-  @@index(fields: [pokemonId], type: Hash)
+  @@index(fields: [userId], type: Hash)
 }
+
+model FlowVersion {
+  /// @HideField({ match: 'FlowHistory*@(Create|Update)*Input' })
+  id          String    @id @default(cuid())
+  /// @FieldType('DateTime')
+  version     DateTime? @default(now())
+  versionName String?   @db.VarChar(50)
+  flow        Flow      @relation(fields: [flowId], references: [id])
+  flowId      String
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  externalId  String?   @unique @db.VarChar(255)
+  /// @Validator.IsString()
+  /// @Validator.IsNotEmpty()
+  code        String    @unique @db.VarChar(255)
+  /// @Validator.IsString()
+  /// @Validator.IsNotEmpty()
+  name        String    @unique @db.VarChar(255)
+  /// @FieldType('JSON')
+  /// @PropertyType('TF.JsonObject')
+  data        Json?     @db.JsonB
+  /// @FieldType('DateTime')
+  createdAt   DateTime? @default(now())
+
+  @@unique(name: "uniqueVersion", [version, flowId, userId])
+  @@index(fields: [data(ops: JsonbOps)], type: Gin)
+  @@index(fields: [id], type: Hash)
+  @@index(fields: [userId], type: Hash)
+  @@index(fields: [flowId], type: Hash)
+}
+
+// model FavoritePokemon {
+//   /// @HideField({ match: 'FavoritePokemon*@(Create|Update)*Input' })
+//   id        String    @id @default(cuid())
+//   pokemonId Int       @db.Integer
+//   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   userId    String
+//   /// @FieldType('DateTime')
+//   createdAt DateTime? @default(now())
+//
+//   @@index(fields: [id], type: Hash)
+//   @@index(fields: [pokemonId], type: Hash)
+// }
 
 enum UserRole {
   ROLE_GUEST

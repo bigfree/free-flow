@@ -2,15 +2,11 @@
 # BUILD FOR LOCAL DEVELOPMENT
 ###################
 FROM node:21.3-alpine As development
-ENV YARN_VERSION=4.2.2
 EXPOSE 4000
 
 WORKDIR /usr/src/app
 COPY --chown=node:node package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-COPY --chown=node:node .yarn ./.yarn
 
-RUN corepack enable && corepack prepare yarn@${YARN_VERSION}
-RUN yarn set version stable
 RUN yarn install
 RUN yarn prisma generate
 COPY --chown=node:node . .
@@ -21,7 +17,6 @@ USER node
 # BUILD FOR PRODUCTION
 ###################
 FROM node:21.3-alpine As build
-ENV YARN_VERSION=4.2.2
 
 WORKDIR /usr/src/app
 
@@ -29,7 +24,6 @@ COPY --chown=node:node package*.json ./
 COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node . .
 
-RUN corepack enable && corepack prepare yarn@${YARN_VERSION}
 RUN yarn build
 
 ENV NODE_ENV production
