@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "schema:generate": "graphql-codegen",
-    "fetch:freeflow": "rover graph fetch free-flow-gql@current --output ./freeFlow.graphql"
+    "schema:fetch": "rover graph fetch free-flow-gql@current --output ./freeFlow.graphql"
   },
   "dependencies": {
     "@apollo/client": "^3.10.4",
@@ -19,6 +19,7 @@
     "@mantine/form": "^7.9.2",
     "@mantine/hooks": "^7.9.2",
     "@mantine/nprogress": "^7.9.2",
+    "@mantine/spotlight": "^7.10.1",
     "@mantine/vanilla-extract": "^7.9.2",
     "@react-buddy/ide-toolbox": "^2.4.0",
     "@tabler/icons-react": "^3.4.0",
@@ -38,6 +39,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.1",
+    "reactflow": "^11.11.3",
     "sort-by": "^1.2.0",
     "zod": "^3.23.8",
     "zustand": "^4.5.2"

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateOneLogArgs, FindManyLogArgs, FindUniqueLogOrThrowArgs, Log } from '../@generated/log';
+import { CreateOneLogArgs, FindManyLogArgs, FindUniqueLogOrThrowArgs, Log } from '../@generated';
 import { PrismaService } from '../common/prisma/prisma.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { CreateLogEvent } from '../events/create-log.event';

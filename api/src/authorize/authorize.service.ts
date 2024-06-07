@@ -10,7 +10,7 @@ import { AccessTokenData } from '../common/types/authorize.types';
 import { RegisterInput } from './dto/register.input';
 import { UserPasswordService } from '../common/services/user-password/user-password.service';
 import { UserRoleService } from '../common/services/user-role/user-role.service';
-import { User } from '../@generated/user';
+import { User } from '../@generated';
 import { TokensService } from '../common/services/tokens/tokens.service';
 import { RefreshInput } from './dto/refresh.input';
 

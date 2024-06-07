@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { LogService } from './log.service';
-import { CreateOneLogArgs, FindManyLogArgs, FindUniqueLogOrThrowArgs, Log } from '../@generated/log';
+import { CreateOneLogArgs, FindManyLogArgs, FindUniqueLogOrThrowArgs, Log } from '../@generated';
 import { PublishStateEnum } from '../common/pubsub/publish-state.enum';
 import { PubSub } from 'graphql-subscriptions';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';

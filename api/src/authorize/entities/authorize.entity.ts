@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { User } from '../../@generated/user/';
+import { User } from '../../@generated';
 import { GraphQLJWT } from 'graphql-scalars';
 
 @ObjectType('Authorize')

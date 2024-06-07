@@ -5,6 +5,9 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { PubSub } from 'graphql-subscriptions';
 import { GqlThrottlerGuard } from '../common/guards/gql-throttle.guard';
 import { SkipThrottle } from '@nestjs/throttler';
+import { RolesGuard } from '../common/guards/role.guard';
+import { UserRole } from '@prisma/client';
+import { PublishStateEnum } from '../common/pubsub/publish-state.enum';
 import {
     CreateOneFlowArgs,
     DeleteOneFlowArgs,
@@ -12,10 +15,7 @@ import {
     FindUniqueFlowArgs,
     Flow,
     UpdateOneFlowArgs,
-} from '../@generated/flow';
-import { RolesGuard } from '../common/guards/role.guard';
-import { UserRole } from '@prisma/client';
-import { PublishStateEnum } from '../common/pubsub/publish-state.enum';
+} from '../@generated';
 
 @UseGuards(JwtAuthGuard)
 @Resolver(() => Flow)

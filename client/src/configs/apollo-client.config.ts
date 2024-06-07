@@ -19,42 +19,9 @@ import { FragmentDefinitionNode, OperationDefinitionNode } from 'graphql/languag
 // import { removeToken } from '@/store/user.store.ts';
 import { onError } from '@apollo/client/link/error';
 import localForage from 'localforage';
+import useAccessTokenStore from '@stores/tokens/access-token.store.ts';
 
-const cache: InMemoryCache = new InMemoryCache({
-    // typePolicies: {
-    //     Query: {
-    //         fields: {
-    //             // pokemon_v2_pokemon: offsetLimitPagination(['where'])
-    //             pokemon_v2_pokemon: {
-    //                 ...offsetLimitPagination(['where']),
-    //                 read(
-    //                     existing,
-    //                     {
-    //                         args: {
-    //                             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //                             // @ts-expect-error
-    //                             offset = 0,
-    //                             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    //                             // @ts-expect-error
-    //                             limit = existing?.length,
-    //                         } = {},
-    //                     },
-    //                 ) {
-    //                     return existing && existing.slice(offset, offset + limit);
-    //                 },
-    //                 // keyArgs: ['where'],
-    //                 // merge(existing, incoming, { args }) {
-    //                 //     const merged = existing ? existing.slice(0) : [];
-    //                 //     for (let i = 0; i < incoming.length; ++i) {
-    //                 //         merged[args?.offset + i] = incoming[i];
-    //                 //     }
-    //                 //     return merged;
-    //                 // },
-    //             },
-    //         },
-    //     },
-    // },
-});
+const cache: InMemoryCache = new InMemoryCache();
 
 const store: LocalForage = localForage.createInstance({
     driver: [localForage.INDEXEDDB, localForage.LOCALSTORAGE],
@@ -99,9 +66,10 @@ const freeFlowSubscriptionEndpoint: GraphQLWsLink = new GraphQLWsLink(
 
 const authMiddleware: ApolloLink = new ApolloLink((operation: Operation, forward: NextLink) => {
     // TODO: Add authorization for feature
+    const accessToken = useAccessTokenStore.getState().accessToken;
     operation.setContext({
         headers: {
-            // authorization: token ? `Bearer ${token}` : '',
+            authorization: accessToken ? `Bearer ${accessToken}` : '',
             // authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9rdWtzdGVyQGdtYWlsLmNvbSIsInN1YiI6eyJpZCI6ImNscHRoNHBnNDAwMDA1ODJzY2pmN2poc3ciLCJmaXJzdE5hbWUiOiJBZGFtIiwibGFzdE5hbWUiOiJNaWtvIiwidXNlcm5hbWUiOm51bGwsImVtYWlsIjoib2t1a3N0ZXJAZ21haWwuY29tIiwiY3JlYXRlZEF0IjoiMjAyMy0xMi0wNlQwNzo1NDo1Ni41NDBaIn0sImlhdCI6MTcwMTg0OTI5NiwiZXhwIjoxNzAyNDU0MDk2fQ.cfxphSGV7B5-m0mKO8EvJW_ZDLTNzrLGTtsP5bqgHCU',
         },
     });
@@ -140,7 +108,7 @@ export const apolloClient: ApolloClient<NormalizedCacheObject> = new ApolloClien
     // credentials: 'include',
     defaultOptions: {
         query: {
-            fetchPolicy: 'cache-only',
+            fetchPolicy: 'cache-first',
             errorPolicy: 'all',
         },
     },

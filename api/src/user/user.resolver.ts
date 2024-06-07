@@ -7,7 +7,7 @@ import {
     FindUniqueUserArgs,
     UpdateOneUserArgs,
     User,
-} from '../@generated/user';
+} from '../@generated';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { AccessTokenData } from '../common/types/authorize.types';
 import { UseGuards } from '@nestjs/common';

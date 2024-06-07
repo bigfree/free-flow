@@ -24,6 +24,8 @@ import { AppVersionMiddleware } from './common/middleware/app-version/app-versio
 import { FlowModule } from './flow/flow.module';
 import { TabModule } from './tab/tab.module';
 import { FlowVersionModule } from './flow-version/flow-version.module';
+import { WorkspaceModule } from './workspace/workspace.module';
+import { UserConfigModule } from './user-config/user-config.module';
 
 @Module({
     imports: [
@@ -54,6 +56,8 @@ import { FlowVersionModule } from './flow-version/flow-version.module';
         FlowModule,
         TabModule,
         FlowVersionModule,
+        WorkspaceModule,
+        UserConfigModule,
     ],
     controllers: [AppController],
     providers: [

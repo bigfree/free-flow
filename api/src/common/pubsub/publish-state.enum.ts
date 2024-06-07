@@ -7,4 +7,7 @@ export enum PublishStateEnum {
     FLOW_CREATED = 'flowCreated',
     FLOW_UPDATED = 'flowUpdated',
     FLOW_DELETED = 'flowDeleted',
+    WORKSPACE_CREATED = 'workspaceCreated',
+    WORKSPACE_UPDATED = 'workspaceUpdated',
+    WORKSPACE_DELETED = 'workspaceDeleted',
 }

@@ -1,4 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../common/prisma/prisma.service';
+import { CreateLogEvent } from '../events/create-log.event';
+import { LogFrom, LogType } from '@prisma/client';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { UserPasswordService } from '../common/services/user-password/user-password.service';
+import { UserRoleService } from '../common/services/user-role/user-role.service';
 import {
     CreateOneUserArgs,
     DeleteOneUserArgs,
@@ -6,13 +12,7 @@ import {
     FindUniqueUserArgs,
     UpdateOneUserArgs,
     User,
-} from '../@generated/user';
-import { PrismaService } from '../common/prisma/prisma.service';
-import { CreateLogEvent } from '../events/create-log.event';
-import { LogFrom, LogType } from '@prisma/client';
-import { EventEmitter2 } from '@nestjs/event-emitter';
-import { UserPasswordService } from '../common/services/user-password/user-password.service';
-import { UserRoleService } from '../common/services/user-role/user-role.service';
+} from '../@generated';
 
 @Injectable()
 export class UserService {
@@ -34,7 +34,32 @@ export class UserService {
             include: {
                 profile: true,
                 tabs: true,
-                flows: true,
+                flows: {
+                    include: {
+                        _count: true,
+                    },
+                },
+                flowsVersion: {
+                    include: {
+                        flow: true,
+                    },
+                },
+                assignedWorkspaces: {
+                    include: {
+                        user: true,
+                        workspace: true,
+                    },
+                },
+                createdWorkspaces: {
+                    include: {
+                        _count: true,
+                    },
+                },
+                config: {
+                    include: {
+                        activeWorkspace: true,
+                    },
+                },
             },
             ...findUniqueUserArgs,
         });
@@ -51,7 +76,32 @@ export class UserService {
             include: {
                 profile: true,
                 tabs: true,
-                flows: true,
+                flows: {
+                    include: {
+                        _count: true,
+                    },
+                },
+                flowsVersion: {
+                    include: {
+                        flow: true,
+                    },
+                },
+                assignedWorkspaces: {
+                    include: {
+                        user: true,
+                        workspace: true,
+                    },
+                },
+                createdWorkspaces: {
+                    include: {
+                        _count: true,
+                    },
+                },
+                config: {
+                    include: {
+                        activeWorkspace: true,
+                    },
+                },
             },
             ...findManyUserArgs,
         });
@@ -103,6 +153,14 @@ export class UserService {
                 profile: true,
                 tabs: true,
                 flows: true,
+                flowsVersion: true,
+                assignedWorkspaces: true,
+                createdWorkspaces: true,
+                config: {
+                    include: {
+                        activeWorkspace: true,
+                    },
+                },
             },
             ...createOneUserArgs,
             data: {
@@ -141,6 +199,14 @@ export class UserService {
                 profile: true,
                 tabs: true,
                 flows: true,
+                flowsVersion: true,
+                assignedWorkspaces: true,
+                createdWorkspaces: true,
+                config: {
+                    include: {
+                        activeWorkspace: true,
+                    },
+                },
             },
             ...updateOneUserArgs,
         });
@@ -162,6 +228,14 @@ export class UserService {
                 profile: true,
                 tabs: true,
                 flows: true,
+                flowsVersion: true,
+                assignedWorkspaces: true,
+                createdWorkspaces: true,
+                config: {
+                    include: {
+                        activeWorkspace: true,
+                    },
+                },
             },
             ...deleteOneUserArgs,
         });

@@ -13,16 +13,18 @@ datasource db {
 
 // https://github.com/unlight/prisma-nestjs-graphql
 generator nestgraphql {
-  provider               = "node node_modules/prisma-nestjs-graphql"
-  output                 = "../src/@generated"
-  purgeOutput            = true
-  reExport               = Directories
-  fields_Validator_from  = "class-validator"
-  fields_Validator_input = true
-  fields_Scalars_from    = "graphql-scalars"
-  fields_Scalars_input   = true
-  fields_Scalars_output  = true
-  fields_TF_from         = "type-fest"
+  provider                              = "node node_modules/prisma-nestjs-graphql"
+  output                                = "../src/@generated"
+  purgeOutput                           = true
+  emitCompiled                          = false
+  emitSingle                            = true
+  requireSingleFieldsInWhereUniqueInput = true
+  fields_Validator_from                 = "class-validator"
+  fields_Validator_input                = true
+  fields_Scalars_from                   = "graphql-scalars"
+  fields_Scalars_input                  = true
+  fields_Scalars_output                 = true
+  fields_TF_from                        = "type-fest"
 }
 
 // https://github.com/notiz-dev/prisma-dbml-generator#additional-options
@@ -40,30 +42,32 @@ generator docs {
 
 model User {
   /// @HideField({ match: 'User*@(Create|Update)*Input' })
-  id            String         @id @default(cuid())
+  id                 String              @id @default(cuid())
   /// @HideField({ match: 'User*@(Create|Update)*Input' })
-  pairId        String?
+  pairId             String?
   /// @Validator.IsString()
   /// @Validator.IsNotEmpty()
   /// @Validator.IsEmail()
   /// @FieldType('Scalars.GraphQLEmailAddress')
-  email         String         @unique @db.VarChar(100)
-  type          UserType       @default(USER)
-  role          UserRole[]
+  email              String              @unique @db.VarChar(100)
+  type               UserType            @default(USER)
+  role               UserRole[]
   /// @HideField({ match: 'User*@(Where)*Input', output: true })
-  password      Password       @relation(fields: [passwordId], references: [id], onDelete: Cascade)
+  password           Password            @relation(fields: [passwordId], references: [id], onDelete: Cascade)
   /// @HideField({ match: 'User*@(Where)*Input', output: true })
-  passwordId    String         @unique
+  passwordId         String              @unique
   /// @HideField({ input: true, output: true })
-  refreshTokens RefreshToken[]
-  flows         Flow[]
-  flowsVersion  FlowVersion[]
-  tabs          Tab[]          @relation("TabsOnUser")
-  profile       Profile?
+  refreshTokens      RefreshToken[]
+  flows              Flow[]
+  flowsVersion       FlowVersion[]
+  tabs               Tab[]               @relation("TabsOnUser")
+  createdWorkspaces  Workspace[]         @relation("CreatedWorkspaceUser")
+  assignedWorkspaces UsersOnWorkspaces[]
+  profile            Profile?
+  config             UserConfig?
   /// @FieldType('DateTime')
-  createdAt     DateTime?      @default(now())
+  createdAt          DateTime?           @default(now())
 
-  // @@unique(name: "fullname", fields: [firstName, lastName])
   @@index(fields: [id], type: Hash)
   @@index(fields: [email], type: Hash)
 }
@@ -97,6 +101,8 @@ model Profile {
   lastName  String    @db.VarChar(50)
   username  String?   @unique @db.VarChar(50)
   bio       String?   @db.Text
+  avatar    String?   @db.VarChar(255)
+  acronym   String?   @db.VarChar(2)
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String    @unique
   /// @FieldType('DateTime')
@@ -108,13 +114,55 @@ model Profile {
   @@index(fields: [id], type: Hash)
 }
 
+model UserConfig {
+  /// @HideField({ match: 'UserConfig*@(Create|Update)*Input' })
+  id                String      @id @default(cuid())
+  theme             ThemeColor? @default(AUTO)
+  user              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String      @unique
+  activeWorkspace   Workspace?  @relation(fields: [activeWorkspaceId], references: [id])
+  activeWorkspaceId String?
+}
+
+model Workspace {
+  /// @HideField({ match: 'Workspace*@(Create|Update)*Input' })
+  id            String              @id @default(cuid())
+  name          String              @unique @db.VarChar(50)
+  aberration    String              @unique @db.VarChar(5)
+  profile       WorkspaceProfile?
+  createdBy     User                @relation("CreatedWorkspaceUser", fields: [createdById], references: [id])
+  createdById   String
+  assignedUsers UsersOnWorkspaces[]
+  assignedFlows FlowsOnWorkspaces[]
+  activeOnUser  UserConfig[]
+  /// @FieldType('DateTime')
+  createdAt     DateTime?           @default(now())
+
+  @@index(fields: [id], type: Hash)
+}
+
+model WorkspaceProfile {
+  /// @HideField({ match: 'WorkspaceProfile*@(Create|Update)*Input' })
+  id          String    @id @default(cuid())
+  description String?   @db.Text
+  icon        String?   @db.VarChar(255)
+  color       String?   @db.VarChar(15)
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String    @unique
+  /// @FieldType('DateTime')
+  createdAt   DateTime? @default(now())
+
+  @@index(fields: [id], type: Hash)
+}
+
 model Tab {
   /// @HideField({ match: 'Tab*@(Create)*Input' })
   id     String @id @default(cuid())
   user   User   @relation("TabsOnUser", fields: [userId], references: [id], onDelete: Cascade)
   userId String
-  flow   Flow   @relation("FlowOnTab", fields: [flowId], references: [id], onDelete: Cascade)
-  flowId String
+  /// @FieldType('JSON')
+  /// @PropertyType('TF.JsonObject')
+  data   Json?  @db.JsonB
 
   @@index(fields: [id], type: Hash)
   @@index(fields: [userId], type: Hash)
@@ -140,23 +188,25 @@ model Log {
 
 model Flow {
   /// @HideField({ match: 'Flow*@(Create|Update)*Input' })
-  id         String        @id @default(cuid())
-  externalId String?       @unique @db.VarChar(255)
+  id          String    @id @default(cuid())
+  externalId  String?   @unique @db.VarChar(255)
   /// @Validator.IsString()
   /// @Validator.IsNotEmpty()
-  code       String        @unique @db.VarChar(255)
+  code        String    @unique @db.VarChar(255)
   /// @Validator.IsString()
   /// @Validator.IsNotEmpty()
-  name       String        @unique @db.VarChar(255)
+  name        String    @unique @db.VarChar(255)
+  description String?   @db.Text
   /// @FieldType('JSON')
   /// @PropertyType('TF.JsonObject')
-  data       Json?         @db.JsonB
-  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     String
-  tabs       Tab[]         @relation("FlowOnTab")
-  versions   FlowVersion[]
+  data        Json?     @db.JsonB
   /// @FieldType('DateTime')
-  createdAt  DateTime?     @default(now())
+  createdAt   DateTime? @default(now())
+
+  user               User?               @relation(fields: [userId], references: [id])
+  userId             String?
+  versions           FlowVersion[]
+  assignedWorkspaces FlowsOnWorkspaces[]
 
   @@index(fields: [data(ops: JsonbOps)], type: Gin)
   @@index(fields: [id], type: Hash)
@@ -171,15 +221,15 @@ model FlowVersion {
   versionName String?   @db.VarChar(50)
   flow        Flow      @relation(fields: [flowId], references: [id])
   flowId      String
-  user        User      @relation(fields: [userId], references: [id])
-  userId      String
-  externalId  String?   @unique @db.VarChar(255)
+  user        User?     @relation(fields: [userId], references: [id])
+  userId      String?
+  externalId  String?   @db.VarChar(255)
   /// @Validator.IsString()
   /// @Validator.IsNotEmpty()
-  code        String    @unique @db.VarChar(255)
+  code        String    @db.VarChar(255)
   /// @Validator.IsString()
   /// @Validator.IsNotEmpty()
-  name        String    @unique @db.VarChar(255)
+  name        String    @db.VarChar(255)
   /// @FieldType('JSON')
   /// @PropertyType('TF.JsonObject')
   data        Json?     @db.JsonB
@@ -191,6 +241,22 @@ model FlowVersion {
   @@index(fields: [id], type: Hash)
   @@index(fields: [userId], type: Hash)
   @@index(fields: [flowId], type: Hash)
+}
+
+model Auditlog {
+  /// @HideField({ match: 'Auditlog*@(Create|Update)*Input' })
+  id        String        @id @default(cuid())
+  operation OperationType
+  table     String
+  /// @FieldType('JSON')
+  /// @PropertyType('TF.JsonObject')
+  data      Json?         @db.JsonB
+  /// @FieldType('DateTime')
+  createdAt DateTime?     @default(now())
+
+  @@index(fields: [id], type: Hash)
+  @@index(fields: [data(ops: JsonbOps)], type: Gin)
+  @@index(fields: [createdAt(ops: TimestampBloomOps)], type: Brin)
 }
 
 // model FavoritePokemon {
@@ -206,9 +272,49 @@ model FlowVersion {
 //   @@index(fields: [pokemonId], type: Hash)
 // }
 
+// Relations M -> N
+model UsersOnWorkspaces {
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
+  /// @FieldType('DateTime')
+  assignedAt  DateTime? @default(now())
+
+  @@id([userId, workspaceId])
+  @@index(fields: [userId], type: Hash)
+  @@index(fields: [workspaceId], type: Hash)
+}
+
+model FlowsOnWorkspaces {
+  flow        Flow      @relation(fields: [flowId], references: [id])
+  flowId      String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
+  /// @FieldType('DateTime')
+  assignedAt  DateTime? @default(now())
+
+  @@id([flowId, workspaceId])
+  @@index(fields: [flowId], type: Hash)
+  @@index(fields: [workspaceId], type: Hash)
+}
+
+enum ThemeColor {
+  LIGHT
+  DARK
+  AUTO
+}
+
+enum OperationType {
+  CREATE
+  UPDATE
+  DELETE
+}
+
 enum UserRole {
   ROLE_GUEST
   ROLE_USER
+  ROLE_DEVELOPER
   ROLE_ADMIN
 }
 

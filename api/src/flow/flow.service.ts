@@ -7,10 +7,11 @@ import {
     FindUniqueFlowArgs,
     Flow,
     UpdateOneFlowArgs,
-} from '../@generated/flow';
+} from '../@generated';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { CreateLogEvent } from '../events/create-log.event';
 import { LogFrom, LogType } from '@prisma/client';
+import { CreateFlowVersionEvent } from '../events/create-flow-version.event';
 
 @Injectable()
 export class FlowService {
@@ -27,34 +28,32 @@ export class FlowService {
      */
     public async create(createOneFlowArgs: CreateOneFlowArgs): Promise<Flow> {
         // TODO: Add audit log
-        // TODO: Add versions by event
-        const logData: CreateLogEvent = {
-            type: LogType.ERROR,
-            from: LogFrom.API,
-            eventName: 'createOne',
-            serviceName: FlowService.name,
-        };
-
-        if (!(await this.isUserExist(createOneFlowArgs.data.user.connect.id))) {
-            this.eventEmitter.emit(
-                'create.log',
-                new CreateLogEvent({
-                    ...logData,
-                    message: "User doesn't exist!",
-                    context: {
-                        ...createOneFlowArgs.data,
+        /**
+         * Create flow
+         */
+        const flow = await this.prismaService.flow.create({
+            data: createOneFlowArgs.data,
+            include: {
+                _count: true,
+                user: true,
+                versions: true,
+                assignedWorkspaces: {
+                    include: {
+                        flow: true,
+                        workspace: true,
                     },
-                }),
-            );
-            throw new Error("User doesn't exist!");
+                },
+            },
+        });
+
+        /**
+         * Create new version from Flow
+         */
+        if (flow) {
+            this.createVersionEvent(flow);
         }
 
-        return this.prismaService.flow.create({
-            include: {
-                user: true,
-            },
-            data: createOneFlowArgs.data,
-        });
+        return flow;
     }
 
     /**
@@ -66,15 +65,23 @@ export class FlowService {
     public async findAll(findManyFlowArgs: FindManyFlowArgs): Promise<Flow[]> {
         // TODO: Add audit log
         return this.prismaService.flow.findMany({
-            include: {
-                user: true,
-            },
-            where: findManyFlowArgs.where,
             cursor: findManyFlowArgs.cursor,
             distinct: findManyFlowArgs.distinct,
-            take: findManyFlowArgs.take,
+            include: {
+                _count: true,
+                user: true,
+                versions: true,
+                assignedWorkspaces: {
+                    include: {
+                        flow: true,
+                        workspace: true,
+                    },
+                },
+            },
             orderBy: findManyFlowArgs.orderBy,
             skip: findManyFlowArgs.skip,
+            take: findManyFlowArgs.take,
+            where: findManyFlowArgs.where,
         });
     }
 
@@ -88,7 +95,15 @@ export class FlowService {
         // TODO: Add audit log
         return this.prismaService.flow.findUnique({
             include: {
+                _count: true,
                 user: true,
+                versions: true,
+                assignedWorkspaces: {
+                    include: {
+                        flow: true,
+                        workspace: true,
+                    },
+                },
             },
             where: findUniqueFlowArgs.where,
         });
@@ -102,35 +117,33 @@ export class FlowService {
      */
     public async update(updateOneFlowArgs: UpdateOneFlowArgs): Promise<Flow> {
         // TODO: Add audit log
-        // TODO: Add versions by event
-        const logData: CreateLogEvent = {
-            type: LogType.ERROR,
-            from: LogFrom.API,
-            eventName: 'updateOne',
-            serviceName: FlowService.name,
-        };
-
-        if (!(await this.isUserExist(updateOneFlowArgs.data.user.connect.id))) {
-            this.eventEmitter.emit(
-                'create.log',
-                new CreateLogEvent({
-                    ...logData,
-                    message: "User doesn't exist!",
-                    context: {
-                        ...updateOneFlowArgs.data,
-                    },
-                }),
-            );
-            throw new Error("User doesn't exist!");
-        }
-
-        return this.prismaService.flow.update({
-            include: {
-                user: true,
-            },
+        /**
+         * Update flow
+         */
+        const flow = await this.prismaService.flow.update({
             data: updateOneFlowArgs.data,
+            include: {
+                _count: true,
+                user: true,
+                versions: true,
+                assignedWorkspaces: {
+                    include: {
+                        flow: true,
+                        workspace: true,
+                    },
+                },
+            },
             where: updateOneFlowArgs.where,
         });
+
+        /**
+         * Create new version from update Flow
+         */
+        if (flow) {
+            this.createVersionEvent(flow);
+        }
+
+        return flow;
     }
 
     /**
@@ -143,27 +156,64 @@ export class FlowService {
         // TODO: Add audit log
         return this.prismaService.flow.delete({
             include: {
+                _count: true,
                 user: true,
+                versions: true,
+                assignedWorkspaces: {
+                    include: {
+                        flow: true,
+                        workspace: true,
+                    },
+                },
             },
             where: deleteOneFlowArgs.where,
         });
     }
 
     /**
-     * Checks if a user with the given userId exists.
+     * Creates a flow version event and emits it using the event emitter.
      *
-     * @param {string} userId - The ID of the user to check.
-     * @returns {Promise<boolean>} - A promise that resolves to true if the user exists, false otherwise.
+     * @param {Flow} flow - The flow object to create the version event for.
+     * @returns {void} - A Promise that resolves when the flow version event is emitted.
      * @private
      */
-    private async isUserExist(userId: string): Promise<boolean> {
-        return !!(await this.prismaService.user.findUnique({
-            where: {
-                id: userId,
-            },
-            select: {
-                id: true,
-            },
-        }));
+    private createVersionEvent(flow: Flow): void {
+        const resultEmit: boolean = this.eventEmitter.emit(
+            'create.flow.version',
+            new CreateFlowVersionEvent({
+                flow: {
+                    code: flow.code,
+                    data: flow.data,
+                    externalId: flow.externalId,
+                    flow: {
+                        connect: {
+                            id: flow.id,
+                        },
+                    },
+                    name: flow.name,
+                    user: {
+                        connect: {
+                            id: flow.userId,
+                        },
+                    },
+                },
+            }),
+        );
+
+        if (!resultEmit) {
+            this.eventEmitter.emit(
+                'create.log',
+                new CreateLogEvent({
+                    context: {
+                        flow,
+                    },
+                    eventName: this.createVersionEvent.name,
+                    from: LogFrom.APP,
+                    message: 'Create flow version error!',
+                    serviceName: FlowService.name,
+                    type: LogType.ERROR,
+                }),
+            );
+        }
     }
 }

@@ -4,9 +4,10 @@ import path from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
+import Unfonts from 'unplugin-fonts/vite';
 
 const ReactCompilerConfig = {
-    compilationMode: "annotation"
+    compilationMode: 'annotation',
 };
 
 // https://vitejs.dev/config/
@@ -16,12 +17,24 @@ export default defineConfig({
         tsconfigPaths(),
         visualizer() as PluginOption,
         react({
-        // babel: {
-        //     plugins: [
-        //         ["babel-plugin-react-compiler", ReactCompilerConfig],
-        //     ]
-        // }
-    })],
+            // babel: {
+            //     plugins: [
+            //         ["babel-plugin-react-compiler", ReactCompilerConfig],
+            //     ]
+            // }
+        }),
+        Unfonts({
+            google: {
+                preconnect: true,
+                families: [
+                    {
+                        name: 'Poppins',
+                        styles: 'wght@100;200;300;400;500;600;700;800;900',
+                    },
+                ],
+            },
+        }),
+    ],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src/'),

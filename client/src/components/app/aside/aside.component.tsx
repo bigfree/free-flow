@@ -1,10 +1,11 @@
-import { FC, ReactElement } from 'react';
+import { FC, Fragment, ReactElement } from 'react';
+import AsideLinks from '@components/app/aside/links/aside-links.component.tsx';
 
 const Aside: FC = (): ReactElement => {
     return (
-        <div>
-            <p>Aside component</p>
-        </div>
+        <Fragment>
+            <AsideLinks/>
+        </Fragment>
     );
 };
 

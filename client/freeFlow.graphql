@@ -1,3 +1,26 @@
+type AuditlogCountAggregate {
+  _all: Int!
+  createdAt: Int!
+  data: Int!
+  id: Int!
+  operation: Int!
+  table: Int!
+}
+
+type AuditlogMaxAggregate {
+  createdAt: DateTime
+  id: String
+  operation: OperationType
+  table: String
+}
+
+type AuditlogMinAggregate {
+  createdAt: DateTime
+  id: String
+  operation: OperationType
+  table: String
+}
+
 type Authorize {
   """JWT Token"""
   accessToken: JWT!
@@ -42,6 +65,13 @@ input EnumLogTypeFilter {
   notIn: [LogType!]
 }
 
+input EnumThemeColorNullableFilter {
+  equals: ThemeColor
+  in: [ThemeColor!]
+  not: NestedEnumThemeColorNullableFilter
+  notIn: [ThemeColor!]
+}
+
 input EnumUserRoleNullableListFilter {
   equals: [UserRole!]
   has: UserRole
@@ -62,14 +92,23 @@ input EnumUserTypeFilter {
 }
 
 type Flow {
+  _count: FlowCount!
+  assignedWorkspaces: [FlowsOnWorkspaces!]
   code: String!
   createdAt: DateTime
   data: JSON
+  description: String
   externalId: String
   id: ID!
   name: String!
-  user: User!
-  userId: String!
+  user: User
+  userId: String
+  versions: [FlowVersion!]
+}
+
+type FlowCount {
+  assignedWorkspaces: Int!
+  versions: Int!
 }
 
 type FlowCountAggregate {
@@ -77,6 +116,7 @@ type FlowCountAggregate {
   code: Int!
   createdAt: Int!
   data: Int!
+  description: Int!
   externalId: Int!
   id: Int!
   name: Int!
@@ -84,18 +124,22 @@ type FlowCountAggregate {
 }
 
 input FlowCreateInput {
+  assignedWorkspaces: FlowsOnWorkspacesCreateNestedManyWithoutFlowInput
   code: String!
   createdAt: DateTime
   data: JSON
+  description: String
   externalId: String
   name: String!
-  user: UserCreateNestedOneWithoutFlowsInput!
+  user: UserCreateNestedOneWithoutFlowsInput
+  versions: FlowVersionCreateNestedManyWithoutFlowInput
 }
 
 input FlowCreateManyUserInput {
   code: String!
   createdAt: DateTime
   data: JSON
+  description: String
   externalId: String
   name: String!
 }
@@ -112,17 +156,64 @@ input FlowCreateNestedManyWithoutUserInput {
   createMany: FlowCreateManyUserInputEnvelope
 }
 
+input FlowCreateNestedOneWithoutAssignedWorkspacesInput {
+  connect: FlowWhereUniqueInput
+  connectOrCreate: FlowCreateOrConnectWithoutAssignedWorkspacesInput
+  create: FlowCreateWithoutAssignedWorkspacesInput
+}
+
+input FlowCreateNestedOneWithoutVersionsInput {
+  connect: FlowWhereUniqueInput
+  connectOrCreate: FlowCreateOrConnectWithoutVersionsInput
+  create: FlowCreateWithoutVersionsInput
+}
+
+input FlowCreateOrConnectWithoutAssignedWorkspacesInput {
+  create: FlowCreateWithoutAssignedWorkspacesInput!
+  where: FlowWhereUniqueInput!
+}
+
 input FlowCreateOrConnectWithoutUserInput {
   create: FlowCreateWithoutUserInput!
   where: FlowWhereUniqueInput!
 }
 
-input FlowCreateWithoutUserInput {
+input FlowCreateOrConnectWithoutVersionsInput {
+  create: FlowCreateWithoutVersionsInput!
+  where: FlowWhereUniqueInput!
+}
+
+input FlowCreateWithoutAssignedWorkspacesInput {
   code: String!
   createdAt: DateTime
   data: JSON
+  description: String
   externalId: String
   name: String!
+  user: UserCreateNestedOneWithoutFlowsInput
+  versions: FlowVersionCreateNestedManyWithoutFlowInput
+}
+
+input FlowCreateWithoutUserInput {
+  assignedWorkspaces: FlowsOnWorkspacesCreateNestedManyWithoutFlowInput
+  code: String!
+  createdAt: DateTime
+  data: JSON
+  description: String
+  externalId: String
+  name: String!
+  versions: FlowVersionCreateNestedManyWithoutFlowInput
+}
+
+input FlowCreateWithoutVersionsInput {
+  assignedWorkspaces: FlowsOnWorkspacesCreateNestedManyWithoutFlowInput
+  code: String!
+  createdAt: DateTime
+  data: JSON
+  description: String
+  externalId: String
+  name: String!
+  user: UserCreateNestedOneWithoutFlowsInput
 }
 
 input FlowListRelationFilter {
@@ -134,6 +225,7 @@ input FlowListRelationFilter {
 type FlowMaxAggregate {
   code: String
   createdAt: DateTime
+  description: String
   externalId: String
   id: String
   name: String
@@ -143,6 +235,7 @@ type FlowMaxAggregate {
 type FlowMinAggregate {
   code: String
   createdAt: DateTime
+  description: String
   externalId: String
   id: String
   name: String
@@ -154,20 +247,29 @@ input FlowOrderByRelationAggregateInput {
 }
 
 input FlowOrderByWithRelationInput {
+  assignedWorkspaces: FlowsOnWorkspacesOrderByRelationAggregateInput
   code: SortOrder
   createdAt: SortOrderInput
   data: SortOrderInput
+  description: SortOrderInput
   externalId: SortOrderInput
   id: SortOrder
   name: SortOrder
   user: UserOrderByWithRelationInput
-  userId: SortOrder
+  userId: SortOrderInput
+  versions: FlowVersionOrderByRelationAggregateInput
+}
+
+input FlowRelationFilter {
+  is: FlowWhereInput
+  isNot: FlowWhereInput
 }
 
 enum FlowScalarFieldEnum {
   code
   createdAt
   data
+  description
   externalId
   id
   name
@@ -181,25 +283,30 @@ input FlowScalarWhereInput {
   code: StringFilter
   createdAt: DateTimeNullableFilter
   data: JsonNullableFilter
+  description: StringNullableFilter
   externalId: StringNullableFilter
   id: StringFilter
   name: StringFilter
-  userId: StringFilter
+  userId: StringNullableFilter
 }
 
 input FlowUpdateInput {
+  assignedWorkspaces: FlowsOnWorkspacesUpdateManyWithoutFlowNestedInput
   code: StringFieldUpdateOperationsInput
   createdAt: NullableDateTimeFieldUpdateOperationsInput
   data: JSON
+  description: NullableStringFieldUpdateOperationsInput
   externalId: NullableStringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
-  user: UserUpdateOneRequiredWithoutFlowsNestedInput
+  user: UserUpdateOneWithoutFlowsNestedInput
+  versions: FlowVersionUpdateManyWithoutFlowNestedInput
 }
 
 input FlowUpdateManyMutationInput {
   code: StringFieldUpdateOperationsInput
   createdAt: NullableDateTimeFieldUpdateOperationsInput
   data: JSON
+  description: NullableStringFieldUpdateOperationsInput
   externalId: NullableStringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
 }
@@ -223,17 +330,68 @@ input FlowUpdateManyWithoutUserNestedInput {
   upsert: [FlowUpsertWithWhereUniqueWithoutUserInput!]
 }
 
+input FlowUpdateOneRequiredWithoutAssignedWorkspacesNestedInput {
+  connect: FlowWhereUniqueInput
+  connectOrCreate: FlowCreateOrConnectWithoutAssignedWorkspacesInput
+  create: FlowCreateWithoutAssignedWorkspacesInput
+  update: FlowUpdateToOneWithWhereWithoutAssignedWorkspacesInput
+  upsert: FlowUpsertWithoutAssignedWorkspacesInput
+}
+
+input FlowUpdateOneRequiredWithoutVersionsNestedInput {
+  connect: FlowWhereUniqueInput
+  connectOrCreate: FlowCreateOrConnectWithoutVersionsInput
+  create: FlowCreateWithoutVersionsInput
+  update: FlowUpdateToOneWithWhereWithoutVersionsInput
+  upsert: FlowUpsertWithoutVersionsInput
+}
+
+input FlowUpdateToOneWithWhereWithoutAssignedWorkspacesInput {
+  data: FlowUpdateWithoutAssignedWorkspacesInput!
+  where: FlowWhereInput
+}
+
+input FlowUpdateToOneWithWhereWithoutVersionsInput {
+  data: FlowUpdateWithoutVersionsInput!
+  where: FlowWhereInput
+}
+
 input FlowUpdateWithWhereUniqueWithoutUserInput {
   data: FlowUpdateWithoutUserInput!
   where: FlowWhereUniqueInput!
 }
 
-input FlowUpdateWithoutUserInput {
+input FlowUpdateWithoutAssignedWorkspacesInput {
   code: StringFieldUpdateOperationsInput
   createdAt: NullableDateTimeFieldUpdateOperationsInput
   data: JSON
+  description: NullableStringFieldUpdateOperationsInput
   externalId: NullableStringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
+  user: UserUpdateOneWithoutFlowsNestedInput
+  versions: FlowVersionUpdateManyWithoutFlowNestedInput
+}
+
+input FlowUpdateWithoutUserInput {
+  assignedWorkspaces: FlowsOnWorkspacesUpdateManyWithoutFlowNestedInput
+  code: StringFieldUpdateOperationsInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  data: JSON
+  description: NullableStringFieldUpdateOperationsInput
+  externalId: NullableStringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  versions: FlowVersionUpdateManyWithoutFlowNestedInput
+}
+
+input FlowUpdateWithoutVersionsInput {
+  assignedWorkspaces: FlowsOnWorkspacesUpdateManyWithoutFlowNestedInput
+  code: StringFieldUpdateOperationsInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  data: JSON
+  description: NullableStringFieldUpdateOperationsInput
+  externalId: NullableStringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  user: UserUpdateOneWithoutFlowsNestedInput
 }
 
 input FlowUpsertWithWhereUniqueWithoutUserInput {
@@ -242,32 +400,579 @@ input FlowUpsertWithWhereUniqueWithoutUserInput {
   where: FlowWhereUniqueInput!
 }
 
-input FlowWhereInput {
-  AND: [FlowWhereInput!]
-  NOT: [FlowWhereInput!]
-  OR: [FlowWhereInput!]
+input FlowUpsertWithoutAssignedWorkspacesInput {
+  create: FlowCreateWithoutAssignedWorkspacesInput!
+  update: FlowUpdateWithoutAssignedWorkspacesInput!
+  where: FlowWhereInput
+}
+
+input FlowUpsertWithoutVersionsInput {
+  create: FlowCreateWithoutVersionsInput!
+  update: FlowUpdateWithoutVersionsInput!
+  where: FlowWhereInput
+}
+
+type FlowVersion {
+  code: String!
+  createdAt: DateTime
+  data: JSON
+  externalId: String
+  flow: Flow!
+  flowId: String!
+  id: ID!
+  name: String!
+  user: User
+  userId: String
+  version: DateTime
+  versionName: String
+}
+
+type FlowVersionCountAggregate {
+  _all: Int!
+  code: Int!
+  createdAt: Int!
+  data: Int!
+  externalId: Int!
+  flowId: Int!
+  id: Int!
+  name: Int!
+  userId: Int!
+  version: Int!
+  versionName: Int!
+}
+
+input FlowVersionCreateManyFlowInput {
+  code: String!
+  createdAt: DateTime
+  data: JSON
+  externalId: String
+  id: String
+  name: String!
+  userId: String
+  version: DateTime
+  versionName: String
+}
+
+input FlowVersionCreateManyFlowInputEnvelope {
+  data: [FlowVersionCreateManyFlowInput!]!
+  skipDuplicates: Boolean
+}
+
+input FlowVersionCreateManyUserInput {
+  code: String!
+  createdAt: DateTime
+  data: JSON
+  externalId: String
+  flowId: String!
+  id: String
+  name: String!
+  version: DateTime
+  versionName: String
+}
+
+input FlowVersionCreateManyUserInputEnvelope {
+  data: [FlowVersionCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input FlowVersionCreateNestedManyWithoutFlowInput {
+  connect: [FlowVersionWhereUniqueInput!]
+  connectOrCreate: [FlowVersionCreateOrConnectWithoutFlowInput!]
+  create: [FlowVersionCreateWithoutFlowInput!]
+  createMany: FlowVersionCreateManyFlowInputEnvelope
+}
+
+input FlowVersionCreateNestedManyWithoutUserInput {
+  connect: [FlowVersionWhereUniqueInput!]
+  connectOrCreate: [FlowVersionCreateOrConnectWithoutUserInput!]
+  create: [FlowVersionCreateWithoutUserInput!]
+  createMany: FlowVersionCreateManyUserInputEnvelope
+}
+
+input FlowVersionCreateOrConnectWithoutFlowInput {
+  create: FlowVersionCreateWithoutFlowInput!
+  where: FlowVersionWhereUniqueInput!
+}
+
+input FlowVersionCreateOrConnectWithoutUserInput {
+  create: FlowVersionCreateWithoutUserInput!
+  where: FlowVersionWhereUniqueInput!
+}
+
+input FlowVersionCreateWithoutFlowInput {
+  code: String!
+  createdAt: DateTime
+  data: JSON
+  externalId: String
+  id: String
+  name: String!
+  user: UserCreateNestedOneWithoutFlowsVersionInput
+  version: DateTime
+  versionName: String
+}
+
+input FlowVersionCreateWithoutUserInput {
+  code: String!
+  createdAt: DateTime
+  data: JSON
+  externalId: String
+  flow: FlowCreateNestedOneWithoutVersionsInput!
+  id: String
+  name: String!
+  version: DateTime
+  versionName: String
+}
+
+input FlowVersionListRelationFilter {
+  every: FlowVersionWhereInput
+  none: FlowVersionWhereInput
+  some: FlowVersionWhereInput
+}
+
+type FlowVersionMaxAggregate {
+  code: String
+  createdAt: DateTime
+  externalId: String
+  flowId: String
+  id: String
+  name: String
+  userId: String
+  version: DateTime
+  versionName: String
+}
+
+type FlowVersionMinAggregate {
+  code: String
+  createdAt: DateTime
+  externalId: String
+  flowId: String
+  id: String
+  name: String
+  userId: String
+  version: DateTime
+  versionName: String
+}
+
+input FlowVersionOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input FlowVersionOrderByWithRelationInput {
+  code: SortOrder
+  createdAt: SortOrderInput
+  data: SortOrderInput
+  externalId: SortOrderInput
+  flow: FlowOrderByWithRelationInput
+  flowId: SortOrder
+  id: SortOrder
+  name: SortOrder
+  user: UserOrderByWithRelationInput
+  userId: SortOrderInput
+  version: SortOrderInput
+  versionName: SortOrderInput
+}
+
+enum FlowVersionScalarFieldEnum {
+  code
+  createdAt
+  data
+  externalId
+  flowId
+  id
+  name
+  userId
+  version
+  versionName
+}
+
+input FlowVersionScalarWhereInput {
+  AND: [FlowVersionScalarWhereInput!]
+  NOT: [FlowVersionScalarWhereInput!]
+  OR: [FlowVersionScalarWhereInput!]
   code: StringFilter
   createdAt: DateTimeNullableFilter
   data: JsonNullableFilter
   externalId: StringNullableFilter
+  flowId: StringFilter
   id: StringFilter
   name: StringFilter
-  user: UserRelationFilter
-  userId: StringFilter
+  userId: StringNullableFilter
+  version: DateTimeNullableFilter
+  versionName: StringNullableFilter
+}
+
+input FlowVersionUniqueVersionCompoundUniqueInput {
+  flowId: String!
+  userId: String!
+  version: DateTime!
+}
+
+input FlowVersionUpdateManyMutationInput {
+  code: StringFieldUpdateOperationsInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  data: JSON
+  externalId: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  version: NullableDateTimeFieldUpdateOperationsInput
+  versionName: NullableStringFieldUpdateOperationsInput
+}
+
+input FlowVersionUpdateManyWithWhereWithoutFlowInput {
+  data: FlowVersionUpdateManyMutationInput!
+  where: FlowVersionScalarWhereInput!
+}
+
+input FlowVersionUpdateManyWithWhereWithoutUserInput {
+  data: FlowVersionUpdateManyMutationInput!
+  where: FlowVersionScalarWhereInput!
+}
+
+input FlowVersionUpdateManyWithoutFlowNestedInput {
+  connect: [FlowVersionWhereUniqueInput!]
+  connectOrCreate: [FlowVersionCreateOrConnectWithoutFlowInput!]
+  create: [FlowVersionCreateWithoutFlowInput!]
+  createMany: FlowVersionCreateManyFlowInputEnvelope
+  delete: [FlowVersionWhereUniqueInput!]
+  deleteMany: [FlowVersionScalarWhereInput!]
+  disconnect: [FlowVersionWhereUniqueInput!]
+  set: [FlowVersionWhereUniqueInput!]
+  update: [FlowVersionUpdateWithWhereUniqueWithoutFlowInput!]
+  updateMany: [FlowVersionUpdateManyWithWhereWithoutFlowInput!]
+  upsert: [FlowVersionUpsertWithWhereUniqueWithoutFlowInput!]
+}
+
+input FlowVersionUpdateManyWithoutUserNestedInput {
+  connect: [FlowVersionWhereUniqueInput!]
+  connectOrCreate: [FlowVersionCreateOrConnectWithoutUserInput!]
+  create: [FlowVersionCreateWithoutUserInput!]
+  createMany: FlowVersionCreateManyUserInputEnvelope
+  delete: [FlowVersionWhereUniqueInput!]
+  deleteMany: [FlowVersionScalarWhereInput!]
+  disconnect: [FlowVersionWhereUniqueInput!]
+  set: [FlowVersionWhereUniqueInput!]
+  update: [FlowVersionUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [FlowVersionUpdateManyWithWhereWithoutUserInput!]
+  upsert: [FlowVersionUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input FlowVersionUpdateWithWhereUniqueWithoutFlowInput {
+  data: FlowVersionUpdateWithoutFlowInput!
+  where: FlowVersionWhereUniqueInput!
+}
+
+input FlowVersionUpdateWithWhereUniqueWithoutUserInput {
+  data: FlowVersionUpdateWithoutUserInput!
+  where: FlowVersionWhereUniqueInput!
+}
+
+input FlowVersionUpdateWithoutFlowInput {
+  code: StringFieldUpdateOperationsInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  data: JSON
+  externalId: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  user: UserUpdateOneWithoutFlowsVersionNestedInput
+  version: NullableDateTimeFieldUpdateOperationsInput
+  versionName: NullableStringFieldUpdateOperationsInput
+}
+
+input FlowVersionUpdateWithoutUserInput {
+  code: StringFieldUpdateOperationsInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  data: JSON
+  externalId: NullableStringFieldUpdateOperationsInput
+  flow: FlowUpdateOneRequiredWithoutVersionsNestedInput
+  id: StringFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  version: NullableDateTimeFieldUpdateOperationsInput
+  versionName: NullableStringFieldUpdateOperationsInput
+}
+
+input FlowVersionUpsertWithWhereUniqueWithoutFlowInput {
+  create: FlowVersionCreateWithoutFlowInput!
+  update: FlowVersionUpdateWithoutFlowInput!
+  where: FlowVersionWhereUniqueInput!
+}
+
+input FlowVersionUpsertWithWhereUniqueWithoutUserInput {
+  create: FlowVersionCreateWithoutUserInput!
+  update: FlowVersionUpdateWithoutUserInput!
+  where: FlowVersionWhereUniqueInput!
+}
+
+input FlowVersionWhereInput {
+  AND: [FlowVersionWhereInput!]
+  NOT: [FlowVersionWhereInput!]
+  OR: [FlowVersionWhereInput!]
+  code: StringFilter
+  createdAt: DateTimeNullableFilter
+  data: JsonNullableFilter
+  externalId: StringNullableFilter
+  flow: FlowRelationFilter
+  flowId: StringFilter
+  id: StringFilter
+  name: StringFilter
+  user: UserNullableRelationFilter
+  userId: StringNullableFilter
+  version: DateTimeNullableFilter
+  versionName: StringNullableFilter
+}
+
+input FlowVersionWhereUniqueInput {
+  AND: [FlowVersionWhereInput!]
+  NOT: [FlowVersionWhereInput!]
+  OR: [FlowVersionWhereInput!]
+  code: StringFilter
+  createdAt: DateTimeNullableFilter
+  data: JsonNullableFilter
+  externalId: StringNullableFilter
+  flow: FlowRelationFilter
+  flowId: StringFilter
+  id: String
+  name: StringFilter
+  uniqueVersion: FlowVersionUniqueVersionCompoundUniqueInput
+  user: UserNullableRelationFilter
+  userId: StringNullableFilter
+  version: DateTimeNullableFilter
+  versionName: StringNullableFilter
+}
+
+input FlowWhereInput {
+  AND: [FlowWhereInput!]
+  NOT: [FlowWhereInput!]
+  OR: [FlowWhereInput!]
+  assignedWorkspaces: FlowsOnWorkspacesListRelationFilter
+  code: StringFilter
+  createdAt: DateTimeNullableFilter
+  data: JsonNullableFilter
+  description: StringNullableFilter
+  externalId: StringNullableFilter
+  id: StringFilter
+  name: StringFilter
+  user: UserNullableRelationFilter
+  userId: StringNullableFilter
+  versions: FlowVersionListRelationFilter
 }
 
 input FlowWhereUniqueInput {
   AND: [FlowWhereInput!]
   NOT: [FlowWhereInput!]
   OR: [FlowWhereInput!]
+  assignedWorkspaces: FlowsOnWorkspacesListRelationFilter
   code: String
   createdAt: DateTimeNullableFilter
   data: JsonNullableFilter
+  description: StringNullableFilter
   externalId: String
   id: String
   name: String
-  user: UserRelationFilter
-  userId: StringFilter
+  user: UserNullableRelationFilter
+  userId: StringNullableFilter
+  versions: FlowVersionListRelationFilter
+}
+
+type FlowsOnWorkspaces {
+  assignedAt: DateTime
+  flow: Flow!
+  flowId: String!
+  workspace: Workspace!
+  workspaceId: String!
+}
+
+type FlowsOnWorkspacesCountAggregate {
+  _all: Int!
+  assignedAt: Int!
+  flowId: Int!
+  workspaceId: Int!
+}
+
+input FlowsOnWorkspacesCreateManyFlowInput {
+  assignedAt: DateTime
+  workspaceId: String!
+}
+
+input FlowsOnWorkspacesCreateManyFlowInputEnvelope {
+  data: [FlowsOnWorkspacesCreateManyFlowInput!]!
+  skipDuplicates: Boolean
+}
+
+input FlowsOnWorkspacesCreateManyWorkspaceInput {
+  assignedAt: DateTime
+  flowId: String!
+}
+
+input FlowsOnWorkspacesCreateManyWorkspaceInputEnvelope {
+  data: [FlowsOnWorkspacesCreateManyWorkspaceInput!]!
+  skipDuplicates: Boolean
+}
+
+input FlowsOnWorkspacesCreateNestedManyWithoutFlowInput {
+  connect: [FlowsOnWorkspacesWhereUniqueInput!]
+  connectOrCreate: [FlowsOnWorkspacesCreateOrConnectWithoutFlowInput!]
+  create: [FlowsOnWorkspacesCreateWithoutFlowInput!]
+  createMany: FlowsOnWorkspacesCreateManyFlowInputEnvelope
+}
+
+input FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput {
+  connect: [FlowsOnWorkspacesWhereUniqueInput!]
+  connectOrCreate: [FlowsOnWorkspacesCreateOrConnectWithoutWorkspaceInput!]
+  create: [FlowsOnWorkspacesCreateWithoutWorkspaceInput!]
+  createMany: FlowsOnWorkspacesCreateManyWorkspaceInputEnvelope
+}
+
+input FlowsOnWorkspacesCreateOrConnectWithoutFlowInput {
+  create: FlowsOnWorkspacesCreateWithoutFlowInput!
+  where: FlowsOnWorkspacesWhereUniqueInput!
+}
+
+input FlowsOnWorkspacesCreateOrConnectWithoutWorkspaceInput {
+  create: FlowsOnWorkspacesCreateWithoutWorkspaceInput!
+  where: FlowsOnWorkspacesWhereUniqueInput!
+}
+
+input FlowsOnWorkspacesCreateWithoutFlowInput {
+  assignedAt: DateTime
+  workspace: WorkspaceCreateNestedOneWithoutAssignedFlowsInput!
+}
+
+input FlowsOnWorkspacesCreateWithoutWorkspaceInput {
+  assignedAt: DateTime
+  flow: FlowCreateNestedOneWithoutAssignedWorkspacesInput!
+}
+
+input FlowsOnWorkspacesFlowIdWorkspaceIdCompoundUniqueInput {
+  flowId: String!
+  workspaceId: String!
+}
+
+input FlowsOnWorkspacesListRelationFilter {
+  every: FlowsOnWorkspacesWhereInput
+  none: FlowsOnWorkspacesWhereInput
+  some: FlowsOnWorkspacesWhereInput
+}
+
+type FlowsOnWorkspacesMaxAggregate {
+  assignedAt: DateTime
+  flowId: String
+  workspaceId: String
+}
+
+type FlowsOnWorkspacesMinAggregate {
+  assignedAt: DateTime
+  flowId: String
+  workspaceId: String
+}
+
+input FlowsOnWorkspacesOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input FlowsOnWorkspacesScalarWhereInput {
+  AND: [FlowsOnWorkspacesScalarWhereInput!]
+  NOT: [FlowsOnWorkspacesScalarWhereInput!]
+  OR: [FlowsOnWorkspacesScalarWhereInput!]
+  assignedAt: DateTimeNullableFilter
+  flowId: StringFilter
+  workspaceId: StringFilter
+}
+
+input FlowsOnWorkspacesUpdateManyMutationInput {
+  assignedAt: NullableDateTimeFieldUpdateOperationsInput
+}
+
+input FlowsOnWorkspacesUpdateManyWithWhereWithoutFlowInput {
+  data: FlowsOnWorkspacesUpdateManyMutationInput!
+  where: FlowsOnWorkspacesScalarWhereInput!
+}
+
+input FlowsOnWorkspacesUpdateManyWithWhereWithoutWorkspaceInput {
+  data: FlowsOnWorkspacesUpdateManyMutationInput!
+  where: FlowsOnWorkspacesScalarWhereInput!
+}
+
+input FlowsOnWorkspacesUpdateManyWithoutFlowNestedInput {
+  connect: [FlowsOnWorkspacesWhereUniqueInput!]
+  connectOrCreate: [FlowsOnWorkspacesCreateOrConnectWithoutFlowInput!]
+  create: [FlowsOnWorkspacesCreateWithoutFlowInput!]
+  createMany: FlowsOnWorkspacesCreateManyFlowInputEnvelope
+  delete: [FlowsOnWorkspacesWhereUniqueInput!]
+  deleteMany: [FlowsOnWorkspacesScalarWhereInput!]
+  disconnect: [FlowsOnWorkspacesWhereUniqueInput!]
+  set: [FlowsOnWorkspacesWhereUniqueInput!]
+  update: [FlowsOnWorkspacesUpdateWithWhereUniqueWithoutFlowInput!]
+  updateMany: [FlowsOnWorkspacesUpdateManyWithWhereWithoutFlowInput!]
+  upsert: [FlowsOnWorkspacesUpsertWithWhereUniqueWithoutFlowInput!]
+}
+
+input FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput {
+  connect: [FlowsOnWorkspacesWhereUniqueInput!]
+  connectOrCreate: [FlowsOnWorkspacesCreateOrConnectWithoutWorkspaceInput!]
+  create: [FlowsOnWorkspacesCreateWithoutWorkspaceInput!]
+  createMany: FlowsOnWorkspacesCreateManyWorkspaceInputEnvelope
+  delete: [FlowsOnWorkspacesWhereUniqueInput!]
+  deleteMany: [FlowsOnWorkspacesScalarWhereInput!]
+  disconnect: [FlowsOnWorkspacesWhereUniqueInput!]
+  set: [FlowsOnWorkspacesWhereUniqueInput!]
+  update: [FlowsOnWorkspacesUpdateWithWhereUniqueWithoutWorkspaceInput!]
+  updateMany: [FlowsOnWorkspacesUpdateManyWithWhereWithoutWorkspaceInput!]
+  upsert: [FlowsOnWorkspacesUpsertWithWhereUniqueWithoutWorkspaceInput!]
+}
+
+input FlowsOnWorkspacesUpdateWithWhereUniqueWithoutFlowInput {
+  data: FlowsOnWorkspacesUpdateWithoutFlowInput!
+  where: FlowsOnWorkspacesWhereUniqueInput!
+}
+
+input FlowsOnWorkspacesUpdateWithWhereUniqueWithoutWorkspaceInput {
+  data: FlowsOnWorkspacesUpdateWithoutWorkspaceInput!
+  where: FlowsOnWorkspacesWhereUniqueInput!
+}
+
+input FlowsOnWorkspacesUpdateWithoutFlowInput {
+  assignedAt: NullableDateTimeFieldUpdateOperationsInput
+  workspace: WorkspaceUpdateOneRequiredWithoutAssignedFlowsNestedInput
+}
+
+input FlowsOnWorkspacesUpdateWithoutWorkspaceInput {
+  assignedAt: NullableDateTimeFieldUpdateOperationsInput
+  flow: FlowUpdateOneRequiredWithoutAssignedWorkspacesNestedInput
+}
+
+input FlowsOnWorkspacesUpsertWithWhereUniqueWithoutFlowInput {
+  create: FlowsOnWorkspacesCreateWithoutFlowInput!
+  update: FlowsOnWorkspacesUpdateWithoutFlowInput!
+  where: FlowsOnWorkspacesWhereUniqueInput!
+}
+
+input FlowsOnWorkspacesUpsertWithWhereUniqueWithoutWorkspaceInput {
+  create: FlowsOnWorkspacesCreateWithoutWorkspaceInput!
+  update: FlowsOnWorkspacesUpdateWithoutWorkspaceInput!
+  where: FlowsOnWorkspacesWhereUniqueInput!
+}
+
+input FlowsOnWorkspacesWhereInput {
+  AND: [FlowsOnWorkspacesWhereInput!]
+  NOT: [FlowsOnWorkspacesWhereInput!]
+  OR: [FlowsOnWorkspacesWhereInput!]
+  assignedAt: DateTimeNullableFilter
+  flow: FlowRelationFilter
+  flowId: StringFilter
+  workspace: WorkspaceRelationFilter
+  workspaceId: StringFilter
+}
+
+input FlowsOnWorkspacesWhereUniqueInput {
+  AND: [FlowsOnWorkspacesWhereInput!]
+  NOT: [FlowsOnWorkspacesWhereInput!]
+  OR: [FlowsOnWorkspacesWhereInput!]
+  assignedAt: DateTimeNullableFilter
+  flow: FlowRelationFilter
+  flowId: StringFilter
+  flowId_workspaceId: FlowsOnWorkspacesFlowIdWorkspaceIdCompoundUniqueInput
+  workspace: WorkspaceRelationFilter
+  workspaceId: StringFilter
 }
 
 """
@@ -393,15 +1098,26 @@ input LoginInput {
 type Mutation {
   createFlow(data: FlowCreateInput!): Flow!
   createLog(data: LogCreateInput): Log!
+  createMyConfig(userConfigCreateInput: UserConfigCreateInput!): UserConfig!
+  createTab(data: TabCreateInput!): Tab!
   createUser(data: UserCreateInput!): User!
+  createUserConfig(data: UserConfigCreateInput!): UserConfig!
+  createWorkspace(data: WorkspaceCreateInput!): Workspace!
   deleteUser(where: UserWhereUniqueInput!): User!
   login(loginInput: LoginInput!): Authorize!
   logout: User!
-  refresh(refreshInput: RefreshInput!): Authorize!
+  refreshTokens(refreshInput: RefreshInput!): Authorize!
   register(registerInput: RegisterInput!): Authorize!
   removeFlow(where: FlowWhereUniqueInput!): Flow!
+  removeManyTab(where: TabWhereInput): Tab!
+  removeOneTab(where: TabWhereUniqueInput!): Tab!
+  removeWorkspace(where: WorkspaceWhereUniqueInput!): Workspace!
   updateFlow(data: FlowUpdateInput!, where: FlowWhereUniqueInput!): Flow!
+  updateMyConfig(userConfigUpdateInput: UserConfigUpdateInput!): UserConfig!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+  updateUserConfig(data: UserConfigUpdateInput!, where: UserConfigWhereUniqueInput!): UserConfig!
+  updateWorkspace(data: WorkspaceUpdateInput!, where: WorkspaceWhereUniqueInput!): Workspace!
+  upsertUserConfig(create: UserConfigCreateInput!, update: UserConfigUpdateInput!, where: UserConfigWhereUniqueInput!): UserConfig!
 }
 
 input NestedDateTimeNullableFilter {
@@ -427,6 +1143,13 @@ input NestedEnumLogTypeFilter {
   in: [LogType!]
   not: NestedEnumLogTypeFilter
   notIn: [LogType!]
+}
+
+input NestedEnumThemeColorNullableFilter {
+  equals: ThemeColor
+  in: [ThemeColor!]
+  not: NestedEnumThemeColorNullableFilter
+  notIn: [ThemeColor!]
 }
 
 input NestedEnumUserTypeFilter {
@@ -468,6 +1191,10 @@ input NullableDateTimeFieldUpdateOperationsInput {
   set: DateTime
 }
 
+input NullableEnumThemeColorFieldUpdateOperationsInput {
+  set: ThemeColor
+}
+
 input NullableStringFieldUpdateOperationsInput {
   set: String
 }
@@ -475,6 +1202,18 @@ input NullableStringFieldUpdateOperationsInput {
 enum NullsOrder {
   first
   last
+}
+
+enum OperationType {
+  CREATE
+  DELETE
+  UPDATE
+}
+
+type PasswordCountAggregate {
+  _all: Int!
+  id: Int!
+  password: Int!
 }
 
 input PasswordCreateNestedOneWithoutUserInput {
@@ -490,6 +1229,16 @@ input PasswordCreateOrConnectWithoutUserInput {
 
 input PasswordCreateWithoutUserInput {
   password: String!
+}
+
+type PasswordMaxAggregate {
+  id: String
+  password: String
+}
+
+type PasswordMinAggregate {
+  id: String
+  password: String
 }
 
 input PasswordOrderByWithRelationInput {
@@ -540,6 +1289,8 @@ input PasswordWhereUniqueInput {
 }
 
 type Profile {
+  acronym: String
+  avatar: String
   bio: String
   createdAt: DateTime
   firstName: String!
@@ -548,6 +1299,19 @@ type Profile {
   user: User!
   userId: String!
   username: String
+}
+
+type ProfileCountAggregate {
+  _all: Int!
+  acronym: Int!
+  avatar: Int!
+  bio: Int!
+  createdAt: Int!
+  firstName: Int!
+  id: Int!
+  lastName: Int!
+  userId: Int!
+  username: Int!
 }
 
 input ProfileCreateNestedOneWithoutUserInput {
@@ -562,6 +1326,8 @@ input ProfileCreateOrConnectWithoutUserInput {
 }
 
 input ProfileCreateWithoutUserInput {
+  acronym: String
+  avatar: String
   bio: String
   createdAt: DateTime
   firstName: String!
@@ -574,12 +1340,38 @@ input ProfileFullnameCompoundUniqueInput {
   lastName: String!
 }
 
+type ProfileMaxAggregate {
+  acronym: String
+  avatar: String
+  bio: String
+  createdAt: DateTime
+  firstName: String
+  id: String
+  lastName: String
+  userId: String
+  username: String
+}
+
+type ProfileMinAggregate {
+  acronym: String
+  avatar: String
+  bio: String
+  createdAt: DateTime
+  firstName: String
+  id: String
+  lastName: String
+  userId: String
+  username: String
+}
+
 input ProfileNullableRelationFilter {
   is: ProfileWhereInput
   isNot: ProfileWhereInput
 }
 
 input ProfileOrderByWithRelationInput {
+  acronym: SortOrderInput
+  avatar: SortOrderInput
   bio: SortOrderInput
   createdAt: SortOrderInput
   firstName: SortOrder
@@ -606,6 +1398,8 @@ input ProfileUpdateToOneWithWhereWithoutUserInput {
 }
 
 input ProfileUpdateWithoutUserInput {
+  acronym: NullableStringFieldUpdateOperationsInput
+  avatar: NullableStringFieldUpdateOperationsInput
   bio: NullableStringFieldUpdateOperationsInput
   createdAt: NullableDateTimeFieldUpdateOperationsInput
   firstName: StringFieldUpdateOperationsInput
@@ -623,6 +1417,8 @@ input ProfileWhereInput {
   AND: [ProfileWhereInput!]
   NOT: [ProfileWhereInput!]
   OR: [ProfileWhereInput!]
+  acronym: StringNullableFilter
+  avatar: StringNullableFilter
   bio: StringNullableFilter
   createdAt: DateTimeNullableFilter
   firstName: StringFilter
@@ -637,6 +1433,8 @@ input ProfileWhereUniqueInput {
   AND: [ProfileWhereInput!]
   NOT: [ProfileWhereInput!]
   OR: [ProfileWhereInput!]
+  acronym: StringNullableFilter
+  avatar: StringNullableFilter
   bio: StringNullableFilter
   createdAt: DateTimeNullableFilter
   firstName: StringFilter
@@ -650,12 +1448,19 @@ input ProfileWhereUniqueInput {
 
 type Query {
   flow(where: FlowWhereUniqueInput!): Flow!
+  flowVersion(where: FlowVersionWhereUniqueInput!): FlowVersion!
+  flowVersions(cursor: FlowVersionWhereUniqueInput, distinct: [FlowVersionScalarFieldEnum!], orderBy: [FlowVersionOrderByWithRelationInput!], skip: Int, take: Int, where: FlowVersionWhereInput): [FlowVersion!]!
   flows(cursor: FlowWhereUniqueInput, distinct: [FlowScalarFieldEnum!], orderBy: [FlowOrderByWithRelationInput!], skip: Int, take: Int, where: FlowWhereInput): [Flow!]!
   log(where: LogWhereUniqueInput!): Log!
   logs(cursor: LogWhereUniqueInput, distinct: [LogScalarFieldEnum!], orderBy: [LogOrderByWithRelationInput!], skip: Int, take: Int, where: LogWhereInput): [Log!]!
   me: User!
+  myConfig: UserConfig!
+  tabs(cursor: TabWhereUniqueInput, distinct: [TabScalarFieldEnum!], orderBy: [TabOrderByWithRelationInput!], skip: Int, take: Int, where: TabWhereInput): [Tab!]!
   user(where: UserWhereUniqueInput!): User!
+  userConfig(where: UserConfigWhereUniqueInput!): UserConfig!
   users(cursor: UserWhereUniqueInput, distinct: [UserScalarFieldEnum!], orderBy: [UserOrderByWithRelationInput!], skip: Int, take: Int, where: UserWhereInput): [User!]!
+  workspace(where: WorkspaceWhereUniqueInput!): Workspace!
+  workspaces(cursor: WorkspaceWhereUniqueInput, distinct: [WorkspaceScalarFieldEnum!], orderBy: [WorkspaceOrderByWithRelationInput!], skip: Int, take: Int, where: WorkspaceWhereInput): [Workspace!]!
 }
 
 enum QueryMode {
@@ -666,6 +1471,28 @@ enum QueryMode {
 input RefreshInput {
   """Refresh token"""
   refreshToken: String!
+}
+
+type RefreshTokenCountAggregate {
+  _all: Int!
+  expiresAt: Int!
+  id: Int!
+  isRevoked: Int!
+  userId: Int!
+}
+
+type RefreshTokenMaxAggregate {
+  expiresAt: DateTime
+  id: String
+  isRevoked: Boolean
+  userId: String
+}
+
+type RefreshTokenMinAggregate {
+  expiresAt: DateTime
+  id: String
+  isRevoked: Boolean
+  userId: String
 }
 
 input RegisterInput {
@@ -729,23 +1556,396 @@ type Subscription {
   userDeleted: User!
   userLogout: User!
   userUpdated: User!
+  workspaceCreated: User!
+  workspaceDeleted: User!
+  workspaceUpdated: User!
+}
+
+type Tab {
+  data: JSON
+  id: ID!
+  user: User!
+  userId: String!
+}
+
+type TabCountAggregate {
+  _all: Int!
+  data: Int!
+  id: Int!
+  userId: Int!
+}
+
+input TabCreateInput {
+  data: JSON
+  user: UserCreateNestedOneWithoutTabsInput!
+}
+
+input TabCreateManyUserInput {
+  data: JSON
+}
+
+input TabCreateManyUserInputEnvelope {
+  data: [TabCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input TabCreateNestedManyWithoutUserInput {
+  connect: [TabWhereUniqueInput!]
+  connectOrCreate: [TabCreateOrConnectWithoutUserInput!]
+  create: [TabCreateWithoutUserInput!]
+  createMany: TabCreateManyUserInputEnvelope
+}
+
+input TabCreateOrConnectWithoutUserInput {
+  create: TabCreateWithoutUserInput!
+  where: TabWhereUniqueInput!
+}
+
+input TabCreateWithoutUserInput {
+  data: JSON
+}
+
+input TabListRelationFilter {
+  every: TabWhereInput
+  none: TabWhereInput
+  some: TabWhereInput
+}
+
+type TabMaxAggregate {
+  id: String
+  userId: String
+}
+
+type TabMinAggregate {
+  id: String
+  userId: String
+}
+
+input TabOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input TabOrderByWithRelationInput {
+  data: SortOrderInput
+  id: SortOrder
+  user: UserOrderByWithRelationInput
+  userId: SortOrder
+}
+
+enum TabScalarFieldEnum {
+  data
+  id
+  userId
+}
+
+input TabScalarWhereInput {
+  AND: [TabScalarWhereInput!]
+  NOT: [TabScalarWhereInput!]
+  OR: [TabScalarWhereInput!]
+  data: JsonNullableFilter
+  id: StringFilter
+  userId: StringFilter
+}
+
+input TabUpdateManyMutationInput {
+  data: JSON
+  id: StringFieldUpdateOperationsInput
+}
+
+input TabUpdateManyWithWhereWithoutUserInput {
+  data: TabUpdateManyMutationInput!
+  where: TabScalarWhereInput!
+}
+
+input TabUpdateManyWithoutUserNestedInput {
+  connect: [TabWhereUniqueInput!]
+  connectOrCreate: [TabCreateOrConnectWithoutUserInput!]
+  create: [TabCreateWithoutUserInput!]
+  createMany: TabCreateManyUserInputEnvelope
+  delete: [TabWhereUniqueInput!]
+  deleteMany: [TabScalarWhereInput!]
+  disconnect: [TabWhereUniqueInput!]
+  set: [TabWhereUniqueInput!]
+  update: [TabUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [TabUpdateManyWithWhereWithoutUserInput!]
+  upsert: [TabUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input TabUpdateWithWhereUniqueWithoutUserInput {
+  data: TabUpdateWithoutUserInput!
+  where: TabWhereUniqueInput!
+}
+
+input TabUpdateWithoutUserInput {
+  data: JSON
+  id: StringFieldUpdateOperationsInput
+}
+
+input TabUpsertWithWhereUniqueWithoutUserInput {
+  create: TabCreateWithoutUserInput!
+  update: TabUpdateWithoutUserInput!
+  where: TabWhereUniqueInput!
+}
+
+input TabWhereInput {
+  AND: [TabWhereInput!]
+  NOT: [TabWhereInput!]
+  OR: [TabWhereInput!]
+  data: JsonNullableFilter
+  id: StringFilter
+  user: UserRelationFilter
+  userId: StringFilter
+}
+
+input TabWhereUniqueInput {
+  AND: [TabWhereInput!]
+  NOT: [TabWhereInput!]
+  OR: [TabWhereInput!]
+  data: JsonNullableFilter
+  id: String
+  user: UserRelationFilter
+  userId: StringFilter
+}
+
+enum ThemeColor {
+  AUTO
+  DARK
+  LIGHT
 }
 
 type User {
   _count: UserCount!
+  assignedWorkspaces: [UsersOnWorkspaces!]
+  config: UserConfig
   createdAt: DateTime
+  createdWorkspaces: [Workspace!]
   email: EmailAddress!
   flows: [Flow!]
+  flowsVersion: [FlowVersion!]
   id: ID!
   pairId: String
   profile: Profile
   role: [UserRole!]
+  tabs: [Tab!]
   type: UserType!
 }
 
+type UserConfig {
+  activeWorkspace: Workspace
+  activeWorkspaceId: String
+  id: ID!
+  theme: ThemeColor
+  user: User!
+  userId: String!
+}
+
+type UserConfigCountAggregate {
+  _all: Int!
+  activeWorkspaceId: Int!
+  id: Int!
+  theme: Int!
+  userId: Int!
+}
+
+input UserConfigCreateInput {
+  activeWorkspace: WorkspaceCreateNestedOneWithoutActiveOnUserInput
+  theme: ThemeColor
+  user: UserCreateNestedOneWithoutConfigInput!
+}
+
+input UserConfigCreateManyActiveWorkspaceInput {
+  theme: ThemeColor
+  userId: String!
+}
+
+input UserConfigCreateManyActiveWorkspaceInputEnvelope {
+  data: [UserConfigCreateManyActiveWorkspaceInput!]!
+  skipDuplicates: Boolean
+}
+
+input UserConfigCreateNestedManyWithoutActiveWorkspaceInput {
+  connect: [UserConfigWhereUniqueInput!]
+  connectOrCreate: [UserConfigCreateOrConnectWithoutActiveWorkspaceInput!]
+  create: [UserConfigCreateWithoutActiveWorkspaceInput!]
+  createMany: UserConfigCreateManyActiveWorkspaceInputEnvelope
+}
+
+input UserConfigCreateNestedOneWithoutUserInput {
+  connect: UserConfigWhereUniqueInput
+  connectOrCreate: UserConfigCreateOrConnectWithoutUserInput
+  create: UserConfigCreateWithoutUserInput
+}
+
+input UserConfigCreateOrConnectWithoutActiveWorkspaceInput {
+  create: UserConfigCreateWithoutActiveWorkspaceInput!
+  where: UserConfigWhereUniqueInput!
+}
+
+input UserConfigCreateOrConnectWithoutUserInput {
+  create: UserConfigCreateWithoutUserInput!
+  where: UserConfigWhereUniqueInput!
+}
+
+input UserConfigCreateWithoutActiveWorkspaceInput {
+  theme: ThemeColor
+  user: UserCreateNestedOneWithoutConfigInput!
+}
+
+input UserConfigCreateWithoutUserInput {
+  activeWorkspace: WorkspaceCreateNestedOneWithoutActiveOnUserInput
+  theme: ThemeColor
+}
+
+input UserConfigListRelationFilter {
+  every: UserConfigWhereInput
+  none: UserConfigWhereInput
+  some: UserConfigWhereInput
+}
+
+type UserConfigMaxAggregate {
+  activeWorkspaceId: String
+  id: String
+  theme: ThemeColor
+  userId: String
+}
+
+type UserConfigMinAggregate {
+  activeWorkspaceId: String
+  id: String
+  theme: ThemeColor
+  userId: String
+}
+
+input UserConfigNullableRelationFilter {
+  is: UserConfigWhereInput
+  isNot: UserConfigWhereInput
+}
+
+input UserConfigOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input UserConfigOrderByWithRelationInput {
+  activeWorkspace: WorkspaceOrderByWithRelationInput
+  activeWorkspaceId: SortOrderInput
+  id: SortOrder
+  theme: SortOrderInput
+  user: UserOrderByWithRelationInput
+  userId: SortOrder
+}
+
+input UserConfigScalarWhereInput {
+  AND: [UserConfigScalarWhereInput!]
+  NOT: [UserConfigScalarWhereInput!]
+  OR: [UserConfigScalarWhereInput!]
+  activeWorkspaceId: StringNullableFilter
+  id: StringFilter
+  theme: EnumThemeColorNullableFilter
+  userId: StringFilter
+}
+
+input UserConfigUpdateInput {
+  activeWorkspace: WorkspaceUpdateOneWithoutActiveOnUserNestedInput
+  theme: NullableEnumThemeColorFieldUpdateOperationsInput
+  user: UserUpdateOneRequiredWithoutConfigNestedInput
+}
+
+input UserConfigUpdateManyMutationInput {
+  theme: NullableEnumThemeColorFieldUpdateOperationsInput
+}
+
+input UserConfigUpdateManyWithWhereWithoutActiveWorkspaceInput {
+  data: UserConfigUpdateManyMutationInput!
+  where: UserConfigScalarWhereInput!
+}
+
+input UserConfigUpdateManyWithoutActiveWorkspaceNestedInput {
+  connect: [UserConfigWhereUniqueInput!]
+  connectOrCreate: [UserConfigCreateOrConnectWithoutActiveWorkspaceInput!]
+  create: [UserConfigCreateWithoutActiveWorkspaceInput!]
+  createMany: UserConfigCreateManyActiveWorkspaceInputEnvelope
+  delete: [UserConfigWhereUniqueInput!]
+  deleteMany: [UserConfigScalarWhereInput!]
+  disconnect: [UserConfigWhereUniqueInput!]
+  set: [UserConfigWhereUniqueInput!]
+  update: [UserConfigUpdateWithWhereUniqueWithoutActiveWorkspaceInput!]
+  updateMany: [UserConfigUpdateManyWithWhereWithoutActiveWorkspaceInput!]
+  upsert: [UserConfigUpsertWithWhereUniqueWithoutActiveWorkspaceInput!]
+}
+
+input UserConfigUpdateOneWithoutUserNestedInput {
+  connect: UserConfigWhereUniqueInput
+  connectOrCreate: UserConfigCreateOrConnectWithoutUserInput
+  create: UserConfigCreateWithoutUserInput
+  delete: UserConfigWhereInput
+  disconnect: UserConfigWhereInput
+  update: UserConfigUpdateToOneWithWhereWithoutUserInput
+  upsert: UserConfigUpsertWithoutUserInput
+}
+
+input UserConfigUpdateToOneWithWhereWithoutUserInput {
+  data: UserConfigUpdateWithoutUserInput!
+  where: UserConfigWhereInput
+}
+
+input UserConfigUpdateWithWhereUniqueWithoutActiveWorkspaceInput {
+  data: UserConfigUpdateWithoutActiveWorkspaceInput!
+  where: UserConfigWhereUniqueInput!
+}
+
+input UserConfigUpdateWithoutActiveWorkspaceInput {
+  theme: NullableEnumThemeColorFieldUpdateOperationsInput
+  user: UserUpdateOneRequiredWithoutConfigNestedInput
+}
+
+input UserConfigUpdateWithoutUserInput {
+  activeWorkspace: WorkspaceUpdateOneWithoutActiveOnUserNestedInput
+  theme: NullableEnumThemeColorFieldUpdateOperationsInput
+}
+
+input UserConfigUpsertWithWhereUniqueWithoutActiveWorkspaceInput {
+  create: UserConfigCreateWithoutActiveWorkspaceInput!
+  update: UserConfigUpdateWithoutActiveWorkspaceInput!
+  where: UserConfigWhereUniqueInput!
+}
+
+input UserConfigUpsertWithoutUserInput {
+  create: UserConfigCreateWithoutUserInput!
+  update: UserConfigUpdateWithoutUserInput!
+  where: UserConfigWhereInput
+}
+
+input UserConfigWhereInput {
+  AND: [UserConfigWhereInput!]
+  NOT: [UserConfigWhereInput!]
+  OR: [UserConfigWhereInput!]
+  activeWorkspace: WorkspaceNullableRelationFilter
+  activeWorkspaceId: StringNullableFilter
+  id: StringFilter
+  theme: EnumThemeColorNullableFilter
+  user: UserRelationFilter
+  userId: StringFilter
+}
+
+input UserConfigWhereUniqueInput {
+  AND: [UserConfigWhereInput!]
+  NOT: [UserConfigWhereInput!]
+  OR: [UserConfigWhereInput!]
+  activeWorkspace: WorkspaceNullableRelationFilter
+  activeWorkspaceId: StringNullableFilter
+  id: String
+  theme: EnumThemeColorNullableFilter
+  user: UserRelationFilter
+  userId: String
+}
+
 type UserCount {
+  assignedWorkspaces: Int!
+  createdWorkspaces: Int!
   flows: Int!
+  flowsVersion: Int!
   refreshTokens: Int!
+  tabs: Int!
 }
 
 type UserCountAggregate {
@@ -759,13 +1959,36 @@ type UserCountAggregate {
 }
 
 input UserCreateInput {
+  assignedWorkspaces: UsersOnWorkspacesCreateNestedManyWithoutUserInput
+  config: UserConfigCreateNestedOneWithoutUserInput
   createdAt: DateTime
+  createdWorkspaces: WorkspaceCreateNestedManyWithoutCreatedByInput
   email: EmailAddress!
   flows: FlowCreateNestedManyWithoutUserInput
+  flowsVersion: FlowVersionCreateNestedManyWithoutUserInput
   password: PasswordCreateNestedOneWithoutUserInput!
   profile: ProfileCreateNestedOneWithoutUserInput
   role: UserCreateroleInput
+  tabs: TabCreateNestedManyWithoutUserInput
   type: UserType
+}
+
+input UserCreateNestedOneWithoutAssignedWorkspacesInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutAssignedWorkspacesInput
+  create: UserCreateWithoutAssignedWorkspacesInput
+}
+
+input UserCreateNestedOneWithoutConfigInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutConfigInput
+  create: UserCreateWithoutConfigInput
+}
+
+input UserCreateNestedOneWithoutCreatedWorkspacesInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutCreatedWorkspacesInput
+  create: UserCreateWithoutCreatedWorkspacesInput
 }
 
 input UserCreateNestedOneWithoutFlowsInput {
@@ -774,14 +1997,126 @@ input UserCreateNestedOneWithoutFlowsInput {
   create: UserCreateWithoutFlowsInput
 }
 
+input UserCreateNestedOneWithoutFlowsVersionInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutFlowsVersionInput
+  create: UserCreateWithoutFlowsVersionInput
+}
+
+input UserCreateNestedOneWithoutTabsInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutTabsInput
+  create: UserCreateWithoutTabsInput
+}
+
+input UserCreateOrConnectWithoutAssignedWorkspacesInput {
+  create: UserCreateWithoutAssignedWorkspacesInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserCreateOrConnectWithoutConfigInput {
+  create: UserCreateWithoutConfigInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserCreateOrConnectWithoutCreatedWorkspacesInput {
+  create: UserCreateWithoutCreatedWorkspacesInput!
+  where: UserWhereUniqueInput!
+}
+
 input UserCreateOrConnectWithoutFlowsInput {
   create: UserCreateWithoutFlowsInput!
   where: UserWhereUniqueInput!
 }
 
-input UserCreateWithoutFlowsInput {
+input UserCreateOrConnectWithoutFlowsVersionInput {
+  create: UserCreateWithoutFlowsVersionInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserCreateOrConnectWithoutTabsInput {
+  create: UserCreateWithoutTabsInput!
+  where: UserWhereUniqueInput!
+}
+
+input UserCreateWithoutAssignedWorkspacesInput {
+  config: UserConfigCreateNestedOneWithoutUserInput
+  createdAt: DateTime
+  createdWorkspaces: WorkspaceCreateNestedManyWithoutCreatedByInput
+  email: EmailAddress!
+  flows: FlowCreateNestedManyWithoutUserInput
+  flowsVersion: FlowVersionCreateNestedManyWithoutUserInput
+  password: PasswordCreateNestedOneWithoutUserInput!
+  profile: ProfileCreateNestedOneWithoutUserInput
+  role: UserCreateroleInput
+  tabs: TabCreateNestedManyWithoutUserInput
+  type: UserType
+}
+
+input UserCreateWithoutConfigInput {
+  assignedWorkspaces: UsersOnWorkspacesCreateNestedManyWithoutUserInput
+  createdAt: DateTime
+  createdWorkspaces: WorkspaceCreateNestedManyWithoutCreatedByInput
+  email: EmailAddress!
+  flows: FlowCreateNestedManyWithoutUserInput
+  flowsVersion: FlowVersionCreateNestedManyWithoutUserInput
+  password: PasswordCreateNestedOneWithoutUserInput!
+  profile: ProfileCreateNestedOneWithoutUserInput
+  role: UserCreateroleInput
+  tabs: TabCreateNestedManyWithoutUserInput
+  type: UserType
+}
+
+input UserCreateWithoutCreatedWorkspacesInput {
+  assignedWorkspaces: UsersOnWorkspacesCreateNestedManyWithoutUserInput
+  config: UserConfigCreateNestedOneWithoutUserInput
   createdAt: DateTime
   email: EmailAddress!
+  flows: FlowCreateNestedManyWithoutUserInput
+  flowsVersion: FlowVersionCreateNestedManyWithoutUserInput
+  password: PasswordCreateNestedOneWithoutUserInput!
+  profile: ProfileCreateNestedOneWithoutUserInput
+  role: UserCreateroleInput
+  tabs: TabCreateNestedManyWithoutUserInput
+  type: UserType
+}
+
+input UserCreateWithoutFlowsInput {
+  assignedWorkspaces: UsersOnWorkspacesCreateNestedManyWithoutUserInput
+  config: UserConfigCreateNestedOneWithoutUserInput
+  createdAt: DateTime
+  createdWorkspaces: WorkspaceCreateNestedManyWithoutCreatedByInput
+  email: EmailAddress!
+  flowsVersion: FlowVersionCreateNestedManyWithoutUserInput
+  password: PasswordCreateNestedOneWithoutUserInput!
+  profile: ProfileCreateNestedOneWithoutUserInput
+  role: UserCreateroleInput
+  tabs: TabCreateNestedManyWithoutUserInput
+  type: UserType
+}
+
+input UserCreateWithoutFlowsVersionInput {
+  assignedWorkspaces: UsersOnWorkspacesCreateNestedManyWithoutUserInput
+  config: UserConfigCreateNestedOneWithoutUserInput
+  createdAt: DateTime
+  createdWorkspaces: WorkspaceCreateNestedManyWithoutCreatedByInput
+  email: EmailAddress!
+  flows: FlowCreateNestedManyWithoutUserInput
+  password: PasswordCreateNestedOneWithoutUserInput!
+  profile: ProfileCreateNestedOneWithoutUserInput
+  role: UserCreateroleInput
+  tabs: TabCreateNestedManyWithoutUserInput
+  type: UserType
+}
+
+input UserCreateWithoutTabsInput {
+  assignedWorkspaces: UsersOnWorkspacesCreateNestedManyWithoutUserInput
+  config: UserConfigCreateNestedOneWithoutUserInput
+  createdAt: DateTime
+  createdWorkspaces: WorkspaceCreateNestedManyWithoutCreatedByInput
+  email: EmailAddress!
+  flows: FlowCreateNestedManyWithoutUserInput
+  flowsVersion: FlowVersionCreateNestedManyWithoutUserInput
   password: PasswordCreateNestedOneWithoutUserInput!
   profile: ProfileCreateNestedOneWithoutUserInput
   role: UserCreateroleInput
@@ -814,15 +2149,20 @@ input UserNullableRelationFilter {
 }
 
 input UserOrderByWithRelationInput {
+  assignedWorkspaces: UsersOnWorkspacesOrderByRelationAggregateInput
+  config: UserConfigOrderByWithRelationInput
   createdAt: SortOrderInput
+  createdWorkspaces: WorkspaceOrderByRelationAggregateInput
   email: SortOrder
   flows: FlowOrderByRelationAggregateInput
+  flowsVersion: FlowVersionOrderByRelationAggregateInput
   id: SortOrder
   pairId: SortOrderInput
   password: PasswordOrderByWithRelationInput
   passwordId: SortOrder
   profile: ProfileOrderByWithRelationInput
   role: SortOrder
+  tabs: TabOrderByRelationAggregateInput
   type: SortOrder
 }
 
@@ -833,6 +2173,7 @@ input UserRelationFilter {
 
 enum UserRole {
   ROLE_ADMIN
+  ROLE_DEVELOPER
   ROLE_GUEST
   ROLE_USER
 }
@@ -854,21 +2195,77 @@ enum UserType {
 }
 
 input UserUpdateInput {
+  assignedWorkspaces: UsersOnWorkspacesUpdateManyWithoutUserNestedInput
+  config: UserConfigUpdateOneWithoutUserNestedInput
   createdAt: NullableDateTimeFieldUpdateOperationsInput
+  createdWorkspaces: WorkspaceUpdateManyWithoutCreatedByNestedInput
   email: StringFieldUpdateOperationsInput
   flows: FlowUpdateManyWithoutUserNestedInput
+  flowsVersion: FlowVersionUpdateManyWithoutUserNestedInput
   password: PasswordUpdateOneRequiredWithoutUserNestedInput
   profile: ProfileUpdateOneWithoutUserNestedInput
   role: UserUpdateroleInput
+  tabs: TabUpdateManyWithoutUserNestedInput
   type: EnumUserTypeFieldUpdateOperationsInput
 }
 
-input UserUpdateOneRequiredWithoutFlowsNestedInput {
+input UserUpdateOneRequiredWithoutAssignedWorkspacesNestedInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutAssignedWorkspacesInput
+  create: UserCreateWithoutAssignedWorkspacesInput
+  update: UserUpdateToOneWithWhereWithoutAssignedWorkspacesInput
+  upsert: UserUpsertWithoutAssignedWorkspacesInput
+}
+
+input UserUpdateOneRequiredWithoutConfigNestedInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutConfigInput
+  create: UserCreateWithoutConfigInput
+  update: UserUpdateToOneWithWhereWithoutConfigInput
+  upsert: UserUpsertWithoutConfigInput
+}
+
+input UserUpdateOneRequiredWithoutCreatedWorkspacesNestedInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutCreatedWorkspacesInput
+  create: UserCreateWithoutCreatedWorkspacesInput
+  update: UserUpdateToOneWithWhereWithoutCreatedWorkspacesInput
+  upsert: UserUpsertWithoutCreatedWorkspacesInput
+}
+
+input UserUpdateOneWithoutFlowsNestedInput {
   connect: UserWhereUniqueInput
   connectOrCreate: UserCreateOrConnectWithoutFlowsInput
   create: UserCreateWithoutFlowsInput
+  delete: UserWhereInput
+  disconnect: UserWhereInput
   update: UserUpdateToOneWithWhereWithoutFlowsInput
   upsert: UserUpsertWithoutFlowsInput
+}
+
+input UserUpdateOneWithoutFlowsVersionNestedInput {
+  connect: UserWhereUniqueInput
+  connectOrCreate: UserCreateOrConnectWithoutFlowsVersionInput
+  create: UserCreateWithoutFlowsVersionInput
+  delete: UserWhereInput
+  disconnect: UserWhereInput
+  update: UserUpdateToOneWithWhereWithoutFlowsVersionInput
+  upsert: UserUpsertWithoutFlowsVersionInput
+}
+
+input UserUpdateToOneWithWhereWithoutAssignedWorkspacesInput {
+  data: UserUpdateWithoutAssignedWorkspacesInput!
+  where: UserWhereInput
+}
+
+input UserUpdateToOneWithWhereWithoutConfigInput {
+  data: UserUpdateWithoutConfigInput!
+  where: UserWhereInput
+}
+
+input UserUpdateToOneWithWhereWithoutCreatedWorkspacesInput {
+  data: UserUpdateWithoutCreatedWorkspacesInput!
+  where: UserWhereInput
 }
 
 input UserUpdateToOneWithWhereWithoutFlowsInput {
@@ -876,12 +2273,78 @@ input UserUpdateToOneWithWhereWithoutFlowsInput {
   where: UserWhereInput
 }
 
-input UserUpdateWithoutFlowsInput {
+input UserUpdateToOneWithWhereWithoutFlowsVersionInput {
+  data: UserUpdateWithoutFlowsVersionInput!
+  where: UserWhereInput
+}
+
+input UserUpdateWithoutAssignedWorkspacesInput {
+  config: UserConfigUpdateOneWithoutUserNestedInput
   createdAt: NullableDateTimeFieldUpdateOperationsInput
+  createdWorkspaces: WorkspaceUpdateManyWithoutCreatedByNestedInput
   email: StringFieldUpdateOperationsInput
+  flows: FlowUpdateManyWithoutUserNestedInput
+  flowsVersion: FlowVersionUpdateManyWithoutUserNestedInput
   password: PasswordUpdateOneRequiredWithoutUserNestedInput
   profile: ProfileUpdateOneWithoutUserNestedInput
   role: UserUpdateroleInput
+  tabs: TabUpdateManyWithoutUserNestedInput
+  type: EnumUserTypeFieldUpdateOperationsInput
+}
+
+input UserUpdateWithoutConfigInput {
+  assignedWorkspaces: UsersOnWorkspacesUpdateManyWithoutUserNestedInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  createdWorkspaces: WorkspaceUpdateManyWithoutCreatedByNestedInput
+  email: StringFieldUpdateOperationsInput
+  flows: FlowUpdateManyWithoutUserNestedInput
+  flowsVersion: FlowVersionUpdateManyWithoutUserNestedInput
+  password: PasswordUpdateOneRequiredWithoutUserNestedInput
+  profile: ProfileUpdateOneWithoutUserNestedInput
+  role: UserUpdateroleInput
+  tabs: TabUpdateManyWithoutUserNestedInput
+  type: EnumUserTypeFieldUpdateOperationsInput
+}
+
+input UserUpdateWithoutCreatedWorkspacesInput {
+  assignedWorkspaces: UsersOnWorkspacesUpdateManyWithoutUserNestedInput
+  config: UserConfigUpdateOneWithoutUserNestedInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  email: StringFieldUpdateOperationsInput
+  flows: FlowUpdateManyWithoutUserNestedInput
+  flowsVersion: FlowVersionUpdateManyWithoutUserNestedInput
+  password: PasswordUpdateOneRequiredWithoutUserNestedInput
+  profile: ProfileUpdateOneWithoutUserNestedInput
+  role: UserUpdateroleInput
+  tabs: TabUpdateManyWithoutUserNestedInput
+  type: EnumUserTypeFieldUpdateOperationsInput
+}
+
+input UserUpdateWithoutFlowsInput {
+  assignedWorkspaces: UsersOnWorkspacesUpdateManyWithoutUserNestedInput
+  config: UserConfigUpdateOneWithoutUserNestedInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  createdWorkspaces: WorkspaceUpdateManyWithoutCreatedByNestedInput
+  email: StringFieldUpdateOperationsInput
+  flowsVersion: FlowVersionUpdateManyWithoutUserNestedInput
+  password: PasswordUpdateOneRequiredWithoutUserNestedInput
+  profile: ProfileUpdateOneWithoutUserNestedInput
+  role: UserUpdateroleInput
+  tabs: TabUpdateManyWithoutUserNestedInput
+  type: EnumUserTypeFieldUpdateOperationsInput
+}
+
+input UserUpdateWithoutFlowsVersionInput {
+  assignedWorkspaces: UsersOnWorkspacesUpdateManyWithoutUserNestedInput
+  config: UserConfigUpdateOneWithoutUserNestedInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  createdWorkspaces: WorkspaceUpdateManyWithoutCreatedByNestedInput
+  email: StringFieldUpdateOperationsInput
+  flows: FlowUpdateManyWithoutUserNestedInput
+  password: PasswordUpdateOneRequiredWithoutUserNestedInput
+  profile: ProfileUpdateOneWithoutUserNestedInput
+  role: UserUpdateroleInput
+  tabs: TabUpdateManyWithoutUserNestedInput
   type: EnumUserTypeFieldUpdateOperationsInput
 }
 
@@ -890,9 +2353,33 @@ input UserUpdateroleInput {
   set: [UserRole!]
 }
 
+input UserUpsertWithoutAssignedWorkspacesInput {
+  create: UserCreateWithoutAssignedWorkspacesInput!
+  update: UserUpdateWithoutAssignedWorkspacesInput!
+  where: UserWhereInput
+}
+
+input UserUpsertWithoutConfigInput {
+  create: UserCreateWithoutConfigInput!
+  update: UserUpdateWithoutConfigInput!
+  where: UserWhereInput
+}
+
+input UserUpsertWithoutCreatedWorkspacesInput {
+  create: UserCreateWithoutCreatedWorkspacesInput!
+  update: UserUpdateWithoutCreatedWorkspacesInput!
+  where: UserWhereInput
+}
+
 input UserUpsertWithoutFlowsInput {
   create: UserCreateWithoutFlowsInput!
   update: UserUpdateWithoutFlowsInput!
+  where: UserWhereInput
+}
+
+input UserUpsertWithoutFlowsVersionInput {
+  create: UserCreateWithoutFlowsVersionInput!
+  update: UserUpdateWithoutFlowsVersionInput!
   where: UserWhereInput
 }
 
@@ -900,13 +2387,18 @@ input UserWhereInput {
   AND: [UserWhereInput!]
   NOT: [UserWhereInput!]
   OR: [UserWhereInput!]
+  assignedWorkspaces: UsersOnWorkspacesListRelationFilter
+  config: UserConfigNullableRelationFilter
   createdAt: DateTimeNullableFilter
+  createdWorkspaces: WorkspaceListRelationFilter
   email: StringFilter
   flows: FlowListRelationFilter
+  flowsVersion: FlowVersionListRelationFilter
   id: StringFilter
   pairId: StringNullableFilter
   profile: ProfileNullableRelationFilter
   role: EnumUserRoleNullableListFilter
+  tabs: TabListRelationFilter
   type: EnumUserTypeFilter
 }
 
@@ -914,12 +2406,726 @@ input UserWhereUniqueInput {
   AND: [UserWhereInput!]
   NOT: [UserWhereInput!]
   OR: [UserWhereInput!]
+  assignedWorkspaces: UsersOnWorkspacesListRelationFilter
+  config: UserConfigNullableRelationFilter
   createdAt: DateTimeNullableFilter
+  createdWorkspaces: WorkspaceListRelationFilter
   email: EmailAddress
   flows: FlowListRelationFilter
+  flowsVersion: FlowVersionListRelationFilter
   id: String
   pairId: StringNullableFilter
   profile: ProfileNullableRelationFilter
   role: EnumUserRoleNullableListFilter
+  tabs: TabListRelationFilter
   type: EnumUserTypeFilter
+}
+
+type UsersOnWorkspaces {
+  assignedAt: DateTime
+  user: User!
+  userId: String!
+  workspace: Workspace!
+  workspaceId: String!
+}
+
+type UsersOnWorkspacesCountAggregate {
+  _all: Int!
+  assignedAt: Int!
+  userId: Int!
+  workspaceId: Int!
+}
+
+input UsersOnWorkspacesCreateManyUserInput {
+  assignedAt: DateTime
+  workspaceId: String!
+}
+
+input UsersOnWorkspacesCreateManyUserInputEnvelope {
+  data: [UsersOnWorkspacesCreateManyUserInput!]!
+  skipDuplicates: Boolean
+}
+
+input UsersOnWorkspacesCreateManyWorkspaceInput {
+  assignedAt: DateTime
+  userId: String!
+}
+
+input UsersOnWorkspacesCreateManyWorkspaceInputEnvelope {
+  data: [UsersOnWorkspacesCreateManyWorkspaceInput!]!
+  skipDuplicates: Boolean
+}
+
+input UsersOnWorkspacesCreateNestedManyWithoutUserInput {
+  connect: [UsersOnWorkspacesWhereUniqueInput!]
+  connectOrCreate: [UsersOnWorkspacesCreateOrConnectWithoutUserInput!]
+  create: [UsersOnWorkspacesCreateWithoutUserInput!]
+  createMany: UsersOnWorkspacesCreateManyUserInputEnvelope
+}
+
+input UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput {
+  connect: [UsersOnWorkspacesWhereUniqueInput!]
+  connectOrCreate: [UsersOnWorkspacesCreateOrConnectWithoutWorkspaceInput!]
+  create: [UsersOnWorkspacesCreateWithoutWorkspaceInput!]
+  createMany: UsersOnWorkspacesCreateManyWorkspaceInputEnvelope
+}
+
+input UsersOnWorkspacesCreateOrConnectWithoutUserInput {
+  create: UsersOnWorkspacesCreateWithoutUserInput!
+  where: UsersOnWorkspacesWhereUniqueInput!
+}
+
+input UsersOnWorkspacesCreateOrConnectWithoutWorkspaceInput {
+  create: UsersOnWorkspacesCreateWithoutWorkspaceInput!
+  where: UsersOnWorkspacesWhereUniqueInput!
+}
+
+input UsersOnWorkspacesCreateWithoutUserInput {
+  assignedAt: DateTime
+  workspace: WorkspaceCreateNestedOneWithoutAssignedUsersInput!
+}
+
+input UsersOnWorkspacesCreateWithoutWorkspaceInput {
+  assignedAt: DateTime
+  user: UserCreateNestedOneWithoutAssignedWorkspacesInput!
+}
+
+input UsersOnWorkspacesListRelationFilter {
+  every: UsersOnWorkspacesWhereInput
+  none: UsersOnWorkspacesWhereInput
+  some: UsersOnWorkspacesWhereInput
+}
+
+type UsersOnWorkspacesMaxAggregate {
+  assignedAt: DateTime
+  userId: String
+  workspaceId: String
+}
+
+type UsersOnWorkspacesMinAggregate {
+  assignedAt: DateTime
+  userId: String
+  workspaceId: String
+}
+
+input UsersOnWorkspacesOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input UsersOnWorkspacesScalarWhereInput {
+  AND: [UsersOnWorkspacesScalarWhereInput!]
+  NOT: [UsersOnWorkspacesScalarWhereInput!]
+  OR: [UsersOnWorkspacesScalarWhereInput!]
+  assignedAt: DateTimeNullableFilter
+  userId: StringFilter
+  workspaceId: StringFilter
+}
+
+input UsersOnWorkspacesUpdateManyMutationInput {
+  assignedAt: NullableDateTimeFieldUpdateOperationsInput
+}
+
+input UsersOnWorkspacesUpdateManyWithWhereWithoutUserInput {
+  data: UsersOnWorkspacesUpdateManyMutationInput!
+  where: UsersOnWorkspacesScalarWhereInput!
+}
+
+input UsersOnWorkspacesUpdateManyWithWhereWithoutWorkspaceInput {
+  data: UsersOnWorkspacesUpdateManyMutationInput!
+  where: UsersOnWorkspacesScalarWhereInput!
+}
+
+input UsersOnWorkspacesUpdateManyWithoutUserNestedInput {
+  connect: [UsersOnWorkspacesWhereUniqueInput!]
+  connectOrCreate: [UsersOnWorkspacesCreateOrConnectWithoutUserInput!]
+  create: [UsersOnWorkspacesCreateWithoutUserInput!]
+  createMany: UsersOnWorkspacesCreateManyUserInputEnvelope
+  delete: [UsersOnWorkspacesWhereUniqueInput!]
+  deleteMany: [UsersOnWorkspacesScalarWhereInput!]
+  disconnect: [UsersOnWorkspacesWhereUniqueInput!]
+  set: [UsersOnWorkspacesWhereUniqueInput!]
+  update: [UsersOnWorkspacesUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [UsersOnWorkspacesUpdateManyWithWhereWithoutUserInput!]
+  upsert: [UsersOnWorkspacesUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput {
+  connect: [UsersOnWorkspacesWhereUniqueInput!]
+  connectOrCreate: [UsersOnWorkspacesCreateOrConnectWithoutWorkspaceInput!]
+  create: [UsersOnWorkspacesCreateWithoutWorkspaceInput!]
+  createMany: UsersOnWorkspacesCreateManyWorkspaceInputEnvelope
+  delete: [UsersOnWorkspacesWhereUniqueInput!]
+  deleteMany: [UsersOnWorkspacesScalarWhereInput!]
+  disconnect: [UsersOnWorkspacesWhereUniqueInput!]
+  set: [UsersOnWorkspacesWhereUniqueInput!]
+  update: [UsersOnWorkspacesUpdateWithWhereUniqueWithoutWorkspaceInput!]
+  updateMany: [UsersOnWorkspacesUpdateManyWithWhereWithoutWorkspaceInput!]
+  upsert: [UsersOnWorkspacesUpsertWithWhereUniqueWithoutWorkspaceInput!]
+}
+
+input UsersOnWorkspacesUpdateWithWhereUniqueWithoutUserInput {
+  data: UsersOnWorkspacesUpdateWithoutUserInput!
+  where: UsersOnWorkspacesWhereUniqueInput!
+}
+
+input UsersOnWorkspacesUpdateWithWhereUniqueWithoutWorkspaceInput {
+  data: UsersOnWorkspacesUpdateWithoutWorkspaceInput!
+  where: UsersOnWorkspacesWhereUniqueInput!
+}
+
+input UsersOnWorkspacesUpdateWithoutUserInput {
+  assignedAt: NullableDateTimeFieldUpdateOperationsInput
+  workspace: WorkspaceUpdateOneRequiredWithoutAssignedUsersNestedInput
+}
+
+input UsersOnWorkspacesUpdateWithoutWorkspaceInput {
+  assignedAt: NullableDateTimeFieldUpdateOperationsInput
+  user: UserUpdateOneRequiredWithoutAssignedWorkspacesNestedInput
+}
+
+input UsersOnWorkspacesUpsertWithWhereUniqueWithoutUserInput {
+  create: UsersOnWorkspacesCreateWithoutUserInput!
+  update: UsersOnWorkspacesUpdateWithoutUserInput!
+  where: UsersOnWorkspacesWhereUniqueInput!
+}
+
+input UsersOnWorkspacesUpsertWithWhereUniqueWithoutWorkspaceInput {
+  create: UsersOnWorkspacesCreateWithoutWorkspaceInput!
+  update: UsersOnWorkspacesUpdateWithoutWorkspaceInput!
+  where: UsersOnWorkspacesWhereUniqueInput!
+}
+
+input UsersOnWorkspacesUserIdWorkspaceIdCompoundUniqueInput {
+  userId: String!
+  workspaceId: String!
+}
+
+input UsersOnWorkspacesWhereInput {
+  AND: [UsersOnWorkspacesWhereInput!]
+  NOT: [UsersOnWorkspacesWhereInput!]
+  OR: [UsersOnWorkspacesWhereInput!]
+  assignedAt: DateTimeNullableFilter
+  user: UserRelationFilter
+  userId: StringFilter
+  workspace: WorkspaceRelationFilter
+  workspaceId: StringFilter
+}
+
+input UsersOnWorkspacesWhereUniqueInput {
+  AND: [UsersOnWorkspacesWhereInput!]
+  NOT: [UsersOnWorkspacesWhereInput!]
+  OR: [UsersOnWorkspacesWhereInput!]
+  assignedAt: DateTimeNullableFilter
+  user: UserRelationFilter
+  userId: StringFilter
+  userId_workspaceId: UsersOnWorkspacesUserIdWorkspaceIdCompoundUniqueInput
+  workspace: WorkspaceRelationFilter
+  workspaceId: StringFilter
+}
+
+type Workspace {
+  _count: WorkspaceCount!
+  aberration: String!
+  activeOnUser: [UserConfig!]
+  assignedFlows: [FlowsOnWorkspaces!]
+  assignedUsers: [UsersOnWorkspaces!]
+  createdAt: DateTime
+  createdBy: User!
+  createdById: String!
+  id: ID!
+  name: String!
+  profile: WorkspaceProfile
+}
+
+type WorkspaceCount {
+  activeOnUser: Int!
+  assignedFlows: Int!
+  assignedUsers: Int!
+}
+
+type WorkspaceCountAggregate {
+  _all: Int!
+  aberration: Int!
+  createdAt: Int!
+  createdById: Int!
+  id: Int!
+  name: Int!
+}
+
+input WorkspaceCreateInput {
+  aberration: String!
+  activeOnUser: UserConfigCreateNestedManyWithoutActiveWorkspaceInput
+  assignedFlows: FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput
+  assignedUsers: UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput
+  createdAt: DateTime
+  createdBy: UserCreateNestedOneWithoutCreatedWorkspacesInput!
+  name: String!
+  profile: WorkspaceProfileCreateNestedOneWithoutWorkspaceInput
+}
+
+input WorkspaceCreateManyCreatedByInput {
+  aberration: String!
+  createdAt: DateTime
+  name: String!
+}
+
+input WorkspaceCreateManyCreatedByInputEnvelope {
+  data: [WorkspaceCreateManyCreatedByInput!]!
+  skipDuplicates: Boolean
+}
+
+input WorkspaceCreateNestedManyWithoutCreatedByInput {
+  connect: [WorkspaceWhereUniqueInput!]
+  connectOrCreate: [WorkspaceCreateOrConnectWithoutCreatedByInput!]
+  create: [WorkspaceCreateWithoutCreatedByInput!]
+  createMany: WorkspaceCreateManyCreatedByInputEnvelope
+}
+
+input WorkspaceCreateNestedOneWithoutActiveOnUserInput {
+  connect: WorkspaceWhereUniqueInput
+  connectOrCreate: WorkspaceCreateOrConnectWithoutActiveOnUserInput
+  create: WorkspaceCreateWithoutActiveOnUserInput
+}
+
+input WorkspaceCreateNestedOneWithoutAssignedFlowsInput {
+  connect: WorkspaceWhereUniqueInput
+  connectOrCreate: WorkspaceCreateOrConnectWithoutAssignedFlowsInput
+  create: WorkspaceCreateWithoutAssignedFlowsInput
+}
+
+input WorkspaceCreateNestedOneWithoutAssignedUsersInput {
+  connect: WorkspaceWhereUniqueInput
+  connectOrCreate: WorkspaceCreateOrConnectWithoutAssignedUsersInput
+  create: WorkspaceCreateWithoutAssignedUsersInput
+}
+
+input WorkspaceCreateOrConnectWithoutActiveOnUserInput {
+  create: WorkspaceCreateWithoutActiveOnUserInput!
+  where: WorkspaceWhereUniqueInput!
+}
+
+input WorkspaceCreateOrConnectWithoutAssignedFlowsInput {
+  create: WorkspaceCreateWithoutAssignedFlowsInput!
+  where: WorkspaceWhereUniqueInput!
+}
+
+input WorkspaceCreateOrConnectWithoutAssignedUsersInput {
+  create: WorkspaceCreateWithoutAssignedUsersInput!
+  where: WorkspaceWhereUniqueInput!
+}
+
+input WorkspaceCreateOrConnectWithoutCreatedByInput {
+  create: WorkspaceCreateWithoutCreatedByInput!
+  where: WorkspaceWhereUniqueInput!
+}
+
+input WorkspaceCreateWithoutActiveOnUserInput {
+  aberration: String!
+  assignedFlows: FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput
+  assignedUsers: UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput
+  createdAt: DateTime
+  createdBy: UserCreateNestedOneWithoutCreatedWorkspacesInput!
+  name: String!
+  profile: WorkspaceProfileCreateNestedOneWithoutWorkspaceInput
+}
+
+input WorkspaceCreateWithoutAssignedFlowsInput {
+  aberration: String!
+  activeOnUser: UserConfigCreateNestedManyWithoutActiveWorkspaceInput
+  assignedUsers: UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput
+  createdAt: DateTime
+  createdBy: UserCreateNestedOneWithoutCreatedWorkspacesInput!
+  name: String!
+  profile: WorkspaceProfileCreateNestedOneWithoutWorkspaceInput
+}
+
+input WorkspaceCreateWithoutAssignedUsersInput {
+  aberration: String!
+  activeOnUser: UserConfigCreateNestedManyWithoutActiveWorkspaceInput
+  assignedFlows: FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput
+  createdAt: DateTime
+  createdBy: UserCreateNestedOneWithoutCreatedWorkspacesInput!
+  name: String!
+  profile: WorkspaceProfileCreateNestedOneWithoutWorkspaceInput
+}
+
+input WorkspaceCreateWithoutCreatedByInput {
+  aberration: String!
+  activeOnUser: UserConfigCreateNestedManyWithoutActiveWorkspaceInput
+  assignedFlows: FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput
+  assignedUsers: UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput
+  createdAt: DateTime
+  name: String!
+  profile: WorkspaceProfileCreateNestedOneWithoutWorkspaceInput
+}
+
+input WorkspaceListRelationFilter {
+  every: WorkspaceWhereInput
+  none: WorkspaceWhereInput
+  some: WorkspaceWhereInput
+}
+
+type WorkspaceMaxAggregate {
+  aberration: String
+  createdAt: DateTime
+  createdById: String
+  id: String
+  name: String
+}
+
+type WorkspaceMinAggregate {
+  aberration: String
+  createdAt: DateTime
+  createdById: String
+  id: String
+  name: String
+}
+
+input WorkspaceNullableRelationFilter {
+  is: WorkspaceWhereInput
+  isNot: WorkspaceWhereInput
+}
+
+input WorkspaceOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input WorkspaceOrderByWithRelationInput {
+  aberration: SortOrder
+  activeOnUser: UserConfigOrderByRelationAggregateInput
+  assignedFlows: FlowsOnWorkspacesOrderByRelationAggregateInput
+  assignedUsers: UsersOnWorkspacesOrderByRelationAggregateInput
+  createdAt: SortOrderInput
+  createdBy: UserOrderByWithRelationInput
+  createdById: SortOrder
+  id: SortOrder
+  name: SortOrder
+  profile: WorkspaceProfileOrderByWithRelationInput
+}
+
+type WorkspaceProfile {
+  color: String
+  createdAt: DateTime
+  description: String
+  icon: String
+  id: ID!
+  workspace: Workspace!
+  workspaceId: String!
+}
+
+type WorkspaceProfileCountAggregate {
+  _all: Int!
+  color: Int!
+  createdAt: Int!
+  description: Int!
+  icon: Int!
+  id: Int!
+  workspaceId: Int!
+}
+
+input WorkspaceProfileCreateNestedOneWithoutWorkspaceInput {
+  connect: WorkspaceProfileWhereUniqueInput
+  connectOrCreate: WorkspaceProfileCreateOrConnectWithoutWorkspaceInput
+  create: WorkspaceProfileCreateWithoutWorkspaceInput
+}
+
+input WorkspaceProfileCreateOrConnectWithoutWorkspaceInput {
+  create: WorkspaceProfileCreateWithoutWorkspaceInput!
+  where: WorkspaceProfileWhereUniqueInput!
+}
+
+input WorkspaceProfileCreateWithoutWorkspaceInput {
+  color: String
+  createdAt: DateTime
+  description: String
+  icon: String
+}
+
+type WorkspaceProfileMaxAggregate {
+  color: String
+  createdAt: DateTime
+  description: String
+  icon: String
+  id: String
+  workspaceId: String
+}
+
+type WorkspaceProfileMinAggregate {
+  color: String
+  createdAt: DateTime
+  description: String
+  icon: String
+  id: String
+  workspaceId: String
+}
+
+input WorkspaceProfileNullableRelationFilter {
+  is: WorkspaceProfileWhereInput
+  isNot: WorkspaceProfileWhereInput
+}
+
+input WorkspaceProfileOrderByWithRelationInput {
+  color: SortOrderInput
+  createdAt: SortOrderInput
+  description: SortOrderInput
+  icon: SortOrderInput
+  id: SortOrder
+  workspace: WorkspaceOrderByWithRelationInput
+  workspaceId: SortOrder
+}
+
+input WorkspaceProfileUpdateOneWithoutWorkspaceNestedInput {
+  connect: WorkspaceProfileWhereUniqueInput
+  connectOrCreate: WorkspaceProfileCreateOrConnectWithoutWorkspaceInput
+  create: WorkspaceProfileCreateWithoutWorkspaceInput
+  delete: WorkspaceProfileWhereInput
+  disconnect: WorkspaceProfileWhereInput
+  update: WorkspaceProfileUpdateToOneWithWhereWithoutWorkspaceInput
+  upsert: WorkspaceProfileUpsertWithoutWorkspaceInput
+}
+
+input WorkspaceProfileUpdateToOneWithWhereWithoutWorkspaceInput {
+  data: WorkspaceProfileUpdateWithoutWorkspaceInput!
+  where: WorkspaceProfileWhereInput
+}
+
+input WorkspaceProfileUpdateWithoutWorkspaceInput {
+  color: NullableStringFieldUpdateOperationsInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  description: NullableStringFieldUpdateOperationsInput
+  icon: NullableStringFieldUpdateOperationsInput
+}
+
+input WorkspaceProfileUpsertWithoutWorkspaceInput {
+  create: WorkspaceProfileCreateWithoutWorkspaceInput!
+  update: WorkspaceProfileUpdateWithoutWorkspaceInput!
+  where: WorkspaceProfileWhereInput
+}
+
+input WorkspaceProfileWhereInput {
+  AND: [WorkspaceProfileWhereInput!]
+  NOT: [WorkspaceProfileWhereInput!]
+  OR: [WorkspaceProfileWhereInput!]
+  color: StringNullableFilter
+  createdAt: DateTimeNullableFilter
+  description: StringNullableFilter
+  icon: StringNullableFilter
+  id: StringFilter
+  workspace: WorkspaceRelationFilter
+  workspaceId: StringFilter
+}
+
+input WorkspaceProfileWhereUniqueInput {
+  AND: [WorkspaceProfileWhereInput!]
+  NOT: [WorkspaceProfileWhereInput!]
+  OR: [WorkspaceProfileWhereInput!]
+  color: StringNullableFilter
+  createdAt: DateTimeNullableFilter
+  description: StringNullableFilter
+  icon: StringNullableFilter
+  id: String
+  workspace: WorkspaceRelationFilter
+  workspaceId: String
+}
+
+input WorkspaceRelationFilter {
+  is: WorkspaceWhereInput
+  isNot: WorkspaceWhereInput
+}
+
+enum WorkspaceScalarFieldEnum {
+  aberration
+  createdAt
+  createdById
+  id
+  name
+}
+
+input WorkspaceScalarWhereInput {
+  AND: [WorkspaceScalarWhereInput!]
+  NOT: [WorkspaceScalarWhereInput!]
+  OR: [WorkspaceScalarWhereInput!]
+  aberration: StringFilter
+  createdAt: DateTimeNullableFilter
+  createdById: StringFilter
+  id: StringFilter
+  name: StringFilter
+}
+
+input WorkspaceUpdateInput {
+  aberration: StringFieldUpdateOperationsInput
+  activeOnUser: UserConfigUpdateManyWithoutActiveWorkspaceNestedInput
+  assignedFlows: FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
+  assignedUsers: UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  createdBy: UserUpdateOneRequiredWithoutCreatedWorkspacesNestedInput
+  name: StringFieldUpdateOperationsInput
+  profile: WorkspaceProfileUpdateOneWithoutWorkspaceNestedInput
+}
+
+input WorkspaceUpdateManyMutationInput {
+  aberration: StringFieldUpdateOperationsInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+}
+
+input WorkspaceUpdateManyWithWhereWithoutCreatedByInput {
+  data: WorkspaceUpdateManyMutationInput!
+  where: WorkspaceScalarWhereInput!
+}
+
+input WorkspaceUpdateManyWithoutCreatedByNestedInput {
+  connect: [WorkspaceWhereUniqueInput!]
+  connectOrCreate: [WorkspaceCreateOrConnectWithoutCreatedByInput!]
+  create: [WorkspaceCreateWithoutCreatedByInput!]
+  createMany: WorkspaceCreateManyCreatedByInputEnvelope
+  delete: [WorkspaceWhereUniqueInput!]
+  deleteMany: [WorkspaceScalarWhereInput!]
+  disconnect: [WorkspaceWhereUniqueInput!]
+  set: [WorkspaceWhereUniqueInput!]
+  update: [WorkspaceUpdateWithWhereUniqueWithoutCreatedByInput!]
+  updateMany: [WorkspaceUpdateManyWithWhereWithoutCreatedByInput!]
+  upsert: [WorkspaceUpsertWithWhereUniqueWithoutCreatedByInput!]
+}
+
+input WorkspaceUpdateOneRequiredWithoutAssignedFlowsNestedInput {
+  connect: WorkspaceWhereUniqueInput
+  connectOrCreate: WorkspaceCreateOrConnectWithoutAssignedFlowsInput
+  create: WorkspaceCreateWithoutAssignedFlowsInput
+  update: WorkspaceUpdateToOneWithWhereWithoutAssignedFlowsInput
+  upsert: WorkspaceUpsertWithoutAssignedFlowsInput
+}
+
+input WorkspaceUpdateOneRequiredWithoutAssignedUsersNestedInput {
+  connect: WorkspaceWhereUniqueInput
+  connectOrCreate: WorkspaceCreateOrConnectWithoutAssignedUsersInput
+  create: WorkspaceCreateWithoutAssignedUsersInput
+  update: WorkspaceUpdateToOneWithWhereWithoutAssignedUsersInput
+  upsert: WorkspaceUpsertWithoutAssignedUsersInput
+}
+
+input WorkspaceUpdateOneWithoutActiveOnUserNestedInput {
+  connect: WorkspaceWhereUniqueInput
+  connectOrCreate: WorkspaceCreateOrConnectWithoutActiveOnUserInput
+  create: WorkspaceCreateWithoutActiveOnUserInput
+  delete: WorkspaceWhereInput
+  disconnect: WorkspaceWhereInput
+  update: WorkspaceUpdateToOneWithWhereWithoutActiveOnUserInput
+  upsert: WorkspaceUpsertWithoutActiveOnUserInput
+}
+
+input WorkspaceUpdateToOneWithWhereWithoutActiveOnUserInput {
+  data: WorkspaceUpdateWithoutActiveOnUserInput!
+  where: WorkspaceWhereInput
+}
+
+input WorkspaceUpdateToOneWithWhereWithoutAssignedFlowsInput {
+  data: WorkspaceUpdateWithoutAssignedFlowsInput!
+  where: WorkspaceWhereInput
+}
+
+input WorkspaceUpdateToOneWithWhereWithoutAssignedUsersInput {
+  data: WorkspaceUpdateWithoutAssignedUsersInput!
+  where: WorkspaceWhereInput
+}
+
+input WorkspaceUpdateWithWhereUniqueWithoutCreatedByInput {
+  data: WorkspaceUpdateWithoutCreatedByInput!
+  where: WorkspaceWhereUniqueInput!
+}
+
+input WorkspaceUpdateWithoutActiveOnUserInput {
+  aberration: StringFieldUpdateOperationsInput
+  assignedFlows: FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
+  assignedUsers: UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  createdBy: UserUpdateOneRequiredWithoutCreatedWorkspacesNestedInput
+  name: StringFieldUpdateOperationsInput
+  profile: WorkspaceProfileUpdateOneWithoutWorkspaceNestedInput
+}
+
+input WorkspaceUpdateWithoutAssignedFlowsInput {
+  aberration: StringFieldUpdateOperationsInput
+  activeOnUser: UserConfigUpdateManyWithoutActiveWorkspaceNestedInput
+  assignedUsers: UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  createdBy: UserUpdateOneRequiredWithoutCreatedWorkspacesNestedInput
+  name: StringFieldUpdateOperationsInput
+  profile: WorkspaceProfileUpdateOneWithoutWorkspaceNestedInput
+}
+
+input WorkspaceUpdateWithoutAssignedUsersInput {
+  aberration: StringFieldUpdateOperationsInput
+  activeOnUser: UserConfigUpdateManyWithoutActiveWorkspaceNestedInput
+  assignedFlows: FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  createdBy: UserUpdateOneRequiredWithoutCreatedWorkspacesNestedInput
+  name: StringFieldUpdateOperationsInput
+  profile: WorkspaceProfileUpdateOneWithoutWorkspaceNestedInput
+}
+
+input WorkspaceUpdateWithoutCreatedByInput {
+  aberration: StringFieldUpdateOperationsInput
+  activeOnUser: UserConfigUpdateManyWithoutActiveWorkspaceNestedInput
+  assignedFlows: FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
+  assignedUsers: UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  profile: WorkspaceProfileUpdateOneWithoutWorkspaceNestedInput
+}
+
+input WorkspaceUpsertWithWhereUniqueWithoutCreatedByInput {
+  create: WorkspaceCreateWithoutCreatedByInput!
+  update: WorkspaceUpdateWithoutCreatedByInput!
+  where: WorkspaceWhereUniqueInput!
+}
+
+input WorkspaceUpsertWithoutActiveOnUserInput {
+  create: WorkspaceCreateWithoutActiveOnUserInput!
+  update: WorkspaceUpdateWithoutActiveOnUserInput!
+  where: WorkspaceWhereInput
+}
+
+input WorkspaceUpsertWithoutAssignedFlowsInput {
+  create: WorkspaceCreateWithoutAssignedFlowsInput!
+  update: WorkspaceUpdateWithoutAssignedFlowsInput!
+  where: WorkspaceWhereInput
+}
+
+input WorkspaceUpsertWithoutAssignedUsersInput {
+  create: WorkspaceCreateWithoutAssignedUsersInput!
+  update: WorkspaceUpdateWithoutAssignedUsersInput!
+  where: WorkspaceWhereInput
+}
+
+input WorkspaceWhereInput {
+  AND: [WorkspaceWhereInput!]
+  NOT: [WorkspaceWhereInput!]
+  OR: [WorkspaceWhereInput!]
+  aberration: StringFilter
+  activeOnUser: UserConfigListRelationFilter
+  assignedFlows: FlowsOnWorkspacesListRelationFilter
+  assignedUsers: UsersOnWorkspacesListRelationFilter
+  createdAt: DateTimeNullableFilter
+  createdBy: UserRelationFilter
+  createdById: StringFilter
+  id: StringFilter
+  name: StringFilter
+  profile: WorkspaceProfileNullableRelationFilter
+}
+
+input WorkspaceWhereUniqueInput {
+  AND: [WorkspaceWhereInput!]
+  NOT: [WorkspaceWhereInput!]
+  OR: [WorkspaceWhereInput!]
+  aberration: String
+  activeOnUser: UserConfigListRelationFilter
+  assignedFlows: FlowsOnWorkspacesListRelationFilter
+  assignedUsers: UsersOnWorkspacesListRelationFilter
+  createdAt: DateTimeNullableFilter
+  createdBy: UserRelationFilter
+  createdById: StringFilter
+  id: String
+  name: String
+  profile: WorkspaceProfileNullableRelationFilter
 }

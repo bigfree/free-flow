@@ -5,7 +5,7 @@ import { LoginInput } from './dto/login.input';
 import { UseGuards } from '@nestjs/common';
 import { GqlThrottlerGuard } from '../common/guards/gql-throttle.guard';
 import { RegisterInput } from './dto/register.input';
-import { User } from '../@generated/user';
+import { User } from '../@generated';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { AccessTokenData } from '../common/types/authorize.types';
 import { PublishStateEnum } from '../common/pubsub/publish-state.enum';
@@ -71,7 +71,7 @@ export class AuthorizeResolver {
     }
 
     @UseGuards(GqlThrottlerGuard)
-    @Mutation(() => Authorize)
+    @Mutation(() => Authorize, { name: 'refreshTokens' })
     public async refresh(@Args('refreshInput') refreshInput: RefreshInput): Promise<Authorize> {
         return await this.authorizeService.refresh(refreshInput);
     }

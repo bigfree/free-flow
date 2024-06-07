@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { TabService } from './tab.service';
-import { CreateOneTabArgs, DeleteManyTabArgs, DeleteOneTabArgs, FindManyTabArgs, Tab } from '../@generated/tab';
+import { CreateOneTabArgs, DeleteManyTabArgs, DeleteOneTabArgs, FindManyTabArgs, Tab } from '../@generated';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { GqlThrottlerGuard } from '../common/guards/gql-throttle.guard';

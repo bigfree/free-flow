@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateOneTabArgs, DeleteManyTabArgs, DeleteOneTabArgs, FindManyTabArgs, Tab } from '../@generated/tab';
+import { CreateOneTabArgs, DeleteManyTabArgs, DeleteOneTabArgs, FindManyTabArgs, Tab } from '../@generated';
 import { PrismaService } from '../common/prisma/prisma.service';
 import { BatchPayload } from './dto/batch-payload.output';
 
@@ -15,11 +15,10 @@ export class TabService {
      */
     public async create(createOneTabArgs: CreateOneTabArgs): Promise<Tab> {
         return this.prismaService.tab.create({
+            data: createOneTabArgs.data,
             include: {
-                flow: true,
                 user: true,
             },
-            ...createOneTabArgs,
         });
     }
 
@@ -31,11 +30,15 @@ export class TabService {
      */
     public async findAll(findManyTabArgs: FindManyTabArgs): Promise<Tab[]> {
         return this.prismaService.tab.findMany({
+            cursor: findManyTabArgs.cursor,
+            distinct: findManyTabArgs.distinct,
             include: {
-                flow: true,
                 user: true,
             },
-            ...findManyTabArgs,
+            orderBy: findManyTabArgs.orderBy,
+            skip: findManyTabArgs.skip,
+            take: findManyTabArgs.take,
+            where: findManyTabArgs.where,
         });
     }
 
@@ -48,16 +51,21 @@ export class TabService {
     public async removeOne(deleteOneTabArgs: DeleteOneTabArgs): Promise<Tab> {
         return this.prismaService.tab.delete({
             include: {
-                flow: true,
                 user: true,
             },
-            ...deleteOneTabArgs,
+            where: deleteOneTabArgs.where,
         });
     }
 
+    /**
+     * Removes multiple tab objects from the database.
+     *
+     * @param {DeleteManyTabArgs} deleteManyTabArgs - The arguments for removing multiple tabs.
+     * @returns {Promise<BatchPayload>} - A promise that resolves to a BatchPayload object representing the number of tabs removed.
+     */
     public async removeMany(deleteManyTabArgs: DeleteManyTabArgs): Promise<BatchPayload> {
         return this.prismaService.tab.deleteMany({
-            ...deleteManyTabArgs,
+            where: deleteManyTabArgs.where,
         });
     }
 }
