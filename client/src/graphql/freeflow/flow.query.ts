@@ -7,6 +7,7 @@ export const FlowDetailQuery = gql(/* GraphQL */ `
             __typename
             description
             data
+            edges
             _count {
                 versions
             }

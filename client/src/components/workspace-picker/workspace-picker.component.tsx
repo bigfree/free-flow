@@ -2,7 +2,7 @@ import { FC, Fragment, ReactElement, useCallback, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { Avatar, Center, ComboboxStore, Group, Text, UnstyledButton, useCombobox } from '@mantine/core';
 import {
-    ActiveWorkspaceColor,
+    ActiveWorkspaceColorVar,
     ButtonContent,
     ButtonIcon,
     SpotlightAction,
@@ -103,24 +103,17 @@ const WorkspacePicker: FC = (): ReactElement => {
                 className={WorkspacePickerComponent}
                 onClick={() => workspacesSpotlight.open()}
                 style={assignInlineVars({
-                    [ActiveWorkspaceColor]: myConfigData?.myConfig?.activeWorkspace?.profile?.color ?? '#000000',
+                    [ActiveWorkspaceColorVar]: myConfigData?.myConfig?.activeWorkspace?.profile?.color ?? '#000000',
                 })}
             >
-                <div></div>
                 <Avatar
                     size={'md'}
-                    radius={'sm'}
-                    color={myConfigData?.myConfig?.activeWorkspace?.profile?.color ?? '#000000'}
-                >
-                    WS
-                </Avatar>
+                    radius={'md'}
+                    color={myConfigData?.myConfig?.activeWorkspace?.profile?.color ?? 'initials'}
+                    name={myConfigData?.myConfig?.activeWorkspace?.name}
+                />
                 <div className={ButtonContent}>
-                    <Text c={'dimmed'} size={'sm'} lh={1}>
-                        {myConfigData?.myConfig?.activeWorkspace?.aberration}
-                    </Text>
-                    <Text size={'md'} fw={600}>
-                        {myConfigData?.myConfig?.activeWorkspace?.name}
-                    </Text>
+                    <Text size={'sm'}>{myConfigData?.myConfig?.activeWorkspace?.name}</Text>
                 </div>
                 <IconSelector className={ButtonIcon} stroke={1.5} />
             </UnstyledButton>
@@ -138,7 +131,7 @@ const WorkspacePicker: FC = (): ReactElement => {
                     <div className={SpotlightOptionGroup}>
                         <Link to={'/workspaces/create'} className={SpotlightLink}>
                             <Group wrap="nowrap" w="100%">
-                                <Avatar size={'md'} radius={'sm'}>
+                                <Avatar size={'md'} radius={'md'}>
                                     <IconFolderPlus />
                                 </Avatar>
                                 <div style={{ flex: 1 }}>Create new workspace</div>
@@ -160,14 +153,13 @@ const WorkspacePicker: FC = (): ReactElement => {
                                             <Center>
                                                 <Avatar
                                                     size={'md'}
-                                                    radius={'sm'}
-                                                    color={workspace.profile?.color ?? '#000000'}
-                                                >
-                                                    WS
-                                                </Avatar>
+                                                    radius={'md'}
+                                                    color={workspace.profile?.color ?? 'initials'}
+                                                    name={workspace.name}
+                                                />
                                             </Center>
                                             <div style={{ flex: 1 }}>
-                                                <Text opacity={0.6} size={'sm'}>
+                                                <Text opacity={0.6} size={'xs'} c={'dimmed'}>
                                                     {workspace.aberration}
                                                 </Text>
                                                 <Text size={'md'}>{workspace.name}</Text>

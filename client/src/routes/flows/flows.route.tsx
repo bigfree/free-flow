@@ -4,11 +4,17 @@ import { FlowsQuery } from '@graphql/freeflow/flows.query.ts';
 import { myConfigVar } from '@stores/reactive.store.ts';
 import { Link } from 'react-router-dom';
 import { Button, Divider, Text } from '@mantine/core';
+import { SortOrder } from '@/generated/freeFlow/graphql.ts';
 
 const FlowsRoute: FC = (): ReactElement => {
     const myConfig = useReactiveVar(myConfigVar);
     const { data } = useQuery(FlowsQuery, {
         variables: {
+            orderBy: {
+                createdAt: {
+                    sort: SortOrder.Desc
+                }
+            },
             where: {
                 assignedWorkspaces: {
                     every: {

@@ -10,6 +10,10 @@ export const MeComponent = style({
     paddingRight: vars.spacing.sm,
 });
 
+export const MeAvatarRootCss = style({
+    cursor: 'pointer',
+});
+
 // export const FullName = style({
 //     fontSize: rem(13),
 //     fontWeight: 500,

@@ -12,6 +12,7 @@ export const RootAppNavbar = style({
 export const RootAppMain = style({
     display: 'flex',
     flexFlow: 'column',
+    height: '100vh',
 });
 
 export const RootAppHeader = style({
@@ -21,4 +22,5 @@ export const RootAppHeader = style({
 export const RootAppOutletWrapper = style({
     flex: 1,
     display: 'flex',
+    minHeight: 1,
 });

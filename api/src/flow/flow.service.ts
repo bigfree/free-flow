@@ -93,7 +93,7 @@ export class FlowService {
      */
     public async findOne(findUniqueFlowArgs: FindUniqueFlowArgs): Promise<Flow | null> {
         // TODO: Add audit log
-        return this.prismaService.flow.findUnique({
+        return this.prismaService.flow.findUniqueOrThrow({
             include: {
                 _count: true,
                 user: true,

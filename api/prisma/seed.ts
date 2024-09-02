@@ -5,6 +5,7 @@ import { faker } from '@faker-js/faker/locale/sk';
 const prisma = new PrismaClient();
 
 async function main() {
+    console.log('Deleting...');
     await prisma.workspaceProfile.deleteMany();
     await prisma.workspace.deleteMany();
     await prisma.userConfig.deleteMany();
@@ -14,6 +15,7 @@ async function main() {
     await prisma.tab.deleteMany();
     await prisma.flowVersion.deleteMany();
     await prisma.flow.deleteMany();
+    await prisma.action.deleteMany();
 
     console.log('Seeding...');
 
@@ -36,7 +38,6 @@ async function main() {
                     lastName: 'Miko',
                     username: 'Adminko',
                     bio: faker.person.bio(),
-                    avatar: faker.image.avatarGitHub(),
                     acronym: 'AM',
                 },
             },
@@ -83,7 +84,7 @@ async function main() {
                             firstName,
                             lastName,
                             bio: faker.person.bio(),
-                            avatar: faker.image.avatarGitHub(),
+                            avatar: faker.image.avatar(),
                             username: `Userko${index}`,
                         },
                     },
@@ -129,7 +130,7 @@ async function main() {
      */
     const workspace = await prisma.workspace.create({
         data: {
-            name: 'My Workspace',
+            name: 'Workspace',
             aberration: faker.string.alpha(5),
             profile: {
                 create: {

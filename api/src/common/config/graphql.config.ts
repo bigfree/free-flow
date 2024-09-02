@@ -4,6 +4,7 @@ import { join } from 'path';
 import { InMemoryLRUCache } from '@apollo/utils.keyvaluecache';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { DateScalarMode } from '@nestjs/graphql';
+import { GraphQLFormattedError } from 'graphql/error';
 
 export const graphqlConfig = (configService: ConfigService): ApolloDriverConfig => ({
     playground: false,
@@ -31,7 +32,7 @@ export const graphqlConfig = (configService: ConfigService): ApolloDriverConfig 
         dateScalarMode: configService.get<DateScalarMode>('GRAPHQL_SCALAR_DATE_MODE') || 'isoDate',
         // fieldMiddleware: [loggerMiddleware],
     },
-    formatError: (error) => {
+    formatError: (error: GraphQLFormattedError) => {
         const originalError = error.extensions?.originalError as Error;
 
         if (!originalError) {

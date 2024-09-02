@@ -3,7 +3,7 @@ import {
     FlowDeckAsideBodyCss,
     FlowDeckAsideCss, FlowDeckAsideFooterCss, FlowDeckAsideHeaderCss,
     FlowDeckCss,
-    FlowDeckFlowMenuCss,
+    FlowDeckFlowMenuCss, FlowDeckToolbarCss,
     FlowDeckWorkspaceCss,
 } from '@/shared/flow-deck/flow-deck.css.ts';
 
@@ -14,6 +14,7 @@ type FlowDeckProps = FC<PropsWithChildren> & {
     AsideHeader: FC<PropsWithChildren>;
     AsideBody: FC<PropsWithChildren>;
     AsideFooter: FC<PropsWithChildren>;
+    Toolbar: FC<PropsWithChildren>;
 };
 
 /**
@@ -66,6 +67,13 @@ const AsideFooter: FC<PropsWithChildren> = ({ children }): ReactElement => {
     return <div className={FlowDeckAsideFooterCss}>{children}</div>;
 };
 
+/**
+ * FlowDeckAsideFooter component.
+ */
+const Toolbar: FC<PropsWithChildren> = ({ children }): ReactElement => {
+    return <div className={FlowDeckToolbarCss}>{children}</div>;
+};
+
 FlowDeck.displayName = 'FlowDeck';
 Workspace.displayName = 'FlowDeck.Workspace';
 FlowMenu.displayName = 'FlowDeck.FlowMenu';
@@ -73,6 +81,7 @@ Aside.displayName = 'FlowDeck.Aside';
 Aside.displayName = 'FlowDeck.AsideHeader';
 Aside.displayName = 'FlowDeck.AsideBody';
 Aside.displayName = 'FlowDeck.AsideFooter';
+Aside.displayName = 'FlowDeck.Toolbar';
 
 FlowDeck.Aside = Aside;
 FlowDeck.AsideHeader = AsideHeader;
@@ -80,5 +89,6 @@ FlowDeck.AsideBody = AsideBody;
 FlowDeck.AsideFooter = AsideFooter;
 FlowDeck.Workspace = Workspace;
 FlowDeck.FlowMenu = FlowMenu;
+FlowDeck.Toolbar = Toolbar;
 
 export default FlowDeck;

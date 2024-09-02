@@ -10,10 +10,11 @@ export const FlowDeckCss = style({
 
 export const FlowDeckWorkspaceCss = style({
     flex: 1,
+    position: 'relative',
 });
 
 export const FlowDeckFlowMenuCss = style({
-    flex: `0 0 ${rem(80)}`,
+    flex: `0 0 ${rem(76)}`,
     borderLeft: `${rem(1)} solid ${vars.colors.defaultBorder}`,
 });
 
@@ -44,4 +45,12 @@ export const FlowDeckAsideBodyCss = style({
 
 export const FlowDeckAsideFooterCss = style({
     padding: vars.spacing.sm,
+});
+
+export const FlowDeckToolbarCss = style({
+    position: 'absolute',
+    zIndex: 999,
+    bottom: vars.spacing.md,
+    left: vars.spacing.md,
+    display: 'flex'
 });

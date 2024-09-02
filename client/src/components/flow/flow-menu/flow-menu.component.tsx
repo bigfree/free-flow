@@ -1,5 +1,13 @@
 import { FC, ForwardRefExoticComponent, Fragment, ReactElement, RefAttributes, useCallback } from 'react';
-import { Icon, IconHistory, IconInfoCircle, IconProps, IconSettings } from '@tabler/icons-react';
+import {
+    Icon,
+    IconHistory,
+    IconInfoCircle,
+    IconLetterA,
+    IconLetterN,
+    IconProps,
+    IconSettings,
+} from '@tabler/icons-react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
     FlowMenuCss,
@@ -19,7 +27,8 @@ type LinkData = {
 };
 
 const data: LinkData[] = [
-    { link: 'nodes', label: 'Nodes', icon: IconInfoCircle, divider: true },
+    { link: 'nodes', label: 'Nodes', icon: IconLetterN, divider: false },
+    { link: 'actions', label: 'Actions', icon: IconLetterA, divider: true },
     { link: 'info', label: 'Flow', icon: IconInfoCircle, divider: false },
     { link: 'history', label: 'History', icon: IconHistory, divider: false },
     { link: 'config', label: 'Config', icon: IconSettings, divider: false },
@@ -51,7 +60,7 @@ const FlowMenu: FC = (): ReactElement => {
                         }
                         onClick={() => handleOnClickLink(link)}
                     >
-                        <link.icon className={FlowMenuLinkIconCss} />
+                        <link.icon className={FlowMenuLinkIconCss} stroke={1.7} />
                         <span className={FlowMenuLinkLabelCss}>{link.label}</span>
                     </Box>
                     {link.divider ? <Divider className={FlowMenuDividerCss} orientation={'horizontal'} /> : null}

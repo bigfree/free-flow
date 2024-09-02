@@ -26,6 +26,7 @@ import { TabModule } from './tab/tab.module';
 import { FlowVersionModule } from './flow-version/flow-version.module';
 import { WorkspaceModule } from './workspace/workspace.module';
 import { UserConfigModule } from './user-config/user-config.module';
+import { ActionModule } from './action/action.module';
 
 @Module({
     imports: [
@@ -58,6 +59,7 @@ import { UserConfigModule } from './user-config/user-config.module';
         FlowVersionModule,
         WorkspaceModule,
         UserConfigModule,
+        ActionModule,
     ],
     controllers: [AppController],
     providers: [

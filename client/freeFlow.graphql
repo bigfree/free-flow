@@ -1,3 +1,452 @@
+type Action {
+  _count: ActionCount!
+  actionsOnWorkspaces: [ActionsOnWorkspaces!]
+  class: String
+  code: String
+  color: String
+  createdAt: DateTime
+  description: String
+  height: Int
+  id: ID!
+  name: String!
+  radius: Int
+  type: ActionType!
+
+  """Variables on action"""
+  variables: JSON
+  width: Int
+}
+
+type ActionAvgAggregate {
+  height: Float
+  radius: Float
+  width: Float
+}
+
+type ActionCount {
+  actionsOnWorkspaces: Int!
+}
+
+type ActionCountAggregate {
+  _all: Int!
+  class: Int!
+  code: Int!
+  color: Int!
+  createdAt: Int!
+  description: Int!
+  height: Int!
+  id: Int!
+  name: Int!
+  radius: Int!
+  type: Int!
+  variables: Int!
+  width: Int!
+}
+
+input ActionCreateInput {
+  actionsOnWorkspaces: ActionsOnWorkspacesCreateNestedManyWithoutActionInput
+  class: String
+  code: String
+  color: String
+  createdAt: DateTime
+  description: String
+  height: Int
+  name: String!
+  radius: Int
+  type: ActionType
+  variables: JSON
+  width: Int
+}
+
+input ActionCreateNestedOneWithoutActionsOnWorkspacesInput {
+  connect: ActionWhereUniqueInput
+  connectOrCreate: ActionCreateOrConnectWithoutActionsOnWorkspacesInput
+  create: ActionCreateWithoutActionsOnWorkspacesInput
+}
+
+input ActionCreateOrConnectWithoutActionsOnWorkspacesInput {
+  create: ActionCreateWithoutActionsOnWorkspacesInput!
+  where: ActionWhereUniqueInput!
+}
+
+input ActionCreateWithoutActionsOnWorkspacesInput {
+  class: String
+  code: String
+  color: String
+  createdAt: DateTime
+  description: String
+  height: Int
+  name: String!
+  radius: Int
+  type: ActionType
+  variables: JSON
+  width: Int
+}
+
+type ActionMaxAggregate {
+  class: String
+  code: String
+  color: String
+  createdAt: DateTime
+  description: String
+  height: Int
+  id: String
+  name: String
+  radius: Int
+  type: ActionType
+  width: Int
+}
+
+type ActionMinAggregate {
+  class: String
+  code: String
+  color: String
+  createdAt: DateTime
+  description: String
+  height: Int
+  id: String
+  name: String
+  radius: Int
+  type: ActionType
+  width: Int
+}
+
+input ActionOrderByWithRelationInput {
+  actionsOnWorkspaces: ActionsOnWorkspacesOrderByRelationAggregateInput
+  class: SortOrderInput
+  code: SortOrderInput
+  color: SortOrderInput
+  createdAt: SortOrderInput
+  description: SortOrderInput
+  height: SortOrderInput
+  id: SortOrder
+  name: SortOrder
+  radius: SortOrderInput
+  type: SortOrder
+  variables: SortOrderInput
+  width: SortOrderInput
+}
+
+input ActionRelationFilter {
+  is: ActionWhereInput
+  isNot: ActionWhereInput
+}
+
+enum ActionScalarFieldEnum {
+  class
+  code
+  color
+  createdAt
+  description
+  height
+  id
+  name
+  radius
+  type
+  variables
+  width
+}
+
+type ActionSumAggregate {
+  height: Int
+  radius: Int
+  width: Int
+}
+
+enum ActionType {
+  CIRCLE
+  SQUARE
+  TRIANGLE
+}
+
+input ActionUpdateInput {
+  actionsOnWorkspaces: ActionsOnWorkspacesUpdateManyWithoutActionNestedInput
+  class: NullableStringFieldUpdateOperationsInput
+  code: NullableStringFieldUpdateOperationsInput
+  color: NullableStringFieldUpdateOperationsInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  description: NullableStringFieldUpdateOperationsInput
+  height: NullableIntFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  radius: NullableIntFieldUpdateOperationsInput
+  type: EnumActionTypeFieldUpdateOperationsInput
+  variables: JSON
+  width: NullableIntFieldUpdateOperationsInput
+}
+
+input ActionUpdateOneRequiredWithoutActionsOnWorkspacesNestedInput {
+  connect: ActionWhereUniqueInput
+  connectOrCreate: ActionCreateOrConnectWithoutActionsOnWorkspacesInput
+  create: ActionCreateWithoutActionsOnWorkspacesInput
+  update: ActionUpdateToOneWithWhereWithoutActionsOnWorkspacesInput
+  upsert: ActionUpsertWithoutActionsOnWorkspacesInput
+}
+
+input ActionUpdateToOneWithWhereWithoutActionsOnWorkspacesInput {
+  data: ActionUpdateWithoutActionsOnWorkspacesInput!
+  where: ActionWhereInput
+}
+
+input ActionUpdateWithoutActionsOnWorkspacesInput {
+  class: NullableStringFieldUpdateOperationsInput
+  code: NullableStringFieldUpdateOperationsInput
+  color: NullableStringFieldUpdateOperationsInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  description: NullableStringFieldUpdateOperationsInput
+  height: NullableIntFieldUpdateOperationsInput
+  name: StringFieldUpdateOperationsInput
+  radius: NullableIntFieldUpdateOperationsInput
+  type: EnumActionTypeFieldUpdateOperationsInput
+  variables: JSON
+  width: NullableIntFieldUpdateOperationsInput
+}
+
+input ActionUpsertWithoutActionsOnWorkspacesInput {
+  create: ActionCreateWithoutActionsOnWorkspacesInput!
+  update: ActionUpdateWithoutActionsOnWorkspacesInput!
+  where: ActionWhereInput
+}
+
+input ActionWhereInput {
+  AND: [ActionWhereInput!]
+  NOT: [ActionWhereInput!]
+  OR: [ActionWhereInput!]
+  actionsOnWorkspaces: ActionsOnWorkspacesListRelationFilter
+  class: StringNullableFilter
+  code: StringNullableFilter
+  color: StringNullableFilter
+  createdAt: DateTimeNullableFilter
+  description: StringNullableFilter
+  height: IntNullableFilter
+  id: StringFilter
+  name: StringFilter
+  radius: IntNullableFilter
+  type: EnumActionTypeFilter
+  variables: JsonNullableFilter
+  width: IntNullableFilter
+}
+
+input ActionWhereUniqueInput {
+  AND: [ActionWhereInput!]
+  NOT: [ActionWhereInput!]
+  OR: [ActionWhereInput!]
+  actionsOnWorkspaces: ActionsOnWorkspacesListRelationFilter
+  class: StringNullableFilter
+  code: StringNullableFilter
+  color: StringNullableFilter
+  createdAt: DateTimeNullableFilter
+  description: StringNullableFilter
+  height: IntNullableFilter
+  id: String
+  name: String
+  radius: IntNullableFilter
+  type: EnumActionTypeFilter
+  variables: JsonNullableFilter
+  width: IntNullableFilter
+}
+
+type ActionsOnWorkspaces {
+  action: Action!
+  actionId: String!
+  assignedAt: DateTime
+  workspace: Workspace!
+  workspaceId: String!
+}
+
+input ActionsOnWorkspacesActionIdWorkspaceIdCompoundUniqueInput {
+  actionId: String!
+  workspaceId: String!
+}
+
+type ActionsOnWorkspacesCountAggregate {
+  _all: Int!
+  actionId: Int!
+  assignedAt: Int!
+  workspaceId: Int!
+}
+
+input ActionsOnWorkspacesCreateManyActionInput {
+  assignedAt: DateTime
+  workspaceId: String!
+}
+
+input ActionsOnWorkspacesCreateManyActionInputEnvelope {
+  data: [ActionsOnWorkspacesCreateManyActionInput!]!
+  skipDuplicates: Boolean
+}
+
+input ActionsOnWorkspacesCreateManyWorkspaceInput {
+  actionId: String!
+  assignedAt: DateTime
+}
+
+input ActionsOnWorkspacesCreateManyWorkspaceInputEnvelope {
+  data: [ActionsOnWorkspacesCreateManyWorkspaceInput!]!
+  skipDuplicates: Boolean
+}
+
+input ActionsOnWorkspacesCreateNestedManyWithoutActionInput {
+  connect: [ActionsOnWorkspacesWhereUniqueInput!]
+  connectOrCreate: [ActionsOnWorkspacesCreateOrConnectWithoutActionInput!]
+  create: [ActionsOnWorkspacesCreateWithoutActionInput!]
+  createMany: ActionsOnWorkspacesCreateManyActionInputEnvelope
+}
+
+input ActionsOnWorkspacesCreateNestedManyWithoutWorkspaceInput {
+  connect: [ActionsOnWorkspacesWhereUniqueInput!]
+  connectOrCreate: [ActionsOnWorkspacesCreateOrConnectWithoutWorkspaceInput!]
+  create: [ActionsOnWorkspacesCreateWithoutWorkspaceInput!]
+  createMany: ActionsOnWorkspacesCreateManyWorkspaceInputEnvelope
+}
+
+input ActionsOnWorkspacesCreateOrConnectWithoutActionInput {
+  create: ActionsOnWorkspacesCreateWithoutActionInput!
+  where: ActionsOnWorkspacesWhereUniqueInput!
+}
+
+input ActionsOnWorkspacesCreateOrConnectWithoutWorkspaceInput {
+  create: ActionsOnWorkspacesCreateWithoutWorkspaceInput!
+  where: ActionsOnWorkspacesWhereUniqueInput!
+}
+
+input ActionsOnWorkspacesCreateWithoutActionInput {
+  assignedAt: DateTime
+  workspace: WorkspaceCreateNestedOneWithoutActionsOnWorkspacesInput!
+}
+
+input ActionsOnWorkspacesCreateWithoutWorkspaceInput {
+  action: ActionCreateNestedOneWithoutActionsOnWorkspacesInput!
+  assignedAt: DateTime
+}
+
+input ActionsOnWorkspacesListRelationFilter {
+  every: ActionsOnWorkspacesWhereInput
+  none: ActionsOnWorkspacesWhereInput
+  some: ActionsOnWorkspacesWhereInput
+}
+
+type ActionsOnWorkspacesMaxAggregate {
+  actionId: String
+  assignedAt: DateTime
+  workspaceId: String
+}
+
+type ActionsOnWorkspacesMinAggregate {
+  actionId: String
+  assignedAt: DateTime
+  workspaceId: String
+}
+
+input ActionsOnWorkspacesOrderByRelationAggregateInput {
+  _count: SortOrder
+}
+
+input ActionsOnWorkspacesScalarWhereInput {
+  AND: [ActionsOnWorkspacesScalarWhereInput!]
+  NOT: [ActionsOnWorkspacesScalarWhereInput!]
+  OR: [ActionsOnWorkspacesScalarWhereInput!]
+  actionId: StringFilter
+  assignedAt: DateTimeNullableFilter
+  workspaceId: StringFilter
+}
+
+input ActionsOnWorkspacesUpdateManyMutationInput {
+  assignedAt: NullableDateTimeFieldUpdateOperationsInput
+}
+
+input ActionsOnWorkspacesUpdateManyWithWhereWithoutActionInput {
+  data: ActionsOnWorkspacesUpdateManyMutationInput!
+  where: ActionsOnWorkspacesScalarWhereInput!
+}
+
+input ActionsOnWorkspacesUpdateManyWithWhereWithoutWorkspaceInput {
+  data: ActionsOnWorkspacesUpdateManyMutationInput!
+  where: ActionsOnWorkspacesScalarWhereInput!
+}
+
+input ActionsOnWorkspacesUpdateManyWithoutActionNestedInput {
+  connect: [ActionsOnWorkspacesWhereUniqueInput!]
+  connectOrCreate: [ActionsOnWorkspacesCreateOrConnectWithoutActionInput!]
+  create: [ActionsOnWorkspacesCreateWithoutActionInput!]
+  createMany: ActionsOnWorkspacesCreateManyActionInputEnvelope
+  delete: [ActionsOnWorkspacesWhereUniqueInput!]
+  deleteMany: [ActionsOnWorkspacesScalarWhereInput!]
+  disconnect: [ActionsOnWorkspacesWhereUniqueInput!]
+  set: [ActionsOnWorkspacesWhereUniqueInput!]
+  update: [ActionsOnWorkspacesUpdateWithWhereUniqueWithoutActionInput!]
+  updateMany: [ActionsOnWorkspacesUpdateManyWithWhereWithoutActionInput!]
+  upsert: [ActionsOnWorkspacesUpsertWithWhereUniqueWithoutActionInput!]
+}
+
+input ActionsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput {
+  connect: [ActionsOnWorkspacesWhereUniqueInput!]
+  connectOrCreate: [ActionsOnWorkspacesCreateOrConnectWithoutWorkspaceInput!]
+  create: [ActionsOnWorkspacesCreateWithoutWorkspaceInput!]
+  createMany: ActionsOnWorkspacesCreateManyWorkspaceInputEnvelope
+  delete: [ActionsOnWorkspacesWhereUniqueInput!]
+  deleteMany: [ActionsOnWorkspacesScalarWhereInput!]
+  disconnect: [ActionsOnWorkspacesWhereUniqueInput!]
+  set: [ActionsOnWorkspacesWhereUniqueInput!]
+  update: [ActionsOnWorkspacesUpdateWithWhereUniqueWithoutWorkspaceInput!]
+  updateMany: [ActionsOnWorkspacesUpdateManyWithWhereWithoutWorkspaceInput!]
+  upsert: [ActionsOnWorkspacesUpsertWithWhereUniqueWithoutWorkspaceInput!]
+}
+
+input ActionsOnWorkspacesUpdateWithWhereUniqueWithoutActionInput {
+  data: ActionsOnWorkspacesUpdateWithoutActionInput!
+  where: ActionsOnWorkspacesWhereUniqueInput!
+}
+
+input ActionsOnWorkspacesUpdateWithWhereUniqueWithoutWorkspaceInput {
+  data: ActionsOnWorkspacesUpdateWithoutWorkspaceInput!
+  where: ActionsOnWorkspacesWhereUniqueInput!
+}
+
+input ActionsOnWorkspacesUpdateWithoutActionInput {
+  assignedAt: NullableDateTimeFieldUpdateOperationsInput
+  workspace: WorkspaceUpdateOneRequiredWithoutActionsOnWorkspacesNestedInput
+}
+
+input ActionsOnWorkspacesUpdateWithoutWorkspaceInput {
+  action: ActionUpdateOneRequiredWithoutActionsOnWorkspacesNestedInput
+  assignedAt: NullableDateTimeFieldUpdateOperationsInput
+}
+
+input ActionsOnWorkspacesUpsertWithWhereUniqueWithoutActionInput {
+  create: ActionsOnWorkspacesCreateWithoutActionInput!
+  update: ActionsOnWorkspacesUpdateWithoutActionInput!
+  where: ActionsOnWorkspacesWhereUniqueInput!
+}
+
+input ActionsOnWorkspacesUpsertWithWhereUniqueWithoutWorkspaceInput {
+  create: ActionsOnWorkspacesCreateWithoutWorkspaceInput!
+  update: ActionsOnWorkspacesUpdateWithoutWorkspaceInput!
+  where: ActionsOnWorkspacesWhereUniqueInput!
+}
+
+input ActionsOnWorkspacesWhereInput {
+  AND: [ActionsOnWorkspacesWhereInput!]
+  NOT: [ActionsOnWorkspacesWhereInput!]
+  OR: [ActionsOnWorkspacesWhereInput!]
+  action: ActionRelationFilter
+  actionId: StringFilter
+  assignedAt: DateTimeNullableFilter
+  workspace: WorkspaceRelationFilter
+  workspaceId: StringFilter
+}
+
+input ActionsOnWorkspacesWhereUniqueInput {
+  AND: [ActionsOnWorkspacesWhereInput!]
+  NOT: [ActionsOnWorkspacesWhereInput!]
+  OR: [ActionsOnWorkspacesWhereInput!]
+  action: ActionRelationFilter
+  actionId: StringFilter
+  actionId_workspaceId: ActionsOnWorkspacesActionIdWorkspaceIdCompoundUniqueInput
+  assignedAt: DateTimeNullableFilter
+  workspace: WorkspaceRelationFilter
+  workspaceId: StringFilter
+}
+
 type AuditlogCountAggregate {
   _all: Int!
   createdAt: Int!
@@ -51,6 +500,17 @@ A field whose value conforms to the standard internet email address format as sp
 """
 scalar EmailAddress @specifiedBy(url: "https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address")
 
+input EnumActionTypeFieldUpdateOperationsInput {
+  set: ActionType
+}
+
+input EnumActionTypeFilter {
+  equals: ActionType
+  in: [ActionType!]
+  not: NestedEnumActionTypeFilter
+  notIn: [ActionType!]
+}
+
 input EnumLogFromNullableFilter {
   equals: LogFrom
   in: [LogFrom!]
@@ -98,6 +558,7 @@ type Flow {
   createdAt: DateTime
   data: JSON
   description: String
+  edges: JSON
   externalId: String
   id: ID!
   name: String!
@@ -117,6 +578,7 @@ type FlowCountAggregate {
   createdAt: Int!
   data: Int!
   description: Int!
+  edges: Int!
   externalId: Int!
   id: Int!
   name: Int!
@@ -129,6 +591,7 @@ input FlowCreateInput {
   createdAt: DateTime
   data: JSON
   description: String
+  edges: JSON
   externalId: String
   name: String!
   user: UserCreateNestedOneWithoutFlowsInput
@@ -140,6 +603,7 @@ input FlowCreateManyUserInput {
   createdAt: DateTime
   data: JSON
   description: String
+  edges: JSON
   externalId: String
   name: String!
 }
@@ -188,6 +652,7 @@ input FlowCreateWithoutAssignedWorkspacesInput {
   createdAt: DateTime
   data: JSON
   description: String
+  edges: JSON
   externalId: String
   name: String!
   user: UserCreateNestedOneWithoutFlowsInput
@@ -200,6 +665,7 @@ input FlowCreateWithoutUserInput {
   createdAt: DateTime
   data: JSON
   description: String
+  edges: JSON
   externalId: String
   name: String!
   versions: FlowVersionCreateNestedManyWithoutFlowInput
@@ -211,6 +677,7 @@ input FlowCreateWithoutVersionsInput {
   createdAt: DateTime
   data: JSON
   description: String
+  edges: JSON
   externalId: String
   name: String!
   user: UserCreateNestedOneWithoutFlowsInput
@@ -252,6 +719,7 @@ input FlowOrderByWithRelationInput {
   createdAt: SortOrderInput
   data: SortOrderInput
   description: SortOrderInput
+  edges: SortOrderInput
   externalId: SortOrderInput
   id: SortOrder
   name: SortOrder
@@ -270,6 +738,7 @@ enum FlowScalarFieldEnum {
   createdAt
   data
   description
+  edges
   externalId
   id
   name
@@ -284,6 +753,7 @@ input FlowScalarWhereInput {
   createdAt: DateTimeNullableFilter
   data: JsonNullableFilter
   description: StringNullableFilter
+  edges: JsonNullableFilter
   externalId: StringNullableFilter
   id: StringFilter
   name: StringFilter
@@ -296,6 +766,7 @@ input FlowUpdateInput {
   createdAt: NullableDateTimeFieldUpdateOperationsInput
   data: JSON
   description: NullableStringFieldUpdateOperationsInput
+  edges: JSON
   externalId: NullableStringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   user: UserUpdateOneWithoutFlowsNestedInput
@@ -307,6 +778,7 @@ input FlowUpdateManyMutationInput {
   createdAt: NullableDateTimeFieldUpdateOperationsInput
   data: JSON
   description: NullableStringFieldUpdateOperationsInput
+  edges: JSON
   externalId: NullableStringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
 }
@@ -366,6 +838,7 @@ input FlowUpdateWithoutAssignedWorkspacesInput {
   createdAt: NullableDateTimeFieldUpdateOperationsInput
   data: JSON
   description: NullableStringFieldUpdateOperationsInput
+  edges: JSON
   externalId: NullableStringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   user: UserUpdateOneWithoutFlowsNestedInput
@@ -378,6 +851,7 @@ input FlowUpdateWithoutUserInput {
   createdAt: NullableDateTimeFieldUpdateOperationsInput
   data: JSON
   description: NullableStringFieldUpdateOperationsInput
+  edges: JSON
   externalId: NullableStringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   versions: FlowVersionUpdateManyWithoutFlowNestedInput
@@ -389,6 +863,7 @@ input FlowUpdateWithoutVersionsInput {
   createdAt: NullableDateTimeFieldUpdateOperationsInput
   data: JSON
   description: NullableStringFieldUpdateOperationsInput
+  edges: JSON
   externalId: NullableStringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
   user: UserUpdateOneWithoutFlowsNestedInput
@@ -416,6 +891,7 @@ type FlowVersion {
   code: String!
   createdAt: DateTime
   data: JSON
+  edges: JSON
   externalId: String
   flow: Flow!
   flowId: String!
@@ -432,6 +908,7 @@ type FlowVersionCountAggregate {
   code: Int!
   createdAt: Int!
   data: Int!
+  edges: Int!
   externalId: Int!
   flowId: Int!
   id: Int!
@@ -445,6 +922,7 @@ input FlowVersionCreateManyFlowInput {
   code: String!
   createdAt: DateTime
   data: JSON
+  edges: JSON
   externalId: String
   id: String
   name: String!
@@ -462,6 +940,7 @@ input FlowVersionCreateManyUserInput {
   code: String!
   createdAt: DateTime
   data: JSON
+  edges: JSON
   externalId: String
   flowId: String!
   id: String
@@ -503,6 +982,7 @@ input FlowVersionCreateWithoutFlowInput {
   code: String!
   createdAt: DateTime
   data: JSON
+  edges: JSON
   externalId: String
   id: String
   name: String!
@@ -515,6 +995,7 @@ input FlowVersionCreateWithoutUserInput {
   code: String!
   createdAt: DateTime
   data: JSON
+  edges: JSON
   externalId: String
   flow: FlowCreateNestedOneWithoutVersionsInput!
   id: String
@@ -561,6 +1042,7 @@ input FlowVersionOrderByWithRelationInput {
   code: SortOrder
   createdAt: SortOrderInput
   data: SortOrderInput
+  edges: SortOrderInput
   externalId: SortOrderInput
   flow: FlowOrderByWithRelationInput
   flowId: SortOrder
@@ -576,6 +1058,7 @@ enum FlowVersionScalarFieldEnum {
   code
   createdAt
   data
+  edges
   externalId
   flowId
   id
@@ -592,6 +1075,7 @@ input FlowVersionScalarWhereInput {
   code: StringFilter
   createdAt: DateTimeNullableFilter
   data: JsonNullableFilter
+  edges: JsonNullableFilter
   externalId: StringNullableFilter
   flowId: StringFilter
   id: StringFilter
@@ -611,6 +1095,7 @@ input FlowVersionUpdateManyMutationInput {
   code: StringFieldUpdateOperationsInput
   createdAt: NullableDateTimeFieldUpdateOperationsInput
   data: JSON
+  edges: JSON
   externalId: NullableStringFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
@@ -670,6 +1155,7 @@ input FlowVersionUpdateWithoutFlowInput {
   code: StringFieldUpdateOperationsInput
   createdAt: NullableDateTimeFieldUpdateOperationsInput
   data: JSON
+  edges: JSON
   externalId: NullableStringFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
   name: StringFieldUpdateOperationsInput
@@ -682,6 +1168,7 @@ input FlowVersionUpdateWithoutUserInput {
   code: StringFieldUpdateOperationsInput
   createdAt: NullableDateTimeFieldUpdateOperationsInput
   data: JSON
+  edges: JSON
   externalId: NullableStringFieldUpdateOperationsInput
   flow: FlowUpdateOneRequiredWithoutVersionsNestedInput
   id: StringFieldUpdateOperationsInput
@@ -709,6 +1196,7 @@ input FlowVersionWhereInput {
   code: StringFilter
   createdAt: DateTimeNullableFilter
   data: JsonNullableFilter
+  edges: JsonNullableFilter
   externalId: StringNullableFilter
   flow: FlowRelationFilter
   flowId: StringFilter
@@ -727,6 +1215,7 @@ input FlowVersionWhereUniqueInput {
   code: StringFilter
   createdAt: DateTimeNullableFilter
   data: JsonNullableFilter
+  edges: JsonNullableFilter
   externalId: StringNullableFilter
   flow: FlowRelationFilter
   flowId: StringFilter
@@ -748,6 +1237,7 @@ input FlowWhereInput {
   createdAt: DateTimeNullableFilter
   data: JsonNullableFilter
   description: StringNullableFilter
+  edges: JsonNullableFilter
   externalId: StringNullableFilter
   id: StringFilter
   name: StringFilter
@@ -765,6 +1255,7 @@ input FlowWhereUniqueInput {
   createdAt: DateTimeNullableFilter
   data: JsonNullableFilter
   description: StringNullableFilter
+  edges: JsonNullableFilter
   externalId: String
   id: String
   name: String
@@ -975,6 +1466,17 @@ input FlowsOnWorkspacesWhereUniqueInput {
   workspaceId: StringFilter
 }
 
+input IntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntNullableFilter
+  notIn: [Int!]
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -1096,6 +1598,7 @@ input LoginInput {
 }
 
 type Mutation {
+  createAction(data: ActionCreateInput!): Action!
   createFlow(data: FlowCreateInput!): Flow!
   createLog(data: LogCreateInput): Log!
   createMyConfig(userConfigCreateInput: UserConfigCreateInput!): UserConfig!
@@ -1108,10 +1611,12 @@ type Mutation {
   logout: User!
   refreshTokens(refreshInput: RefreshInput!): Authorize!
   register(registerInput: RegisterInput!): Authorize!
+  removeAction(where: ActionWhereUniqueInput!): Action!
   removeFlow(where: FlowWhereUniqueInput!): Flow!
   removeManyTab(where: TabWhereInput): Tab!
   removeOneTab(where: TabWhereUniqueInput!): Tab!
   removeWorkspace(where: WorkspaceWhereUniqueInput!): Workspace!
+  updateAction(data: ActionUpdateInput!, where: ActionWhereUniqueInput!): Action!
   updateFlow(data: FlowUpdateInput!, where: FlowWhereUniqueInput!): Flow!
   updateMyConfig(userConfigUpdateInput: UserConfigUpdateInput!): UserConfig!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
@@ -1129,6 +1634,13 @@ input NestedDateTimeNullableFilter {
   lte: DateTime
   not: NestedDateTimeNullableFilter
   notIn: [DateTime!]
+}
+
+input NestedEnumActionTypeFilter {
+  equals: ActionType
+  in: [ActionType!]
+  not: NestedEnumActionTypeFilter
+  notIn: [ActionType!]
 }
 
 input NestedEnumLogFromNullableFilter {
@@ -1157,6 +1669,17 @@ input NestedEnumUserTypeFilter {
   in: [UserType!]
   not: NestedEnumUserTypeFilter
   notIn: [UserType!]
+}
+
+input NestedIntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: NestedIntNullableFilter
+  notIn: [Int!]
 }
 
 input NestedStringFilter {
@@ -1193,6 +1716,14 @@ input NullableDateTimeFieldUpdateOperationsInput {
 
 input NullableEnumThemeColorFieldUpdateOperationsInput {
   set: ThemeColor
+}
+
+input NullableIntFieldUpdateOperationsInput {
+  decrement: Int
+  divide: Int
+  increment: Int
+  multiply: Int
+  set: Int
 }
 
 input NullableStringFieldUpdateOperationsInput {
@@ -1447,6 +1978,8 @@ input ProfileWhereUniqueInput {
 }
 
 type Query {
+  action(where: ActionWhereUniqueInput!): Action!
+  actions(cursor: ActionWhereUniqueInput, distinct: [ActionScalarFieldEnum!], orderBy: [ActionOrderByWithRelationInput!], skip: Int, take: Int, where: ActionWhereInput): [Action!]!
   flow(where: FlowWhereUniqueInput!): Flow!
   flowVersion(where: FlowVersionWhereUniqueInput!): FlowVersion!
   flowVersions(cursor: FlowVersionWhereUniqueInput, distinct: [FlowVersionScalarFieldEnum!], orderBy: [FlowVersionOrderByWithRelationInput!], skip: Int, take: Int, where: FlowVersionWhereInput): [FlowVersion!]!
@@ -2626,6 +3159,7 @@ input UsersOnWorkspacesWhereUniqueInput {
 type Workspace {
   _count: WorkspaceCount!
   aberration: String!
+  actionsOnWorkspaces: [ActionsOnWorkspaces!]
   activeOnUser: [UserConfig!]
   assignedFlows: [FlowsOnWorkspaces!]
   assignedUsers: [UsersOnWorkspaces!]
@@ -2638,6 +3172,7 @@ type Workspace {
 }
 
 type WorkspaceCount {
+  actionsOnWorkspaces: Int!
   activeOnUser: Int!
   assignedFlows: Int!
   assignedUsers: Int!
@@ -2654,6 +3189,7 @@ type WorkspaceCountAggregate {
 
 input WorkspaceCreateInput {
   aberration: String!
+  actionsOnWorkspaces: ActionsOnWorkspacesCreateNestedManyWithoutWorkspaceInput
   activeOnUser: UserConfigCreateNestedManyWithoutActiveWorkspaceInput
   assignedFlows: FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput
   assignedUsers: UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput
@@ -2681,6 +3217,12 @@ input WorkspaceCreateNestedManyWithoutCreatedByInput {
   createMany: WorkspaceCreateManyCreatedByInputEnvelope
 }
 
+input WorkspaceCreateNestedOneWithoutActionsOnWorkspacesInput {
+  connect: WorkspaceWhereUniqueInput
+  connectOrCreate: WorkspaceCreateOrConnectWithoutActionsOnWorkspacesInput
+  create: WorkspaceCreateWithoutActionsOnWorkspacesInput
+}
+
 input WorkspaceCreateNestedOneWithoutActiveOnUserInput {
   connect: WorkspaceWhereUniqueInput
   connectOrCreate: WorkspaceCreateOrConnectWithoutActiveOnUserInput
@@ -2697,6 +3239,11 @@ input WorkspaceCreateNestedOneWithoutAssignedUsersInput {
   connect: WorkspaceWhereUniqueInput
   connectOrCreate: WorkspaceCreateOrConnectWithoutAssignedUsersInput
   create: WorkspaceCreateWithoutAssignedUsersInput
+}
+
+input WorkspaceCreateOrConnectWithoutActionsOnWorkspacesInput {
+  create: WorkspaceCreateWithoutActionsOnWorkspacesInput!
+  where: WorkspaceWhereUniqueInput!
 }
 
 input WorkspaceCreateOrConnectWithoutActiveOnUserInput {
@@ -2719,8 +3266,20 @@ input WorkspaceCreateOrConnectWithoutCreatedByInput {
   where: WorkspaceWhereUniqueInput!
 }
 
+input WorkspaceCreateWithoutActionsOnWorkspacesInput {
+  aberration: String!
+  activeOnUser: UserConfigCreateNestedManyWithoutActiveWorkspaceInput
+  assignedFlows: FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput
+  assignedUsers: UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput
+  createdAt: DateTime
+  createdBy: UserCreateNestedOneWithoutCreatedWorkspacesInput!
+  name: String!
+  profile: WorkspaceProfileCreateNestedOneWithoutWorkspaceInput
+}
+
 input WorkspaceCreateWithoutActiveOnUserInput {
   aberration: String!
+  actionsOnWorkspaces: ActionsOnWorkspacesCreateNestedManyWithoutWorkspaceInput
   assignedFlows: FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput
   assignedUsers: UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput
   createdAt: DateTime
@@ -2731,6 +3290,7 @@ input WorkspaceCreateWithoutActiveOnUserInput {
 
 input WorkspaceCreateWithoutAssignedFlowsInput {
   aberration: String!
+  actionsOnWorkspaces: ActionsOnWorkspacesCreateNestedManyWithoutWorkspaceInput
   activeOnUser: UserConfigCreateNestedManyWithoutActiveWorkspaceInput
   assignedUsers: UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput
   createdAt: DateTime
@@ -2741,6 +3301,7 @@ input WorkspaceCreateWithoutAssignedFlowsInput {
 
 input WorkspaceCreateWithoutAssignedUsersInput {
   aberration: String!
+  actionsOnWorkspaces: ActionsOnWorkspacesCreateNestedManyWithoutWorkspaceInput
   activeOnUser: UserConfigCreateNestedManyWithoutActiveWorkspaceInput
   assignedFlows: FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput
   createdAt: DateTime
@@ -2751,6 +3312,7 @@ input WorkspaceCreateWithoutAssignedUsersInput {
 
 input WorkspaceCreateWithoutCreatedByInput {
   aberration: String!
+  actionsOnWorkspaces: ActionsOnWorkspacesCreateNestedManyWithoutWorkspaceInput
   activeOnUser: UserConfigCreateNestedManyWithoutActiveWorkspaceInput
   assignedFlows: FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput
   assignedUsers: UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput
@@ -2792,6 +3354,7 @@ input WorkspaceOrderByRelationAggregateInput {
 
 input WorkspaceOrderByWithRelationInput {
   aberration: SortOrder
+  actionsOnWorkspaces: ActionsOnWorkspacesOrderByRelationAggregateInput
   activeOnUser: UserConfigOrderByRelationAggregateInput
   assignedFlows: FlowsOnWorkspacesOrderByRelationAggregateInput
   assignedUsers: UsersOnWorkspacesOrderByRelationAggregateInput
@@ -2954,6 +3517,7 @@ input WorkspaceScalarWhereInput {
 
 input WorkspaceUpdateInput {
   aberration: StringFieldUpdateOperationsInput
+  actionsOnWorkspaces: ActionsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
   activeOnUser: UserConfigUpdateManyWithoutActiveWorkspaceNestedInput
   assignedFlows: FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
   assignedUsers: UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
@@ -2988,6 +3552,14 @@ input WorkspaceUpdateManyWithoutCreatedByNestedInput {
   upsert: [WorkspaceUpsertWithWhereUniqueWithoutCreatedByInput!]
 }
 
+input WorkspaceUpdateOneRequiredWithoutActionsOnWorkspacesNestedInput {
+  connect: WorkspaceWhereUniqueInput
+  connectOrCreate: WorkspaceCreateOrConnectWithoutActionsOnWorkspacesInput
+  create: WorkspaceCreateWithoutActionsOnWorkspacesInput
+  update: WorkspaceUpdateToOneWithWhereWithoutActionsOnWorkspacesInput
+  upsert: WorkspaceUpsertWithoutActionsOnWorkspacesInput
+}
+
 input WorkspaceUpdateOneRequiredWithoutAssignedFlowsNestedInput {
   connect: WorkspaceWhereUniqueInput
   connectOrCreate: WorkspaceCreateOrConnectWithoutAssignedFlowsInput
@@ -3014,6 +3586,11 @@ input WorkspaceUpdateOneWithoutActiveOnUserNestedInput {
   upsert: WorkspaceUpsertWithoutActiveOnUserInput
 }
 
+input WorkspaceUpdateToOneWithWhereWithoutActionsOnWorkspacesInput {
+  data: WorkspaceUpdateWithoutActionsOnWorkspacesInput!
+  where: WorkspaceWhereInput
+}
+
 input WorkspaceUpdateToOneWithWhereWithoutActiveOnUserInput {
   data: WorkspaceUpdateWithoutActiveOnUserInput!
   where: WorkspaceWhereInput
@@ -3034,8 +3611,20 @@ input WorkspaceUpdateWithWhereUniqueWithoutCreatedByInput {
   where: WorkspaceWhereUniqueInput!
 }
 
+input WorkspaceUpdateWithoutActionsOnWorkspacesInput {
+  aberration: StringFieldUpdateOperationsInput
+  activeOnUser: UserConfigUpdateManyWithoutActiveWorkspaceNestedInput
+  assignedFlows: FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
+  assignedUsers: UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
+  createdAt: NullableDateTimeFieldUpdateOperationsInput
+  createdBy: UserUpdateOneRequiredWithoutCreatedWorkspacesNestedInput
+  name: StringFieldUpdateOperationsInput
+  profile: WorkspaceProfileUpdateOneWithoutWorkspaceNestedInput
+}
+
 input WorkspaceUpdateWithoutActiveOnUserInput {
   aberration: StringFieldUpdateOperationsInput
+  actionsOnWorkspaces: ActionsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
   assignedFlows: FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
   assignedUsers: UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
   createdAt: NullableDateTimeFieldUpdateOperationsInput
@@ -3046,6 +3635,7 @@ input WorkspaceUpdateWithoutActiveOnUserInput {
 
 input WorkspaceUpdateWithoutAssignedFlowsInput {
   aberration: StringFieldUpdateOperationsInput
+  actionsOnWorkspaces: ActionsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
   activeOnUser: UserConfigUpdateManyWithoutActiveWorkspaceNestedInput
   assignedUsers: UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
   createdAt: NullableDateTimeFieldUpdateOperationsInput
@@ -3056,6 +3646,7 @@ input WorkspaceUpdateWithoutAssignedFlowsInput {
 
 input WorkspaceUpdateWithoutAssignedUsersInput {
   aberration: StringFieldUpdateOperationsInput
+  actionsOnWorkspaces: ActionsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
   activeOnUser: UserConfigUpdateManyWithoutActiveWorkspaceNestedInput
   assignedFlows: FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
   createdAt: NullableDateTimeFieldUpdateOperationsInput
@@ -3066,6 +3657,7 @@ input WorkspaceUpdateWithoutAssignedUsersInput {
 
 input WorkspaceUpdateWithoutCreatedByInput {
   aberration: StringFieldUpdateOperationsInput
+  actionsOnWorkspaces: ActionsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
   activeOnUser: UserConfigUpdateManyWithoutActiveWorkspaceNestedInput
   assignedFlows: FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
   assignedUsers: UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput
@@ -3078,6 +3670,12 @@ input WorkspaceUpsertWithWhereUniqueWithoutCreatedByInput {
   create: WorkspaceCreateWithoutCreatedByInput!
   update: WorkspaceUpdateWithoutCreatedByInput!
   where: WorkspaceWhereUniqueInput!
+}
+
+input WorkspaceUpsertWithoutActionsOnWorkspacesInput {
+  create: WorkspaceCreateWithoutActionsOnWorkspacesInput!
+  update: WorkspaceUpdateWithoutActionsOnWorkspacesInput!
+  where: WorkspaceWhereInput
 }
 
 input WorkspaceUpsertWithoutActiveOnUserInput {
@@ -3103,6 +3701,7 @@ input WorkspaceWhereInput {
   NOT: [WorkspaceWhereInput!]
   OR: [WorkspaceWhereInput!]
   aberration: StringFilter
+  actionsOnWorkspaces: ActionsOnWorkspacesListRelationFilter
   activeOnUser: UserConfigListRelationFilter
   assignedFlows: FlowsOnWorkspacesListRelationFilter
   assignedUsers: UsersOnWorkspacesListRelationFilter
@@ -3119,6 +3718,7 @@ input WorkspaceWhereUniqueInput {
   NOT: [WorkspaceWhereInput!]
   OR: [WorkspaceWhereInput!]
   aberration: String
+  actionsOnWorkspaces: ActionsOnWorkspacesListRelationFilter
   activeOnUser: UserConfigListRelationFilter
   assignedFlows: FlowsOnWorkspacesListRelationFilter
   assignedUsers: UsersOnWorkspacesListRelationFilter

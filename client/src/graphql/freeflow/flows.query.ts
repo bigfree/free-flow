@@ -1,8 +1,8 @@
 import { gql } from '@/generated/freeFlow';
 
 export const FlowsQuery = gql(/* GraphQL */ `
-    query Flows($where: FlowWhereInput) {
-        flows(where: $where) {
+    query Flows($where: FlowWhereInput, $orderBy: [FlowOrderByWithRelationInput!]) {
+        flows(where: $where, orderBy: $orderBy) {
             ...FlowsQueryFragment
         }
     }

@@ -7,9 +7,9 @@ const FlowMenuLinkBaseCss = style({
     display: 'flex',
     flexFlow: 'column',
     alignItems: 'center',
-    height: rem(64),
-    border: `${rem(1)} solid ${vars.colors.defaultBorder}`,
-    marginBottom: rem(7),
+    height: rem(56),
+    border: `${rem(1)} solid transparent`,
+    marginBottom: rem(8),
     borderRadius: vars.radius.sm,
     textDecoration: 'none',
     color: vars.colors.defaultColor,
@@ -20,10 +20,19 @@ const FlowMenuLinkBaseCss = style({
 export const FlowMenuCss = style({
     display: 'flex',
     flexFlow: 'column',
-    padding: rem(7),
+    padding: rem(8),
 });
 
-export const FlowMenuLinkNoActiveCss = style([FlowMenuLinkBaseCss, {}]);
+export const FlowMenuLinkNoActiveCss = style([
+    FlowMenuLinkBaseCss,
+    {
+        selectors: {
+            '&:hover': {
+                backgroundColor: vars.colors.gray[1],
+            },
+        },
+    },
+]);
 
 export const FlowMenuLinkActiveCss = style([
     FlowMenuLinkBaseCss,
@@ -35,17 +44,17 @@ export const FlowMenuLinkActiveCss = style([
 ]);
 
 export const FlowMenuLinkIconCss = style({
-    flex: `0 0 ${rem(42)}`,
-    width: '42%',
+    flex: `0 0 ${rem(36)}`,
+    width: '36%',
 });
 
 export const FlowMenuLinkLabelCss = style({
     lineHeight: 1,
-    fontSize: vars.fontSizes.xs,
+    fontSize: rem(10),
 });
 
 export const FlowMenuDividerCss = style({
-    marginBottom: rem(7),
-    marginLeft: calc(rem(7)).negate().toString(),
-    marginRight: calc(rem(7)).negate().toString(),
+    marginBottom: rem(8),
+    marginLeft: calc(rem(8)).negate().toString(),
+    marginRight: calc(rem(8)).negate().toString(),
 });

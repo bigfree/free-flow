@@ -24,6 +24,465 @@ export type Scalars = {
   JWT: { input: any; output: any; }
 };
 
+export type Action = {
+  __typename?: 'Action';
+  _count: ActionCount;
+  actionsOnWorkspaces?: Maybe<Array<ActionsOnWorkspaces>>;
+  class?: Maybe<Scalars['String']['output']>;
+  code?: Maybe<Scalars['String']['output']>;
+  color?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  height?: Maybe<Scalars['Int']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  radius?: Maybe<Scalars['Int']['output']>;
+  type: ActionType;
+  /** Variables on action */
+  variables?: Maybe<Scalars['JSON']['output']>;
+  width?: Maybe<Scalars['Int']['output']>;
+};
+
+export type ActionAvgAggregate = {
+  __typename?: 'ActionAvgAggregate';
+  height?: Maybe<Scalars['Float']['output']>;
+  radius?: Maybe<Scalars['Float']['output']>;
+  width?: Maybe<Scalars['Float']['output']>;
+};
+
+export type ActionCount = {
+  __typename?: 'ActionCount';
+  actionsOnWorkspaces: Scalars['Int']['output'];
+};
+
+export type ActionCountAggregate = {
+  __typename?: 'ActionCountAggregate';
+  _all: Scalars['Int']['output'];
+  class: Scalars['Int']['output'];
+  code: Scalars['Int']['output'];
+  color: Scalars['Int']['output'];
+  createdAt: Scalars['Int']['output'];
+  description: Scalars['Int']['output'];
+  height: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  name: Scalars['Int']['output'];
+  radius: Scalars['Int']['output'];
+  type: Scalars['Int']['output'];
+  variables: Scalars['Int']['output'];
+  width: Scalars['Int']['output'];
+};
+
+export type ActionCreateInput = {
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesCreateNestedManyWithoutActionInput>;
+  class?: InputMaybe<Scalars['String']['input']>;
+  code?: InputMaybe<Scalars['String']['input']>;
+  color?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  height?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  radius?: InputMaybe<Scalars['Int']['input']>;
+  type?: InputMaybe<ActionType>;
+  variables?: InputMaybe<Scalars['JSON']['input']>;
+  width?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type ActionCreateNestedOneWithoutActionsOnWorkspacesInput = {
+  connect?: InputMaybe<ActionWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<ActionCreateOrConnectWithoutActionsOnWorkspacesInput>;
+  create?: InputMaybe<ActionCreateWithoutActionsOnWorkspacesInput>;
+};
+
+export type ActionCreateOrConnectWithoutActionsOnWorkspacesInput = {
+  create: ActionCreateWithoutActionsOnWorkspacesInput;
+  where: ActionWhereUniqueInput;
+};
+
+export type ActionCreateWithoutActionsOnWorkspacesInput = {
+  class?: InputMaybe<Scalars['String']['input']>;
+  code?: InputMaybe<Scalars['String']['input']>;
+  color?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  height?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  radius?: InputMaybe<Scalars['Int']['input']>;
+  type?: InputMaybe<ActionType>;
+  variables?: InputMaybe<Scalars['JSON']['input']>;
+  width?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type ActionMaxAggregate = {
+  __typename?: 'ActionMaxAggregate';
+  class?: Maybe<Scalars['String']['output']>;
+  code?: Maybe<Scalars['String']['output']>;
+  color?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  height?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  radius?: Maybe<Scalars['Int']['output']>;
+  type?: Maybe<ActionType>;
+  width?: Maybe<Scalars['Int']['output']>;
+};
+
+export type ActionMinAggregate = {
+  __typename?: 'ActionMinAggregate';
+  class?: Maybe<Scalars['String']['output']>;
+  code?: Maybe<Scalars['String']['output']>;
+  color?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  height?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  radius?: Maybe<Scalars['Int']['output']>;
+  type?: Maybe<ActionType>;
+  width?: Maybe<Scalars['Int']['output']>;
+};
+
+export type ActionOrderByWithRelationInput = {
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesOrderByRelationAggregateInput>;
+  class?: InputMaybe<SortOrderInput>;
+  code?: InputMaybe<SortOrderInput>;
+  color?: InputMaybe<SortOrderInput>;
+  createdAt?: InputMaybe<SortOrderInput>;
+  description?: InputMaybe<SortOrderInput>;
+  height?: InputMaybe<SortOrderInput>;
+  id?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  radius?: InputMaybe<SortOrderInput>;
+  type?: InputMaybe<SortOrder>;
+  variables?: InputMaybe<SortOrderInput>;
+  width?: InputMaybe<SortOrderInput>;
+};
+
+export type ActionRelationFilter = {
+  is?: InputMaybe<ActionWhereInput>;
+  isNot?: InputMaybe<ActionWhereInput>;
+};
+
+export enum ActionScalarFieldEnum {
+  Class = 'class',
+  Code = 'code',
+  Color = 'color',
+  CreatedAt = 'createdAt',
+  Description = 'description',
+  Height = 'height',
+  Id = 'id',
+  Name = 'name',
+  Radius = 'radius',
+  Type = 'type',
+  Variables = 'variables',
+  Width = 'width'
+}
+
+export type ActionSumAggregate = {
+  __typename?: 'ActionSumAggregate';
+  height?: Maybe<Scalars['Int']['output']>;
+  radius?: Maybe<Scalars['Int']['output']>;
+  width?: Maybe<Scalars['Int']['output']>;
+};
+
+export enum ActionType {
+  Circle = 'CIRCLE',
+  Square = 'SQUARE',
+  Triangle = 'TRIANGLE'
+}
+
+export type ActionUpdateInput = {
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesUpdateManyWithoutActionNestedInput>;
+  class?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  color?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  height?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  radius?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumActionTypeFieldUpdateOperationsInput>;
+  variables?: InputMaybe<Scalars['JSON']['input']>;
+  width?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+};
+
+export type ActionUpdateOneRequiredWithoutActionsOnWorkspacesNestedInput = {
+  connect?: InputMaybe<ActionWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<ActionCreateOrConnectWithoutActionsOnWorkspacesInput>;
+  create?: InputMaybe<ActionCreateWithoutActionsOnWorkspacesInput>;
+  update?: InputMaybe<ActionUpdateToOneWithWhereWithoutActionsOnWorkspacesInput>;
+  upsert?: InputMaybe<ActionUpsertWithoutActionsOnWorkspacesInput>;
+};
+
+export type ActionUpdateToOneWithWhereWithoutActionsOnWorkspacesInput = {
+  data: ActionUpdateWithoutActionsOnWorkspacesInput;
+  where?: InputMaybe<ActionWhereInput>;
+};
+
+export type ActionUpdateWithoutActionsOnWorkspacesInput = {
+  class?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  color?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  height?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  radius?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  type?: InputMaybe<EnumActionTypeFieldUpdateOperationsInput>;
+  variables?: InputMaybe<Scalars['JSON']['input']>;
+  width?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+};
+
+export type ActionUpsertWithoutActionsOnWorkspacesInput = {
+  create: ActionCreateWithoutActionsOnWorkspacesInput;
+  update: ActionUpdateWithoutActionsOnWorkspacesInput;
+  where?: InputMaybe<ActionWhereInput>;
+};
+
+export type ActionWhereInput = {
+  AND?: InputMaybe<Array<ActionWhereInput>>;
+  NOT?: InputMaybe<Array<ActionWhereInput>>;
+  OR?: InputMaybe<Array<ActionWhereInput>>;
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesListRelationFilter>;
+  class?: InputMaybe<StringNullableFilter>;
+  code?: InputMaybe<StringNullableFilter>;
+  color?: InputMaybe<StringNullableFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  description?: InputMaybe<StringNullableFilter>;
+  height?: InputMaybe<IntNullableFilter>;
+  id?: InputMaybe<StringFilter>;
+  name?: InputMaybe<StringFilter>;
+  radius?: InputMaybe<IntNullableFilter>;
+  type?: InputMaybe<EnumActionTypeFilter>;
+  variables?: InputMaybe<JsonNullableFilter>;
+  width?: InputMaybe<IntNullableFilter>;
+};
+
+export type ActionWhereUniqueInput = {
+  AND?: InputMaybe<Array<ActionWhereInput>>;
+  NOT?: InputMaybe<Array<ActionWhereInput>>;
+  OR?: InputMaybe<Array<ActionWhereInput>>;
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesListRelationFilter>;
+  class?: InputMaybe<StringNullableFilter>;
+  code?: InputMaybe<StringNullableFilter>;
+  color?: InputMaybe<StringNullableFilter>;
+  createdAt?: InputMaybe<DateTimeNullableFilter>;
+  description?: InputMaybe<StringNullableFilter>;
+  height?: InputMaybe<IntNullableFilter>;
+  id?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  radius?: InputMaybe<IntNullableFilter>;
+  type?: InputMaybe<EnumActionTypeFilter>;
+  variables?: InputMaybe<JsonNullableFilter>;
+  width?: InputMaybe<IntNullableFilter>;
+};
+
+export type ActionsOnWorkspaces = {
+  __typename?: 'ActionsOnWorkspaces';
+  action: Action;
+  actionId: Scalars['String']['output'];
+  assignedAt?: Maybe<Scalars['DateTime']['output']>;
+  workspace: Workspace;
+  workspaceId: Scalars['String']['output'];
+};
+
+export type ActionsOnWorkspacesActionIdWorkspaceIdCompoundUniqueInput = {
+  actionId: Scalars['String']['input'];
+  workspaceId: Scalars['String']['input'];
+};
+
+export type ActionsOnWorkspacesCountAggregate = {
+  __typename?: 'ActionsOnWorkspacesCountAggregate';
+  _all: Scalars['Int']['output'];
+  actionId: Scalars['Int']['output'];
+  assignedAt: Scalars['Int']['output'];
+  workspaceId: Scalars['Int']['output'];
+};
+
+export type ActionsOnWorkspacesCreateManyActionInput = {
+  assignedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  workspaceId: Scalars['String']['input'];
+};
+
+export type ActionsOnWorkspacesCreateManyActionInputEnvelope = {
+  data: Array<ActionsOnWorkspacesCreateManyActionInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type ActionsOnWorkspacesCreateManyWorkspaceInput = {
+  actionId: Scalars['String']['input'];
+  assignedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type ActionsOnWorkspacesCreateManyWorkspaceInputEnvelope = {
+  data: Array<ActionsOnWorkspacesCreateManyWorkspaceInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type ActionsOnWorkspacesCreateNestedManyWithoutActionInput = {
+  connect?: InputMaybe<Array<ActionsOnWorkspacesWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<ActionsOnWorkspacesCreateOrConnectWithoutActionInput>>;
+  create?: InputMaybe<Array<ActionsOnWorkspacesCreateWithoutActionInput>>;
+  createMany?: InputMaybe<ActionsOnWorkspacesCreateManyActionInputEnvelope>;
+};
+
+export type ActionsOnWorkspacesCreateNestedManyWithoutWorkspaceInput = {
+  connect?: InputMaybe<Array<ActionsOnWorkspacesWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<ActionsOnWorkspacesCreateOrConnectWithoutWorkspaceInput>>;
+  create?: InputMaybe<Array<ActionsOnWorkspacesCreateWithoutWorkspaceInput>>;
+  createMany?: InputMaybe<ActionsOnWorkspacesCreateManyWorkspaceInputEnvelope>;
+};
+
+export type ActionsOnWorkspacesCreateOrConnectWithoutActionInput = {
+  create: ActionsOnWorkspacesCreateWithoutActionInput;
+  where: ActionsOnWorkspacesWhereUniqueInput;
+};
+
+export type ActionsOnWorkspacesCreateOrConnectWithoutWorkspaceInput = {
+  create: ActionsOnWorkspacesCreateWithoutWorkspaceInput;
+  where: ActionsOnWorkspacesWhereUniqueInput;
+};
+
+export type ActionsOnWorkspacesCreateWithoutActionInput = {
+  assignedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  workspace: WorkspaceCreateNestedOneWithoutActionsOnWorkspacesInput;
+};
+
+export type ActionsOnWorkspacesCreateWithoutWorkspaceInput = {
+  action: ActionCreateNestedOneWithoutActionsOnWorkspacesInput;
+  assignedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type ActionsOnWorkspacesListRelationFilter = {
+  every?: InputMaybe<ActionsOnWorkspacesWhereInput>;
+  none?: InputMaybe<ActionsOnWorkspacesWhereInput>;
+  some?: InputMaybe<ActionsOnWorkspacesWhereInput>;
+};
+
+export type ActionsOnWorkspacesMaxAggregate = {
+  __typename?: 'ActionsOnWorkspacesMaxAggregate';
+  actionId?: Maybe<Scalars['String']['output']>;
+  assignedAt?: Maybe<Scalars['DateTime']['output']>;
+  workspaceId?: Maybe<Scalars['String']['output']>;
+};
+
+export type ActionsOnWorkspacesMinAggregate = {
+  __typename?: 'ActionsOnWorkspacesMinAggregate';
+  actionId?: Maybe<Scalars['String']['output']>;
+  assignedAt?: Maybe<Scalars['DateTime']['output']>;
+  workspaceId?: Maybe<Scalars['String']['output']>;
+};
+
+export type ActionsOnWorkspacesOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type ActionsOnWorkspacesScalarWhereInput = {
+  AND?: InputMaybe<Array<ActionsOnWorkspacesScalarWhereInput>>;
+  NOT?: InputMaybe<Array<ActionsOnWorkspacesScalarWhereInput>>;
+  OR?: InputMaybe<Array<ActionsOnWorkspacesScalarWhereInput>>;
+  actionId?: InputMaybe<StringFilter>;
+  assignedAt?: InputMaybe<DateTimeNullableFilter>;
+  workspaceId?: InputMaybe<StringFilter>;
+};
+
+export type ActionsOnWorkspacesUpdateManyMutationInput = {
+  assignedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type ActionsOnWorkspacesUpdateManyWithWhereWithoutActionInput = {
+  data: ActionsOnWorkspacesUpdateManyMutationInput;
+  where: ActionsOnWorkspacesScalarWhereInput;
+};
+
+export type ActionsOnWorkspacesUpdateManyWithWhereWithoutWorkspaceInput = {
+  data: ActionsOnWorkspacesUpdateManyMutationInput;
+  where: ActionsOnWorkspacesScalarWhereInput;
+};
+
+export type ActionsOnWorkspacesUpdateManyWithoutActionNestedInput = {
+  connect?: InputMaybe<Array<ActionsOnWorkspacesWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<ActionsOnWorkspacesCreateOrConnectWithoutActionInput>>;
+  create?: InputMaybe<Array<ActionsOnWorkspacesCreateWithoutActionInput>>;
+  createMany?: InputMaybe<ActionsOnWorkspacesCreateManyActionInputEnvelope>;
+  delete?: InputMaybe<Array<ActionsOnWorkspacesWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<ActionsOnWorkspacesScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<ActionsOnWorkspacesWhereUniqueInput>>;
+  set?: InputMaybe<Array<ActionsOnWorkspacesWhereUniqueInput>>;
+  update?: InputMaybe<Array<ActionsOnWorkspacesUpdateWithWhereUniqueWithoutActionInput>>;
+  updateMany?: InputMaybe<Array<ActionsOnWorkspacesUpdateManyWithWhereWithoutActionInput>>;
+  upsert?: InputMaybe<Array<ActionsOnWorkspacesUpsertWithWhereUniqueWithoutActionInput>>;
+};
+
+export type ActionsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput = {
+  connect?: InputMaybe<Array<ActionsOnWorkspacesWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<ActionsOnWorkspacesCreateOrConnectWithoutWorkspaceInput>>;
+  create?: InputMaybe<Array<ActionsOnWorkspacesCreateWithoutWorkspaceInput>>;
+  createMany?: InputMaybe<ActionsOnWorkspacesCreateManyWorkspaceInputEnvelope>;
+  delete?: InputMaybe<Array<ActionsOnWorkspacesWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<ActionsOnWorkspacesScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<ActionsOnWorkspacesWhereUniqueInput>>;
+  set?: InputMaybe<Array<ActionsOnWorkspacesWhereUniqueInput>>;
+  update?: InputMaybe<Array<ActionsOnWorkspacesUpdateWithWhereUniqueWithoutWorkspaceInput>>;
+  updateMany?: InputMaybe<Array<ActionsOnWorkspacesUpdateManyWithWhereWithoutWorkspaceInput>>;
+  upsert?: InputMaybe<Array<ActionsOnWorkspacesUpsertWithWhereUniqueWithoutWorkspaceInput>>;
+};
+
+export type ActionsOnWorkspacesUpdateWithWhereUniqueWithoutActionInput = {
+  data: ActionsOnWorkspacesUpdateWithoutActionInput;
+  where: ActionsOnWorkspacesWhereUniqueInput;
+};
+
+export type ActionsOnWorkspacesUpdateWithWhereUniqueWithoutWorkspaceInput = {
+  data: ActionsOnWorkspacesUpdateWithoutWorkspaceInput;
+  where: ActionsOnWorkspacesWhereUniqueInput;
+};
+
+export type ActionsOnWorkspacesUpdateWithoutActionInput = {
+  assignedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  workspace?: InputMaybe<WorkspaceUpdateOneRequiredWithoutActionsOnWorkspacesNestedInput>;
+};
+
+export type ActionsOnWorkspacesUpdateWithoutWorkspaceInput = {
+  action?: InputMaybe<ActionUpdateOneRequiredWithoutActionsOnWorkspacesNestedInput>;
+  assignedAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+};
+
+export type ActionsOnWorkspacesUpsertWithWhereUniqueWithoutActionInput = {
+  create: ActionsOnWorkspacesCreateWithoutActionInput;
+  update: ActionsOnWorkspacesUpdateWithoutActionInput;
+  where: ActionsOnWorkspacesWhereUniqueInput;
+};
+
+export type ActionsOnWorkspacesUpsertWithWhereUniqueWithoutWorkspaceInput = {
+  create: ActionsOnWorkspacesCreateWithoutWorkspaceInput;
+  update: ActionsOnWorkspacesUpdateWithoutWorkspaceInput;
+  where: ActionsOnWorkspacesWhereUniqueInput;
+};
+
+export type ActionsOnWorkspacesWhereInput = {
+  AND?: InputMaybe<Array<ActionsOnWorkspacesWhereInput>>;
+  NOT?: InputMaybe<Array<ActionsOnWorkspacesWhereInput>>;
+  OR?: InputMaybe<Array<ActionsOnWorkspacesWhereInput>>;
+  action?: InputMaybe<ActionRelationFilter>;
+  actionId?: InputMaybe<StringFilter>;
+  assignedAt?: InputMaybe<DateTimeNullableFilter>;
+  workspace?: InputMaybe<WorkspaceRelationFilter>;
+  workspaceId?: InputMaybe<StringFilter>;
+};
+
+export type ActionsOnWorkspacesWhereUniqueInput = {
+  AND?: InputMaybe<Array<ActionsOnWorkspacesWhereInput>>;
+  NOT?: InputMaybe<Array<ActionsOnWorkspacesWhereInput>>;
+  OR?: InputMaybe<Array<ActionsOnWorkspacesWhereInput>>;
+  action?: InputMaybe<ActionRelationFilter>;
+  actionId?: InputMaybe<StringFilter>;
+  actionId_workspaceId?: InputMaybe<ActionsOnWorkspacesActionIdWorkspaceIdCompoundUniqueInput>;
+  assignedAt?: InputMaybe<DateTimeNullableFilter>;
+  workspace?: InputMaybe<WorkspaceRelationFilter>;
+  workspaceId?: InputMaybe<StringFilter>;
+};
+
 export type AuditlogCountAggregate = {
   __typename?: 'AuditlogCountAggregate';
   _all: Scalars['Int']['output'];
@@ -68,6 +527,17 @@ export type DateTimeNullableFilter = {
   lte?: InputMaybe<Scalars['DateTime']['input']>;
   not?: InputMaybe<NestedDateTimeNullableFilter>;
   notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
+};
+
+export type EnumActionTypeFieldUpdateOperationsInput = {
+  set?: InputMaybe<ActionType>;
+};
+
+export type EnumActionTypeFilter = {
+  equals?: InputMaybe<ActionType>;
+  in?: InputMaybe<Array<ActionType>>;
+  not?: InputMaybe<NestedEnumActionTypeFilter>;
+  notIn?: InputMaybe<Array<ActionType>>;
 };
 
 export type EnumLogFromNullableFilter = {
@@ -118,6 +588,7 @@ export type Flow = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   data?: Maybe<Scalars['JSON']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  edges?: Maybe<Scalars['JSON']['output']>;
   externalId?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
@@ -139,6 +610,7 @@ export type FlowCountAggregate = {
   createdAt: Scalars['Int']['output'];
   data: Scalars['Int']['output'];
   description: Scalars['Int']['output'];
+  edges: Scalars['Int']['output'];
   externalId: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
   name: Scalars['Int']['output'];
@@ -151,6 +623,7 @@ export type FlowCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   data?: InputMaybe<Scalars['JSON']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   user?: InputMaybe<UserCreateNestedOneWithoutFlowsInput>;
@@ -162,6 +635,7 @@ export type FlowCreateManyUserInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   data?: InputMaybe<Scalars['JSON']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
 };
@@ -210,6 +684,7 @@ export type FlowCreateWithoutAssignedWorkspacesInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   data?: InputMaybe<Scalars['JSON']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   user?: InputMaybe<UserCreateNestedOneWithoutFlowsInput>;
@@ -222,6 +697,7 @@ export type FlowCreateWithoutUserInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   data?: InputMaybe<Scalars['JSON']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   versions?: InputMaybe<FlowVersionCreateNestedManyWithoutFlowInput>;
@@ -233,6 +709,7 @@ export type FlowCreateWithoutVersionsInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   data?: InputMaybe<Scalars['JSON']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   user?: InputMaybe<UserCreateNestedOneWithoutFlowsInput>;
@@ -276,6 +753,7 @@ export type FlowOrderByWithRelationInput = {
   createdAt?: InputMaybe<SortOrderInput>;
   data?: InputMaybe<SortOrderInput>;
   description?: InputMaybe<SortOrderInput>;
+  edges?: InputMaybe<SortOrderInput>;
   externalId?: InputMaybe<SortOrderInput>;
   id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
@@ -294,6 +772,7 @@ export enum FlowScalarFieldEnum {
   CreatedAt = 'createdAt',
   Data = 'data',
   Description = 'description',
+  Edges = 'edges',
   ExternalId = 'externalId',
   Id = 'id',
   Name = 'name',
@@ -308,6 +787,7 @@ export type FlowScalarWhereInput = {
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   data?: InputMaybe<JsonNullableFilter>;
   description?: InputMaybe<StringNullableFilter>;
+  edges?: InputMaybe<JsonNullableFilter>;
   externalId?: InputMaybe<StringNullableFilter>;
   id?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringFilter>;
@@ -320,6 +800,7 @@ export type FlowUpdateInput = {
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   data?: InputMaybe<Scalars['JSON']['input']>;
   description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   user?: InputMaybe<UserUpdateOneWithoutFlowsNestedInput>;
@@ -331,6 +812,7 @@ export type FlowUpdateManyMutationInput = {
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   data?: InputMaybe<Scalars['JSON']['input']>;
   description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
@@ -390,6 +872,7 @@ export type FlowUpdateWithoutAssignedWorkspacesInput = {
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   data?: InputMaybe<Scalars['JSON']['input']>;
   description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   user?: InputMaybe<UserUpdateOneWithoutFlowsNestedInput>;
@@ -402,6 +885,7 @@ export type FlowUpdateWithoutUserInput = {
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   data?: InputMaybe<Scalars['JSON']['input']>;
   description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   versions?: InputMaybe<FlowVersionUpdateManyWithoutFlowNestedInput>;
@@ -413,6 +897,7 @@ export type FlowUpdateWithoutVersionsInput = {
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   data?: InputMaybe<Scalars['JSON']['input']>;
   description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   user?: InputMaybe<UserUpdateOneWithoutFlowsNestedInput>;
@@ -441,6 +926,7 @@ export type FlowVersion = {
   code: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   data?: Maybe<Scalars['JSON']['output']>;
+  edges?: Maybe<Scalars['JSON']['output']>;
   externalId?: Maybe<Scalars['String']['output']>;
   flow: Flow;
   flowId: Scalars['String']['output'];
@@ -458,6 +944,7 @@ export type FlowVersionCountAggregate = {
   code: Scalars['Int']['output'];
   createdAt: Scalars['Int']['output'];
   data: Scalars['Int']['output'];
+  edges: Scalars['Int']['output'];
   externalId: Scalars['Int']['output'];
   flowId: Scalars['Int']['output'];
   id: Scalars['Int']['output'];
@@ -471,6 +958,7 @@ export type FlowVersionCreateManyFlowInput = {
   code: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   data?: InputMaybe<Scalars['JSON']['input']>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
@@ -488,6 +976,7 @@ export type FlowVersionCreateManyUserInput = {
   code: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   data?: InputMaybe<Scalars['JSON']['input']>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<Scalars['String']['input']>;
   flowId: Scalars['String']['input'];
   id?: InputMaybe<Scalars['String']['input']>;
@@ -529,6 +1018,7 @@ export type FlowVersionCreateWithoutFlowInput = {
   code: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   data?: InputMaybe<Scalars['JSON']['input']>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
@@ -541,6 +1031,7 @@ export type FlowVersionCreateWithoutUserInput = {
   code: Scalars['String']['input'];
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   data?: InputMaybe<Scalars['JSON']['input']>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<Scalars['String']['input']>;
   flow: FlowCreateNestedOneWithoutVersionsInput;
   id?: InputMaybe<Scalars['String']['input']>;
@@ -589,6 +1080,7 @@ export type FlowVersionOrderByWithRelationInput = {
   code?: InputMaybe<SortOrder>;
   createdAt?: InputMaybe<SortOrderInput>;
   data?: InputMaybe<SortOrderInput>;
+  edges?: InputMaybe<SortOrderInput>;
   externalId?: InputMaybe<SortOrderInput>;
   flow?: InputMaybe<FlowOrderByWithRelationInput>;
   flowId?: InputMaybe<SortOrder>;
@@ -604,6 +1096,7 @@ export enum FlowVersionScalarFieldEnum {
   Code = 'code',
   CreatedAt = 'createdAt',
   Data = 'data',
+  Edges = 'edges',
   ExternalId = 'externalId',
   FlowId = 'flowId',
   Id = 'id',
@@ -620,6 +1113,7 @@ export type FlowVersionScalarWhereInput = {
   code?: InputMaybe<StringFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   data?: InputMaybe<JsonNullableFilter>;
+  edges?: InputMaybe<JsonNullableFilter>;
   externalId?: InputMaybe<StringNullableFilter>;
   flowId?: InputMaybe<StringFilter>;
   id?: InputMaybe<StringFilter>;
@@ -639,6 +1133,7 @@ export type FlowVersionUpdateManyMutationInput = {
   code?: InputMaybe<StringFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   data?: InputMaybe<Scalars['JSON']['input']>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -698,6 +1193,7 @@ export type FlowVersionUpdateWithoutFlowInput = {
   code?: InputMaybe<StringFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   data?: InputMaybe<Scalars['JSON']['input']>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -710,6 +1206,7 @@ export type FlowVersionUpdateWithoutUserInput = {
   code?: InputMaybe<StringFieldUpdateOperationsInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
   data?: InputMaybe<Scalars['JSON']['input']>;
+  edges?: InputMaybe<Scalars['JSON']['input']>;
   externalId?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   flow?: InputMaybe<FlowUpdateOneRequiredWithoutVersionsNestedInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -737,6 +1234,7 @@ export type FlowVersionWhereInput = {
   code?: InputMaybe<StringFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   data?: InputMaybe<JsonNullableFilter>;
+  edges?: InputMaybe<JsonNullableFilter>;
   externalId?: InputMaybe<StringNullableFilter>;
   flow?: InputMaybe<FlowRelationFilter>;
   flowId?: InputMaybe<StringFilter>;
@@ -755,6 +1253,7 @@ export type FlowVersionWhereUniqueInput = {
   code?: InputMaybe<StringFilter>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   data?: InputMaybe<JsonNullableFilter>;
+  edges?: InputMaybe<JsonNullableFilter>;
   externalId?: InputMaybe<StringNullableFilter>;
   flow?: InputMaybe<FlowRelationFilter>;
   flowId?: InputMaybe<StringFilter>;
@@ -776,6 +1275,7 @@ export type FlowWhereInput = {
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   data?: InputMaybe<JsonNullableFilter>;
   description?: InputMaybe<StringNullableFilter>;
+  edges?: InputMaybe<JsonNullableFilter>;
   externalId?: InputMaybe<StringNullableFilter>;
   id?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringFilter>;
@@ -793,6 +1293,7 @@ export type FlowWhereUniqueInput = {
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   data?: InputMaybe<JsonNullableFilter>;
   description?: InputMaybe<StringNullableFilter>;
+  edges?: InputMaybe<JsonNullableFilter>;
   externalId?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -1007,6 +1508,17 @@ export type FlowsOnWorkspacesWhereUniqueInput = {
   workspaceId?: InputMaybe<StringFilter>;
 };
 
+export type IntNullableFilter = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  gt?: InputMaybe<Scalars['Int']['input']>;
+  gte?: InputMaybe<Scalars['Int']['input']>;
+  in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  lt?: InputMaybe<Scalars['Int']['input']>;
+  lte?: InputMaybe<Scalars['Int']['input']>;
+  not?: InputMaybe<NestedIntNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
 export type JsonNullableFilter = {
   array_contains?: InputMaybe<Scalars['JSON']['input']>;
   array_ends_with?: InputMaybe<Scalars['JSON']['input']>;
@@ -1123,6 +1635,7 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createAction: Action;
   createFlow: Flow;
   createLog: Log;
   createMyConfig: UserConfig;
@@ -1135,16 +1648,23 @@ export type Mutation = {
   logout: User;
   refreshTokens: Authorize;
   register: Authorize;
+  removeAction: Action;
   removeFlow: Flow;
   removeManyTab: Tab;
   removeOneTab: Tab;
   removeWorkspace: Workspace;
+  updateAction: Action;
   updateFlow: Flow;
   updateMyConfig: UserConfig;
   updateUser: User;
   updateUserConfig: UserConfig;
   updateWorkspace: Workspace;
   upsertUserConfig: UserConfig;
+};
+
+
+export type MutationCreateActionArgs = {
+  data: ActionCreateInput;
 };
 
 
@@ -1203,6 +1723,11 @@ export type MutationRegisterArgs = {
 };
 
 
+export type MutationRemoveActionArgs = {
+  where: ActionWhereUniqueInput;
+};
+
+
 export type MutationRemoveFlowArgs = {
   where: FlowWhereUniqueInput;
 };
@@ -1220,6 +1745,12 @@ export type MutationRemoveOneTabArgs = {
 
 export type MutationRemoveWorkspaceArgs = {
   where: WorkspaceWhereUniqueInput;
+};
+
+
+export type MutationUpdateActionArgs = {
+  data: ActionUpdateInput;
+  where: ActionWhereUniqueInput;
 };
 
 
@@ -1269,6 +1800,13 @@ export type NestedDateTimeNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
 };
 
+export type NestedEnumActionTypeFilter = {
+  equals?: InputMaybe<ActionType>;
+  in?: InputMaybe<Array<ActionType>>;
+  not?: InputMaybe<NestedEnumActionTypeFilter>;
+  notIn?: InputMaybe<Array<ActionType>>;
+};
+
 export type NestedEnumLogFromNullableFilter = {
   equals?: InputMaybe<LogFrom>;
   in?: InputMaybe<Array<LogFrom>>;
@@ -1295,6 +1833,17 @@ export type NestedEnumUserTypeFilter = {
   in?: InputMaybe<Array<UserType>>;
   not?: InputMaybe<NestedEnumUserTypeFilter>;
   notIn?: InputMaybe<Array<UserType>>;
+};
+
+export type NestedIntNullableFilter = {
+  equals?: InputMaybe<Scalars['Int']['input']>;
+  gt?: InputMaybe<Scalars['Int']['input']>;
+  gte?: InputMaybe<Scalars['Int']['input']>;
+  in?: InputMaybe<Array<Scalars['Int']['input']>>;
+  lt?: InputMaybe<Scalars['Int']['input']>;
+  lte?: InputMaybe<Scalars['Int']['input']>;
+  not?: InputMaybe<NestedIntNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
 export type NestedStringFilter = {
@@ -1331,6 +1880,14 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 
 export type NullableEnumThemeColorFieldUpdateOperationsInput = {
   set?: InputMaybe<ThemeColor>;
+};
+
+export type NullableIntFieldUpdateOperationsInput = {
+  decrement?: InputMaybe<Scalars['Int']['input']>;
+  divide?: InputMaybe<Scalars['Int']['input']>;
+  increment?: InputMaybe<Scalars['Int']['input']>;
+  multiply?: InputMaybe<Scalars['Int']['input']>;
+  set?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type NullableStringFieldUpdateOperationsInput = {
@@ -1593,6 +2150,8 @@ export type ProfileWhereUniqueInput = {
 
 export type Query = {
   __typename?: 'Query';
+  action: Action;
+  actions: Array<Action>;
   flow: Flow;
   flowVersion: FlowVersion;
   flowVersions: Array<FlowVersion>;
@@ -1607,6 +2166,21 @@ export type Query = {
   users: Array<User>;
   workspace: Workspace;
   workspaces: Array<Workspace>;
+};
+
+
+export type QueryActionArgs = {
+  where: ActionWhereUniqueInput;
+};
+
+
+export type QueryActionsArgs = {
+  cursor?: InputMaybe<ActionWhereUniqueInput>;
+  distinct?: InputMaybe<Array<ActionScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<ActionOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<ActionWhereInput>;
 };
 
 
@@ -2883,6 +3457,7 @@ export type Workspace = {
   __typename?: 'Workspace';
   _count: WorkspaceCount;
   aberration: Scalars['String']['output'];
+  actionsOnWorkspaces?: Maybe<Array<ActionsOnWorkspaces>>;
   activeOnUser?: Maybe<Array<UserConfig>>;
   assignedFlows?: Maybe<Array<FlowsOnWorkspaces>>;
   assignedUsers?: Maybe<Array<UsersOnWorkspaces>>;
@@ -2896,6 +3471,7 @@ export type Workspace = {
 
 export type WorkspaceCount = {
   __typename?: 'WorkspaceCount';
+  actionsOnWorkspaces: Scalars['Int']['output'];
   activeOnUser: Scalars['Int']['output'];
   assignedFlows: Scalars['Int']['output'];
   assignedUsers: Scalars['Int']['output'];
@@ -2913,6 +3489,7 @@ export type WorkspaceCountAggregate = {
 
 export type WorkspaceCreateInput = {
   aberration: Scalars['String']['input'];
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
   activeOnUser?: InputMaybe<UserConfigCreateNestedManyWithoutActiveWorkspaceInput>;
   assignedFlows?: InputMaybe<FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
   assignedUsers?: InputMaybe<UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
@@ -2940,6 +3517,12 @@ export type WorkspaceCreateNestedManyWithoutCreatedByInput = {
   createMany?: InputMaybe<WorkspaceCreateManyCreatedByInputEnvelope>;
 };
 
+export type WorkspaceCreateNestedOneWithoutActionsOnWorkspacesInput = {
+  connect?: InputMaybe<WorkspaceWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<WorkspaceCreateOrConnectWithoutActionsOnWorkspacesInput>;
+  create?: InputMaybe<WorkspaceCreateWithoutActionsOnWorkspacesInput>;
+};
+
 export type WorkspaceCreateNestedOneWithoutActiveOnUserInput = {
   connect?: InputMaybe<WorkspaceWhereUniqueInput>;
   connectOrCreate?: InputMaybe<WorkspaceCreateOrConnectWithoutActiveOnUserInput>;
@@ -2956,6 +3539,11 @@ export type WorkspaceCreateNestedOneWithoutAssignedUsersInput = {
   connect?: InputMaybe<WorkspaceWhereUniqueInput>;
   connectOrCreate?: InputMaybe<WorkspaceCreateOrConnectWithoutAssignedUsersInput>;
   create?: InputMaybe<WorkspaceCreateWithoutAssignedUsersInput>;
+};
+
+export type WorkspaceCreateOrConnectWithoutActionsOnWorkspacesInput = {
+  create: WorkspaceCreateWithoutActionsOnWorkspacesInput;
+  where: WorkspaceWhereUniqueInput;
 };
 
 export type WorkspaceCreateOrConnectWithoutActiveOnUserInput = {
@@ -2978,8 +3566,20 @@ export type WorkspaceCreateOrConnectWithoutCreatedByInput = {
   where: WorkspaceWhereUniqueInput;
 };
 
+export type WorkspaceCreateWithoutActionsOnWorkspacesInput = {
+  aberration: Scalars['String']['input'];
+  activeOnUser?: InputMaybe<UserConfigCreateNestedManyWithoutActiveWorkspaceInput>;
+  assignedFlows?: InputMaybe<FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
+  assignedUsers?: InputMaybe<UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']['input']>;
+  createdBy: UserCreateNestedOneWithoutCreatedWorkspacesInput;
+  name: Scalars['String']['input'];
+  profile?: InputMaybe<WorkspaceProfileCreateNestedOneWithoutWorkspaceInput>;
+};
+
 export type WorkspaceCreateWithoutActiveOnUserInput = {
   aberration: Scalars['String']['input'];
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
   assignedFlows?: InputMaybe<FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
   assignedUsers?: InputMaybe<UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -2990,6 +3590,7 @@ export type WorkspaceCreateWithoutActiveOnUserInput = {
 
 export type WorkspaceCreateWithoutAssignedFlowsInput = {
   aberration: Scalars['String']['input'];
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
   activeOnUser?: InputMaybe<UserConfigCreateNestedManyWithoutActiveWorkspaceInput>;
   assignedUsers?: InputMaybe<UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -3000,6 +3601,7 @@ export type WorkspaceCreateWithoutAssignedFlowsInput = {
 
 export type WorkspaceCreateWithoutAssignedUsersInput = {
   aberration: Scalars['String']['input'];
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
   activeOnUser?: InputMaybe<UserConfigCreateNestedManyWithoutActiveWorkspaceInput>;
   assignedFlows?: InputMaybe<FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -3010,6 +3612,7 @@ export type WorkspaceCreateWithoutAssignedUsersInput = {
 
 export type WorkspaceCreateWithoutCreatedByInput = {
   aberration: Scalars['String']['input'];
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
   activeOnUser?: InputMaybe<UserConfigCreateNestedManyWithoutActiveWorkspaceInput>;
   assignedFlows?: InputMaybe<FlowsOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
   assignedUsers?: InputMaybe<UsersOnWorkspacesCreateNestedManyWithoutWorkspaceInput>;
@@ -3053,6 +3656,7 @@ export type WorkspaceOrderByRelationAggregateInput = {
 
 export type WorkspaceOrderByWithRelationInput = {
   aberration?: InputMaybe<SortOrder>;
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesOrderByRelationAggregateInput>;
   activeOnUser?: InputMaybe<UserConfigOrderByRelationAggregateInput>;
   assignedFlows?: InputMaybe<FlowsOnWorkspacesOrderByRelationAggregateInput>;
   assignedUsers?: InputMaybe<UsersOnWorkspacesOrderByRelationAggregateInput>;
@@ -3219,6 +3823,7 @@ export type WorkspaceScalarWhereInput = {
 
 export type WorkspaceUpdateInput = {
   aberration?: InputMaybe<StringFieldUpdateOperationsInput>;
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
   activeOnUser?: InputMaybe<UserConfigUpdateManyWithoutActiveWorkspaceNestedInput>;
   assignedFlows?: InputMaybe<FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
   assignedUsers?: InputMaybe<UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
@@ -3253,6 +3858,14 @@ export type WorkspaceUpdateManyWithoutCreatedByNestedInput = {
   upsert?: InputMaybe<Array<WorkspaceUpsertWithWhereUniqueWithoutCreatedByInput>>;
 };
 
+export type WorkspaceUpdateOneRequiredWithoutActionsOnWorkspacesNestedInput = {
+  connect?: InputMaybe<WorkspaceWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<WorkspaceCreateOrConnectWithoutActionsOnWorkspacesInput>;
+  create?: InputMaybe<WorkspaceCreateWithoutActionsOnWorkspacesInput>;
+  update?: InputMaybe<WorkspaceUpdateToOneWithWhereWithoutActionsOnWorkspacesInput>;
+  upsert?: InputMaybe<WorkspaceUpsertWithoutActionsOnWorkspacesInput>;
+};
+
 export type WorkspaceUpdateOneRequiredWithoutAssignedFlowsNestedInput = {
   connect?: InputMaybe<WorkspaceWhereUniqueInput>;
   connectOrCreate?: InputMaybe<WorkspaceCreateOrConnectWithoutAssignedFlowsInput>;
@@ -3279,6 +3892,11 @@ export type WorkspaceUpdateOneWithoutActiveOnUserNestedInput = {
   upsert?: InputMaybe<WorkspaceUpsertWithoutActiveOnUserInput>;
 };
 
+export type WorkspaceUpdateToOneWithWhereWithoutActionsOnWorkspacesInput = {
+  data: WorkspaceUpdateWithoutActionsOnWorkspacesInput;
+  where?: InputMaybe<WorkspaceWhereInput>;
+};
+
 export type WorkspaceUpdateToOneWithWhereWithoutActiveOnUserInput = {
   data: WorkspaceUpdateWithoutActiveOnUserInput;
   where?: InputMaybe<WorkspaceWhereInput>;
@@ -3299,8 +3917,20 @@ export type WorkspaceUpdateWithWhereUniqueWithoutCreatedByInput = {
   where: WorkspaceWhereUniqueInput;
 };
 
+export type WorkspaceUpdateWithoutActionsOnWorkspacesInput = {
+  aberration?: InputMaybe<StringFieldUpdateOperationsInput>;
+  activeOnUser?: InputMaybe<UserConfigUpdateManyWithoutActiveWorkspaceNestedInput>;
+  assignedFlows?: InputMaybe<FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
+  assignedUsers?: InputMaybe<UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
+  createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
+  createdBy?: InputMaybe<UserUpdateOneRequiredWithoutCreatedWorkspacesNestedInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  profile?: InputMaybe<WorkspaceProfileUpdateOneWithoutWorkspaceNestedInput>;
+};
+
 export type WorkspaceUpdateWithoutActiveOnUserInput = {
   aberration?: InputMaybe<StringFieldUpdateOperationsInput>;
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
   assignedFlows?: InputMaybe<FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
   assignedUsers?: InputMaybe<UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -3311,6 +3941,7 @@ export type WorkspaceUpdateWithoutActiveOnUserInput = {
 
 export type WorkspaceUpdateWithoutAssignedFlowsInput = {
   aberration?: InputMaybe<StringFieldUpdateOperationsInput>;
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
   activeOnUser?: InputMaybe<UserConfigUpdateManyWithoutActiveWorkspaceNestedInput>;
   assignedUsers?: InputMaybe<UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -3321,6 +3952,7 @@ export type WorkspaceUpdateWithoutAssignedFlowsInput = {
 
 export type WorkspaceUpdateWithoutAssignedUsersInput = {
   aberration?: InputMaybe<StringFieldUpdateOperationsInput>;
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
   activeOnUser?: InputMaybe<UserConfigUpdateManyWithoutActiveWorkspaceNestedInput>;
   assignedFlows?: InputMaybe<FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
   createdAt?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -3331,6 +3963,7 @@ export type WorkspaceUpdateWithoutAssignedUsersInput = {
 
 export type WorkspaceUpdateWithoutCreatedByInput = {
   aberration?: InputMaybe<StringFieldUpdateOperationsInput>;
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
   activeOnUser?: InputMaybe<UserConfigUpdateManyWithoutActiveWorkspaceNestedInput>;
   assignedFlows?: InputMaybe<FlowsOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
   assignedUsers?: InputMaybe<UsersOnWorkspacesUpdateManyWithoutWorkspaceNestedInput>;
@@ -3343,6 +3976,12 @@ export type WorkspaceUpsertWithWhereUniqueWithoutCreatedByInput = {
   create: WorkspaceCreateWithoutCreatedByInput;
   update: WorkspaceUpdateWithoutCreatedByInput;
   where: WorkspaceWhereUniqueInput;
+};
+
+export type WorkspaceUpsertWithoutActionsOnWorkspacesInput = {
+  create: WorkspaceCreateWithoutActionsOnWorkspacesInput;
+  update: WorkspaceUpdateWithoutActionsOnWorkspacesInput;
+  where?: InputMaybe<WorkspaceWhereInput>;
 };
 
 export type WorkspaceUpsertWithoutActiveOnUserInput = {
@@ -3368,6 +4007,7 @@ export type WorkspaceWhereInput = {
   NOT?: InputMaybe<Array<WorkspaceWhereInput>>;
   OR?: InputMaybe<Array<WorkspaceWhereInput>>;
   aberration?: InputMaybe<StringFilter>;
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesListRelationFilter>;
   activeOnUser?: InputMaybe<UserConfigListRelationFilter>;
   assignedFlows?: InputMaybe<FlowsOnWorkspacesListRelationFilter>;
   assignedUsers?: InputMaybe<UsersOnWorkspacesListRelationFilter>;
@@ -3384,6 +4024,7 @@ export type WorkspaceWhereUniqueInput = {
   NOT?: InputMaybe<Array<WorkspaceWhereInput>>;
   OR?: InputMaybe<Array<WorkspaceWhereInput>>;
   aberration?: InputMaybe<Scalars['String']['input']>;
+  actionsOnWorkspaces?: InputMaybe<ActionsOnWorkspacesListRelationFilter>;
   activeOnUser?: InputMaybe<UserConfigListRelationFilter>;
   assignedFlows?: InputMaybe<FlowsOnWorkspacesListRelationFilter>;
   assignedUsers?: InputMaybe<UsersOnWorkspacesListRelationFilter>;
@@ -3395,21 +4036,41 @@ export type WorkspaceWhereUniqueInput = {
   profile?: InputMaybe<WorkspaceProfileNullableRelationFilter>;
 };
 
+export type ActionQueryVariables = Exact<{
+  where: ActionWhereUniqueInput;
+}>;
+
+
+export type ActionQuery = { __typename: 'Query', action: { __typename: 'Action', width?: number | null, height?: number | null, radius?: number | null, class?: string | null, description?: string | null, id: string, name: string, code?: string | null, color?: string | null, variables?: any | null, type: ActionType, createdAt?: any | null } };
+
+export type ActionsQueryVariables = Exact<{
+  where?: InputMaybe<ActionWhereInput>;
+  orderBy?: InputMaybe<Array<ActionOrderByWithRelationInput> | ActionOrderByWithRelationInput>;
+}>;
+
+
+export type ActionsQuery = { __typename: 'Query', actions: Array<{ __typename: 'Action', width?: number | null, height?: number | null, radius?: number | null, class?: string | null, description?: string | null, id: string, name: string, code?: string | null, color?: string | null, variables?: any | null, type: ActionType, createdAt?: any | null }> };
+
+export type ActionsQueryFragmentFragment = { __typename: 'Action', width?: number | null, height?: number | null, radius?: number | null, class?: string | null, description?: string | null, id: string, name: string, code?: string | null, color?: string | null, variables?: any | null, type: ActionType, createdAt?: any | null };
+
 export type FlowQueryVariables = Exact<{
   where: FlowWhereUniqueInput;
 }>;
 
 
-export type FlowQuery = { __typename: 'Query', flow: { __typename: 'Flow', description?: string | null, data?: any | null, id: string, name: string, code: string, externalId?: string | null, createdAt?: any | null, _count: { __typename?: 'FlowCount', versions: number } } };
+export type FlowQuery = { __typename: 'Query', flow: { __typename: 'Flow', description?: string | null, data?: any | null, edges?: any | null, id: string, name: string, code: string, externalId?: string | null, createdAt?: any | null, _count: { __typename?: 'FlowCount', versions: number } } };
 
 export type FlowsQueryVariables = Exact<{
   where?: InputMaybe<FlowWhereInput>;
+  orderBy?: InputMaybe<Array<FlowOrderByWithRelationInput> | FlowOrderByWithRelationInput>;
 }>;
 
 
 export type FlowsQuery = { __typename?: 'Query', flows: Array<{ __typename: 'Flow', id: string, name: string, code: string, externalId?: string | null, createdAt?: any | null }> };
 
 export type FlowsQueryFragmentFragment = { __typename: 'Flow', id: string, name: string, code: string, externalId?: string | null, createdAt?: any | null };
+
+export type ActionBaseFragmentFragment = { __typename?: 'Action', id: string, name: string, code?: string | null, color?: string | null, variables?: any | null, type: ActionType, createdAt?: any | null };
 
 export type FlowBaseFragmentFragment = { __typename?: 'Flow', id: string, name: string, code: string, externalId?: string | null, createdAt?: any | null };
 
@@ -3434,6 +4095,21 @@ export type MyConfigQueryVariables = Exact<{ [key: string]: never; }>;
 export type MyConfigQuery = { __typename?: 'Query', myConfig: { __typename: 'UserConfig', id: string, theme?: ThemeColor | null, activeWorkspace?: { __typename: 'Workspace', id: string, name: string, aberration: string, profile?: { __typename: 'WorkspaceProfile', id: string, color?: string | null, icon?: string | null } | null } | null } };
 
 export type MyConfigFragmentFragment = { __typename: 'UserConfig', id: string, theme?: ThemeColor | null, activeWorkspace?: { __typename: 'Workspace', id: string, name: string, aberration: string, profile?: { __typename: 'WorkspaceProfile', id: string, color?: string | null, icon?: string | null } | null } | null };
+
+export type CreateActionMutationVariables = Exact<{
+  data: ActionCreateInput;
+}>;
+
+
+export type CreateActionMutation = { __typename: 'Mutation', createAction: { __typename: 'Action', width?: number | null, height?: number | null, radius?: number | null, class?: string | null, description?: string | null, id: string, name: string, code?: string | null, color?: string | null, variables?: any | null, type: ActionType, createdAt?: any | null } };
+
+export type UpdateActionMutationVariables = Exact<{
+  data: ActionUpdateInput;
+  where: ActionWhereUniqueInput;
+}>;
+
+
+export type UpdateActionMutation = { __typename: 'Mutation', updateAction: { __typename: 'Action', width?: number | null, height?: number | null, radius?: number | null, class?: string | null, description?: string | null, id: string, name: string, code?: string | null, color?: string | null, variables?: any | null, type: ActionType, createdAt?: any | null } };
 
 export type UpdateFlowMutationVariables = Exact<{
   data: FlowUpdateInput;
@@ -3472,6 +4148,8 @@ export type MyAssignWorkspacesOnPickerQueryVariables = Exact<{
 
 export type MyAssignWorkspacesOnPickerQuery = { __typename?: 'Query', workspaces: Array<{ __typename: 'Workspace', id: string, name: string, aberration: string, profile?: { __typename: 'WorkspaceProfile', id: string, color?: string | null, icon?: string | null } | null }> };
 
+export const ActionBaseFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ActionBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Action"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"variables"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<ActionBaseFragmentFragment, unknown>;
+export const ActionsQueryFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ActionsQueryFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Action"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"ActionBaseFragment"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"radius"}},{"kind":"Field","name":{"kind":"Name","value":"class"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ActionBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Action"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"variables"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<ActionsQueryFragmentFragment, unknown>;
 export const FlowBaseFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FlowBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Flow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"externalId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<FlowBaseFragmentFragment, unknown>;
 export const FlowsQueryFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FlowsQueryFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Flow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"FlowBaseFragment"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FlowBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Flow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"externalId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<FlowsQueryFragmentFragment, unknown>;
 export const TabFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TabFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Tab"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}}]}}]} as unknown as DocumentNode<TabFragmentFragment, unknown>;
@@ -3480,10 +4158,14 @@ export const WorkspaceBaseFragmentFragmentDoc = {"kind":"Document","definitions"
 export const MeFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"MeFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"tabs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TabFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ProfileFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdWorkspaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"WorkspaceBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"assignedWorkspaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"workspace"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"WorkspaceBaseFragment"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TabFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Tab"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ProfileFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Profile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"acronym"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"bio"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WorkspaceBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Workspace"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"aberration"}}]}}]} as unknown as DocumentNode<MeFragmentFragment, unknown>;
 export const WorkspaceProfileFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WorkspaceProfileFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"WorkspaceProfile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"icon"}}]}}]} as unknown as DocumentNode<WorkspaceProfileFragmentFragment, unknown>;
 export const MyConfigFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"MyConfigFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserConfig"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"theme"}},{"kind":"Field","name":{"kind":"Name","value":"activeWorkspace"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"WorkspaceBaseFragment"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"WorkspaceProfileFragment"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WorkspaceBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Workspace"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"aberration"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WorkspaceProfileFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"WorkspaceProfile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"icon"}}]}}]} as unknown as DocumentNode<MyConfigFragmentFragment, unknown>;
-export const FlowDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Flow"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FlowWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"flow"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"versions"}}]}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"FlowBaseFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FlowBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Flow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"externalId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<FlowQuery, FlowQueryVariables>;
-export const FlowsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Flows"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FlowWhereInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"flows"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FlowsQueryFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FlowBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Flow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"externalId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FlowsQueryFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Flow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"FlowBaseFragment"}}]}}]} as unknown as DocumentNode<FlowsQuery, FlowsQueryVariables>;
+export const ActionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Action"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ActionWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"action"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"ActionBaseFragment"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"radius"}},{"kind":"Field","name":{"kind":"Name","value":"class"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ActionBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Action"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"variables"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<ActionQuery, ActionQueryVariables>;
+export const ActionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Actions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ActionWhereInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ActionOrderByWithRelationInput"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"actions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ActionsQueryFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ActionBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Action"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"variables"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ActionsQueryFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Action"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"ActionBaseFragment"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"radius"}},{"kind":"Field","name":{"kind":"Name","value":"class"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]} as unknown as DocumentNode<ActionsQuery, ActionsQueryVariables>;
+export const FlowDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Flow"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FlowWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"flow"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"edges"}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"versions"}}]}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"FlowBaseFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FlowBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Flow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"externalId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<FlowQuery, FlowQueryVariables>;
+export const FlowsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Flows"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"FlowWhereInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FlowOrderByWithRelationInput"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"flows"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FlowsQueryFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FlowBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Flow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"externalId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FlowsQueryFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Flow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"FlowBaseFragment"}}]}}]} as unknown as DocumentNode<FlowsQuery, FlowsQueryVariables>;
 export const MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MeFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"TabFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Tab"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ProfileFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Profile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"acronym"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"bio"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WorkspaceBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Workspace"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"aberration"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"MeFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"tabs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"TabFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ProfileFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdWorkspaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"WorkspaceBaseFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"assignedWorkspaces"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"workspace"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"WorkspaceBaseFragment"}}]}}]}}]}}]} as unknown as DocumentNode<MeQuery, MeQueryVariables>;
 export const MyConfigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MyConfig"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"myConfig"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MyConfigFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WorkspaceBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Workspace"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"aberration"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WorkspaceProfileFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"WorkspaceProfile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"icon"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"MyConfigFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserConfig"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"theme"}},{"kind":"Field","name":{"kind":"Name","value":"activeWorkspace"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"WorkspaceBaseFragment"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"WorkspaceProfileFragment"}}]}}]}}]}}]} as unknown as DocumentNode<MyConfigQuery, MyConfigQueryVariables>;
+export const CreateActionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateAction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ActionCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"createAction"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"ActionBaseFragment"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"radius"}},{"kind":"Field","name":{"kind":"Name","value":"class"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ActionBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Action"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"variables"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<CreateActionMutation, CreateActionMutationVariables>;
+export const UpdateActionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateAction"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ActionUpdateInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ActionWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"updateAction"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"ActionBaseFragment"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"radius"}},{"kind":"Field","name":{"kind":"Name","value":"class"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ActionBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Action"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"variables"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<UpdateActionMutation, UpdateActionMutationVariables>;
 export const UpdateFlowDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateFlow"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FlowUpdateInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"FlowWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateFlow"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"data"}},{"kind":"Field","name":{"kind":"Name","value":"_count"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"versions"}}]}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"FlowBaseFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FlowBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Flow"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"externalId"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]} as unknown as DocumentNode<UpdateFlowMutation, UpdateFlowMutationVariables>;
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"loginInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"loginInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"loginInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"accessToken"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
 export const UpdateUserConfigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUserConfig"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserConfigUpdateInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserConfigWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUserConfig"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MyConfigFragment"}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WorkspaceBaseFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Workspace"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"aberration"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WorkspaceProfileFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"WorkspaceProfile"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"icon"}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"MyConfigFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserConfig"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"theme"}},{"kind":"Field","name":{"kind":"Name","value":"activeWorkspace"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"WorkspaceBaseFragment"}},{"kind":"Field","name":{"kind":"Name","value":"profile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"WorkspaceProfileFragment"}}]}}]}}]}}]} as unknown as DocumentNode<UpdateUserConfigMutation, UpdateUserConfigMutationVariables>;

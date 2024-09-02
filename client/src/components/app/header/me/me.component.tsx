@@ -1,38 +1,33 @@
 import { FC, ReactElement } from 'react';
-import { Avatar, Flex, Menu, rem, Text, UnstyledButton } from '@mantine/core';
-import { ChevronIcon, MeComponent, MenuItemIcon } from '@components/app/header/me/me.css.ts';
-import { IconChevronRight, IconLogout, IconUser } from '@tabler/icons-react';
+import { Avatar, Menu } from '@mantine/core';
+import { MeAvatarRootCss, MenuItemIcon } from '@components/app/header/me/me.css.ts';
+import { IconLogout, IconUser } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 type MeProps = {
     id: string;
     image: string;
     email: string;
-    fullName: string;
+    firstName: string;
+    lastName: string;
     username: string | null | undefined;
 };
 
-const Me: FC<MeProps> = ({ image, email, fullName, username }): ReactElement => {
+const Me: FC<MeProps> = ({ image, email, firstName, lastName, username }): ReactElement => {
     return (
         <Menu width={200}>
             <Menu.Target>
-                <UnstyledButton className={MeComponent}>
-                    <Flex align={'center'} gap={'xs'}>
-                        <Avatar src={image} radius={'xl'} />
-                        <div>
-                            <Text size={'sm'} fw={500} lh={rem(16)}>
-                                {fullName}
-                            </Text>
-                            <Text c={'dimmed'} size={'xs'}>
-                                {email}
-                            </Text>
-                        </div>
-                        <IconChevronRight className={ChevronIcon} />
-                    </Flex>
-                </UnstyledButton>
+                <Avatar
+                    className={MeAvatarRootCss}
+                    src={image}
+                    color={'initials'}
+                    name={`${firstName} ${lastName}`}
+                    size={'md'}
+                    radius={'md'}
+                />
             </Menu.Target>
             <Menu.Dropdown>
-                <Menu.Label>{username ?? 'User'}</Menu.Label>
+                <Menu.Label>{`${firstName} ${lastName}`}</Menu.Label>
                 <Menu.Item leftSection={<IconUser className={MenuItemIcon} />}>Profile</Menu.Item>
                 <Menu.Item component={Link} to={'/logout'} leftSection={<IconLogout className={MenuItemIcon} />}>
                     Logout

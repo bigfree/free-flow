@@ -126,17 +126,20 @@ model UserConfig {
 
 model Workspace {
   /// @HideField({ match: 'Workspace*@(Create|Update)*Input' })
-  id            String              @id @default(cuid())
-  name          String              @unique @db.VarChar(50)
-  aberration    String              @unique @db.VarChar(5)
-  profile       WorkspaceProfile?
-  createdBy     User                @relation("CreatedWorkspaceUser", fields: [createdById], references: [id])
-  createdById   String
-  assignedUsers UsersOnWorkspaces[]
-  assignedFlows FlowsOnWorkspaces[]
-  activeOnUser  UserConfig[]
+  id          String            @id @default(cuid())
+  name        String            @unique @db.VarChar(50)
+  aberration  String            @unique @db.VarChar(5)
+  profile     WorkspaceProfile?
+  createdBy   User              @relation("CreatedWorkspaceUser", fields: [createdById], references: [id])
+  createdById String
   /// @FieldType('DateTime')
-  createdAt     DateTime?           @default(now())
+  createdAt   DateTime?         @default(now())
+
+  // Relations
+  assignedUsers       UsersOnWorkspaces[]
+  assignedFlows       FlowsOnWorkspaces[]
+  activeOnUser        UserConfig[]
+  actionsOnWorkspaces ActionsOnWorkspaces[]
 
   @@index(fields: [id], type: Hash)
 }
@@ -200,6 +203,9 @@ model Flow {
   /// @FieldType('JSON')
   /// @PropertyType('TF.JsonObject')
   data        Json?     @db.JsonB
+  /// @FieldType('JSON')
+  /// @PropertyType('TF.JsonObject')
+  edges       Json?     @db.JsonB
   /// @FieldType('DateTime')
   createdAt   DateTime? @default(now())
 
@@ -233,6 +239,9 @@ model FlowVersion {
   /// @FieldType('JSON')
   /// @PropertyType('TF.JsonObject')
   data        Json?     @db.JsonB
+  /// @FieldType('JSON')
+  /// @PropertyType('TF.JsonObject')
+  edges       Json?     @db.JsonB
   /// @FieldType('DateTime')
   createdAt   DateTime? @default(now())
 
@@ -259,18 +268,36 @@ model Auditlog {
   @@index(fields: [createdAt(ops: TimestampBloomOps)], type: Brin)
 }
 
-// model FavoritePokemon {
-//   /// @HideField({ match: 'FavoritePokemon*@(Create|Update)*Input' })
-//   id        String    @id @default(cuid())
-//   pokemonId Int       @db.Integer
-//   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   userId    String
-//   /// @FieldType('DateTime')
-//   createdAt DateTime? @default(now())
-//
-//   @@index(fields: [id], type: Hash)
-//   @@index(fields: [pokemonId], type: Hash)
-// }
+model Action {
+  /// @HideField({ match: 'Action*@(Create|Update)*Input' })
+  id          String     @id @default(cuid())
+  name        String     @unique @db.VarChar(255)
+  description String?    @db.Text
+  class       String?    @db.VarChar(255)
+  code        String?    @db.Text
+  /// Variables on action
+  /// @FieldType('JSON')
+  /// @PropertyType('TF.JsonObject')
+  variables   Json?      @db.JsonB
+  /// @FieldType('PositiveInt')
+  width       Int?       @db.Integer
+  /// @FieldType('PositiveInt')
+  height      Int?       @db.Integer
+  /// @FieldType('PositiveInt')
+  radius      Int?       @db.Integer
+  /// @FieldType('HexColorCode')
+  color       String?    @db.VarChar(30)
+  type        ActionType @default(SQUARE)
+
+  /// @FieldType('DateTime')
+  createdAt DateTime? @default(now())
+
+  // Reations
+  actionsOnWorkspaces ActionsOnWorkspaces[]
+
+  @@index(fields: [id], type: Hash)
+  @@index(fields: [variables(ops: JsonbOps)], type: Gin)
+}
 
 // Relations M -> N
 model UsersOnWorkspaces {
@@ -297,6 +324,26 @@ model FlowsOnWorkspaces {
   @@id([flowId, workspaceId])
   @@index(fields: [flowId], type: Hash)
   @@index(fields: [workspaceId], type: Hash)
+}
+
+model ActionsOnWorkspaces {
+  action      Action    @relation(fields: [actionId], references: [id])
+  actionId    String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
+  /// @FieldType('DateTime')
+  assignedAt  DateTime? @default(now())
+
+  @@id([actionId, workspaceId])
+  @@index(fields: [actionId], type: Hash)
+  @@index(fields: [workspaceId], type: Hash)
+}
+
+// TODO: dokoncit action type comments
+enum ActionType {
+  SQUARE
+  CIRCLE
+  TRIANGLE
 }
 
 enum ThemeColor {

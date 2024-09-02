@@ -34,6 +34,7 @@ export const persistor = new CachePersistor({
     storage: new LocalForageWrapper(store),
     maxSize: false,
     debug: true,
+    debounce: 50,
     trigger: 'write',
 });
 

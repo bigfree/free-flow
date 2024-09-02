@@ -2,26 +2,32 @@ import { createVar, style } from '@vanilla-extract/css';
 import { vars } from '@/theme/main.theme.ts';
 import { rem } from '@mantine/core';
 
-export const ActiveWorkspaceColor = createVar();
+export const ActiveWorkspaceColorVar = createVar();
 
 export const WorkspacePickerComponent = style({
-    height: rem(60),
-    paddingLeft: vars.spacing.sm,
+    padding: rem(5),
+    alignSelf: 'center',
     // backgroundColor: vars.colors.gray[1],
     // borderBottom: `${rem(1)} solid ${vars.colors.defaultBorder}`,
     // boxShadow: `${rem(4)} ${rem(4)} 0 0 ${ActiveWorkspaceColor}`,
-    flex: `0 0 ${rem(240)}`,
+    flex: '0 0 auto',
     display: 'flex',
     alignItems: 'center',
+    selectors: {
+        ['&:hover']: {
+            backgroundColor: vars.colors.gray[0],
+            borderRadius: vars.radius.md,
+        }
+    }
 });
 
 export const ButtonContent = style({
     flex: 1,
     paddingLeft: vars.spacing.sm,
+    paddingRight: rem(5),
 });
 
 export const ButtonIcon = style({
-    marginRight: vars.spacing.sm,
     width: rem(19),
     height: rem(19),
 });
